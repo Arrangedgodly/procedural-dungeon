@@ -1,0 +1,160 @@
+[gd_scene load_steps=36 format=3 uid="uid://dt6fdiatgcv6k"]
+
+[ext_resource type="Script" path="res://scripts/basic_dungeon.gd" id="1_2xh76"]
+[ext_resource type="Texture2D" uid="uid://do40mc2cm44gh" path="res://assets/1.png" id="2_5icwf"]
+[ext_resource type="Texture2D" uid="uid://bj78beynng02j" path="res://assets/black_square.png" id="2_14v5t"]
+[ext_resource type="PackedScene" uid="uid://dlsj5v0j7urbv" path="res://scenes/ui.tscn" id="2_x8pav"]
+[ext_resource type="Texture2D" uid="uid://coppuqsrh7rhf" path="res://assets/2.png" id="3_id5ve"]
+[ext_resource type="Texture2D" uid="uid://uggjvhqpqaaa" path="res://assets/10.png" id="3_pav0p"]
+[ext_resource type="Texture2D" uid="uid://5jf5ykm5mdka" path="res://assets/3.png" id="4_ygk6c"]
+[ext_resource type="Texture2D" uid="uid://5ekauygqmi17" path="res://assets/4.png" id="5_c6utx"]
+[ext_resource type="Texture2D" uid="uid://r3muxb66k2w3" path="res://assets/5.png" id="6_ucgjv"]
+[ext_resource type="Texture2D" uid="uid://3eg7uu27x4k0" path="res://assets/6.png" id="7_fccq1"]
+[ext_resource type="Texture2D" uid="uid://capqd2ouwrlv0" path="res://assets/7.png" id="8_hgwi8"]
+[ext_resource type="Texture2D" uid="uid://8dxnnbcbvqgg" path="res://assets/8.png" id="9_obb22"]
+[ext_resource type="Texture2D" uid="uid://cdnyhd48uehud" path="res://assets/9.png" id="10_g4kbu"]
+[ext_resource type="Texture2D" uid="uid://bnehnaqi5sdpr" path="res://assets/11.png" id="12_ltodl"]
+[ext_resource type="Texture2D" uid="uid://o1krnylo3fjm" path="res://assets/12.png" id="13_wj0ec"]
+[ext_resource type="Texture2D" uid="uid://cjc5dtniph420" path="res://assets/13.png" id="14_2tctg"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eaxe5"]
+texture = ExtResource("2_14v5t")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_k1rmi"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_eaxe5")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s8kpt"]
+texture = ExtResource("10_g4kbu")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_loneq"]
+texture = ExtResource("3_pav0p")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m7k0h"]
+texture = ExtResource("12_ltodl")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tr4up"]
+texture = ExtResource("13_wj0ec")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iyg27"]
+texture = ExtResource("14_2tctg")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_t2vpk"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_s8kpt")
+sources/1 = SubResource("TileSetAtlasSource_loneq")
+sources/2 = SubResource("TileSetAtlasSource_m7k0h")
+sources/3 = SubResource("TileSetAtlasSource_tr4up")
+sources/4 = SubResource("TileSetAtlasSource_iyg27")
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_c3xt6"]
+tile_data = PackedInt32Array(0, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_x4edk"]
+tile_data = PackedInt32Array(0, 1, 0)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5hofu"]
+texture = ExtResource("2_5icwf")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_grojs"]
+texture = ExtResource("3_id5ve")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tjnoe"]
+texture = ExtResource("4_ygk6c")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qg7qd"]
+texture = ExtResource("5_c6utx")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1hysa"]
+texture = ExtResource("6_ucgjv")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ocxly"]
+texture = ExtResource("7_fccq1")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v4gnl"]
+texture = ExtResource("8_hgwi8")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d26tg"]
+texture = ExtResource("9_obb22")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_u53nq"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_5hofu")
+sources/1 = SubResource("TileSetAtlasSource_grojs")
+sources/2 = SubResource("TileSetAtlasSource_tjnoe")
+sources/3 = SubResource("TileSetAtlasSource_qg7qd")
+sources/4 = SubResource("TileSetAtlasSource_1hysa")
+sources/5 = SubResource("TileSetAtlasSource_ocxly")
+sources/6 = SubResource("TileSetAtlasSource_v4gnl")
+sources/7 = SubResource("TileSetAtlasSource_d26tg")
+pattern_0 = SubResource("TileMapPattern_c3xt6")
+pattern_1 = SubResource("TileMapPattern_x4edk")
+
+[node name="BasicDungeon" type="Node2D" node_paths=PackedStringArray("rooms", "tiles", "walk", "background", "walls", "camera", "ui")]
+script = ExtResource("1_2xh76")
+rooms = NodePath("Rooms")
+tiles = NodePath("Tiles")
+walk = NodePath("Tiles/Walk")
+background = NodePath("Tiles/Background")
+walls = NodePath("Tiles/Walls")
+camera = NodePath("Camera")
+ui = NodePath("CanvasLayer/UI")
+
+[node name="Rooms" type="Node" parent="."]
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(0.075, 0.075)
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+
+[node name="Tiles" type="Node2D" parent="."]
+
+[node name="Background" type="TileMapLayer" parent="Tiles"]
+tile_set = SubResource("TileSet_k1rmi")
+
+[node name="Walls" type="TileMapLayer" parent="Tiles"]
+tile_set = SubResource("TileSet_t2vpk")
+
+[node name="Walk" type="TileMapLayer" parent="Tiles"]
+tile_set = SubResource("TileSet_u53nq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("2_x8pav")]
+
+[connection signal="trigger_generate_layers" from="CanvasLayer/UI" to="." method="_on_ui_trigger_generate_layers"]
+[connection signal="trigger_generate_map" from="CanvasLayer/UI" to="." method="_on_ui_trigger_generate_map"]
