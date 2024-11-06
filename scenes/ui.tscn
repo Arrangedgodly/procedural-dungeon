@@ -285,7 +285,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/HBoxContainer4/Control"]
+[node name="Space" type="AnimatedSprite2D" parent="VBoxContainer/HBoxContainer4/Control"]
 sprite_frames = SubResource("SpriteFrames_6u8yt")
 autoplay = "default"
 

@@ -1,5 +1,8 @@
 extends Node2D
 class_name RoomGenerator
+signal texture_generated
+signal map_generation_started
+signal map_generation_finished
 
 var Room = preload("res://scenes/room.tscn")
 
@@ -16,6 +19,8 @@ var camera_init_pos: Vector2
 var tile_size = 32
 var path: AStar2D
 var current_focused_room: Node = null
+var is_generating: bool = false
+var has_texture: bool = false
 var camera_state = CameraState.OVERVIEW
 
 enum CameraState {
@@ -109,6 +114,7 @@ func create_layout():
 	await get_tree().create_timer(1.0).timeout
 	cull_rooms()
 	fit_camera_to_rooms()
+	map_generation_finished.emit()
 
 func make_map():
 	walk.clear()
@@ -351,7 +357,9 @@ func _input(event: InputEvent) -> void:
 
 func _on_ui_trigger_generate_layers() -> void:
 	make_map()
+	texture_generated.emit()
 
 
 func _on_ui_trigger_generate_map() -> void:
+	map_generation_started.emit()
 	apply_settings()

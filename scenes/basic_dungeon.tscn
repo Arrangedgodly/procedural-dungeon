@@ -156,5 +156,8 @@ tile_set = SubResource("TileSet_u53nq")
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("2_x8pav")]
 
+[connection signal="map_generation_finished" from="." to="CanvasLayer/UI" method="_on_basic_dungeon_map_generation_finished"]
+[connection signal="map_generation_started" from="." to="CanvasLayer/UI" method="_on_basic_dungeon_map_generation_started"]
+[connection signal="texture_generated" from="." to="CanvasLayer/UI" method="_on_basic_dungeon_texture_generated"]
 [connection signal="trigger_generate_layers" from="CanvasLayer/UI" to="." method="_on_ui_trigger_generate_layers"]
 [connection signal="trigger_generate_map" from="CanvasLayer/UI" to="." method="_on_ui_trigger_generate_map"]
