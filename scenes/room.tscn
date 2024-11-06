@@ -3,8 +3,14 @@
 [ext_resource type="Script" path="res://scripts/room.gd" id="1_626cy"]
 
 [node name="Room" type="RigidBody2D"]
+input_pickable = true
 can_sleep = false
 lock_rotation = true
 script = ExtResource("1_626cy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+debug_color = Color(5.77569e-07, 0.632118, 0.740889, 0.901961)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

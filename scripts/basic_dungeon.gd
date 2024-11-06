@@ -58,8 +58,7 @@ func make_rooms() -> void:
 		room_instance.make_room(pos, Vector2(width, height) * tile_size)
 		
 		# Make room clickable
-		var collision_shape = room_instance.get_node("CollisionShape2D")
-		room_instance.input_event.connect(_on_room_clicked.bind(room_instance))
+		room_instance.room_clicked.connect(_on_room_clicked)
 
 func cull_rooms():
 	var room_positions = []
@@ -220,12 +219,15 @@ func draw_room_outline(upper_left: Vector2, size: Vector2):
 	set_wall_cell(Vector2i(upper_left.x + 1, upper_left.y + size.y * 2 - 1)) #Bottom Left
 	set_wall_cell(Vector2i(upper_left.x + size.x * 2 - 1, upper_left.y + size.y * 2 - 1)) #Bottom Right
 
-func _on_room_clicked(_viewport: Node, event: InputEvent, _shape_idx: int, room: Node) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		focus_on_room(room)
+func _on_room_clicked(room: Node) -> void:
+	focus_on_room(room)
 
 func focus_on_room(room: Node) -> void:
+	if current_focused_room:
+		current_focused_room.set_focused(false)
+	
 	current_focused_room = room
+	current_focused_room.set_focused(true)
 	camera_state = CameraState.FOCUSED_ON_ROOM
 
 func focus_next_room() -> void:
@@ -234,7 +236,16 @@ func focus_next_room() -> void:
 		
 	var current_index = current_focused_room.get_index()
 	var next_index = (current_index + 1) % rooms.get_child_count()
+	
+	current_focused_room.set_focused(false)
+	
 	current_focused_room = rooms.get_child(next_index)
+	current_focused_room.set_focused(true)
+
+func set_all_rooms_interactive(interactive: bool) -> void:
+	for room in rooms.get_children():
+		if room != current_focused_room:
+			room.input_pickable = interactive
 
 func toggle_mouse_follow() -> void:
 	if camera_state == CameraState.FOLLOWING_MOUSE:
@@ -244,7 +255,12 @@ func toggle_mouse_follow() -> void:
 
 func reset_camera_to_overview() -> void:
 	camera_state = CameraState.OVERVIEW
-	current_focused_room = null
+	
+	# Unfocus current room if any
+	if current_focused_room:
+		current_focused_room.set_focused(false)
+		current_focused_room = null
+	
 	fit_camera_to_rooms()
 
 func fit_camera_to_rooms() -> void:
@@ -297,7 +313,7 @@ func ensure_dungeon_size() -> void:
 
 func _draw():
 	for room in rooms.get_children():
-		draw_rect(Rect2(room.position - room.size, room.size * 2), Color(32, 228, 0), false)
+		draw_rect(Rect2(room.position - room.size, room.size * 2), Color(32, 228, 0), false, 32)
 	if path:
 		for point in path.get_point_ids():
 			for connection in path.get_point_connections(point):
@@ -310,14 +326,14 @@ func _process(_delta: float) -> void:
 	match camera_state:
 		CameraState.FOLLOWING_MOUSE:
 			camera.position = get_global_mouse_position()
-			camera.zoom = Vector2(0.5, 0.5)
+			camera.zoom = Vector2(0.25, 0.25)
 		CameraState.FOCUSED_ON_ROOM:
 			if current_focused_room:
 				camera.position = current_focused_room.position
-				camera.zoom = Vector2(0.25, 0.25)
+				camera.zoom = Vector2(0.5, 0.5)
 		CameraState.OVERVIEW:
 			camera.position = camera_init_pos
-			camera.zoom = Vector2(0.075, 0.075)
+			camera.zoom = Vector2(0.05, 0.05)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):  # Escape key
@@ -334,8 +350,8 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_ui_trigger_generate_layers() -> void:
-	pass # Replace with function body.
+	make_map()
 
 
 func _on_ui_trigger_generate_map() -> void:
-	pass # Replace with function body.
+	apply_settings()

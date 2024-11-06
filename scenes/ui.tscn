@@ -1,6 +1,128 @@
-[gd_scene load_steps=2 format=3 uid="uid://dlsj5v0j7urbv"]
+[gd_scene load_steps=28 format=3 uid="uid://dlsj5v0j7urbv"]
 
 [ext_resource type="Script" path="res://scripts/ui.gd" id="1_p0f7x"]
+[ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="2_nb0xv"]
+[ext_resource type="StyleBox" uid="uid://uj7c8syjpihb" path="res://styles/button_hover.tres" id="3_18ond"]
+[ext_resource type="Texture2D" uid="uid://bklveth0wovj4" path="res://assets/ui/default.png" id="3_rk4di"]
+[ext_resource type="Texture2D" uid="uid://bnwpgxc57ixec" path="res://assets/ui/lclick.png" id="4_23nhl"]
+[ext_resource type="Texture2D" uid="uid://c71p15w54a2tv" path="res://assets/ui/tab_b1.png" id="5_ctos5"]
+[ext_resource type="Texture2D" uid="uid://bdaswnjd0ppyw" path="res://assets/ui/rclick.png" id="5_e0ait"]
+[ext_resource type="Texture2D" uid="uid://dkh3o26vacgmw" path="res://assets/ui/tab_press_b1.png" id="6_23qqn"]
+[ext_resource type="Texture2D" uid="uid://divkskd688a5v" path="res://assets/ui/esc.png" id="7_suwbg"]
+[ext_resource type="Texture2D" uid="uid://cp4cuucprcx5d" path="res://assets/ui/esc_press.png" id="8_smc43"]
+[ext_resource type="Texture2D" uid="uid://duiapkjhj4v8c" path="res://assets/ui/spacebar_b1.png" id="11_v7w36"]
+[ext_resource type="Texture2D" uid="uid://bnwwb4frxdhs0" path="res://assets/ui/spacebar_press_b1.png" id="12_noxyq"]
+
+[sub_resource type="Theme" id="Theme_3wm2g"]
+default_font = ExtResource("2_nb0xv")
+default_font_size = 32
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_un778"]
+atlas = ExtResource("3_rk4di")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1n3b"]
+atlas = ExtResource("4_23nhl")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umajd"]
+atlas = ExtResource("3_rk4di")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nu5um"]
+atlas = ExtResource("5_e0ait")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m2twi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_un778")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1n3b")
+}],
+"loop": true,
+"name": &"left_click",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umajd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nu5um")
+}],
+"loop": true,
+"name": &"right_click",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aikn7"]
+atlas = ExtResource("5_ctos5")
+region = Rect2(0, 0, 48, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0wg6"]
+atlas = ExtResource("6_23qqn")
+region = Rect2(0, 0, 48, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6u8yt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aikn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0wg6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tclv6"]
+atlas = ExtResource("7_suwbg")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnw2r"]
+atlas = ExtResource("8_smc43")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qcox3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tclv6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnw2r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w34rr"]
+atlas = ExtResource("11_v7w36")
+region = Rect2(0, 0, 72, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtxuf"]
+atlas = ExtResource("12_noxyq")
+region = Rect2(0, 0, 72, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t3ct5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w34rr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtxuf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -9,6 +131,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_p0f7x")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -24,11 +147,14 @@ alignment = 1
 
 [node name="RoomsGeneratedLabel" type="Label" parent="HBoxContainer/RoomsGenerated"]
 layout_mode = 2
+theme = SubResource("Theme_3wm2g")
 text = "Rooms Generated"
 horizontal_alignment = 1
 
 [node name="RoomsGeneratedSpinBox" type="SpinBox" parent="HBoxContainer/RoomsGenerated"]
 layout_mode = 2
+mouse_filter = 2
+theme = SubResource("Theme_3wm2g")
 alignment = 1
 
 [node name="MinSize" type="VBoxContainer" parent="HBoxContainer"]
@@ -37,11 +163,14 @@ alignment = 1
 
 [node name="MinSizeLabel" type="Label" parent="HBoxContainer/MinSize"]
 layout_mode = 2
+theme = SubResource("Theme_3wm2g")
 text = "Min Size"
 horizontal_alignment = 1
 
 [node name="MinSizeSpinBox" type="SpinBox" parent="HBoxContainer/MinSize"]
 layout_mode = 2
+mouse_filter = 2
+theme = SubResource("Theme_3wm2g")
 alignment = 1
 
 [node name="MaxSize" type="VBoxContainer" parent="HBoxContainer"]
@@ -50,11 +179,14 @@ alignment = 1
 
 [node name="MaxSizeLabel" type="Label" parent="HBoxContainer/MaxSize"]
 layout_mode = 2
+theme = SubResource("Theme_3wm2g")
 text = "Max Size"
 horizontal_alignment = 1
 
 [node name="MaxSizeSpinBox" type="SpinBox" parent="HBoxContainer/MaxSize"]
 layout_mode = 2
+mouse_filter = 2
+theme = SubResource("Theme_3wm2g")
 alignment = 1
 
 [node name="HorizontalSpread" type="VBoxContainer" parent="HBoxContainer"]
@@ -63,11 +195,14 @@ alignment = 1
 
 [node name="HorizontalSpreadLabel" type="Label" parent="HBoxContainer/HorizontalSpread"]
 layout_mode = 2
+theme = SubResource("Theme_3wm2g")
 text = "Horizontal Spread"
 horizontal_alignment = 1
 
 [node name="HorizontalSpreadSpinBox" type="SpinBox" parent="HBoxContainer/HorizontalSpread"]
 layout_mode = 2
+mouse_filter = 2
+theme = SubResource("Theme_3wm2g")
 alignment = 1
 
 [node name="CorridorWidth" type="VBoxContainer" parent="HBoxContainer"]
@@ -76,32 +211,140 @@ alignment = 1
 
 [node name="CorridorWidthLabel" type="Label" parent="HBoxContainer/CorridorWidth"]
 layout_mode = 2
+theme = SubResource("Theme_3wm2g")
 text = "Corridor Width"
 horizontal_alignment = 1
 
 [node name="CorridorWidthSpinBox" type="SpinBox" parent="HBoxContainer/CorridorWidth"]
 layout_mode = 2
+mouse_filter = 2
+theme = SubResource("Theme_3wm2g")
 alignment = 1
-
-[node name="Apply" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "Apply Changes"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_top = 720.0
+offset_top = 710.0
 offset_right = 1200.0
-offset_bottom = 800.0
+offset_bottom = 790.0
 theme_override_constants/separation = 150
 alignment = 1
 
 [node name="GenerateNewMap" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
+theme = SubResource("Theme_3wm2g")
+theme_override_styles/focus = ExtResource("3_18ond")
+theme_override_styles/hover = ExtResource("3_18ond")
 text = "Generate New Map"
 
 [node name="GenerateNewTexture" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
+theme = SubResource("Theme_3wm2g")
+theme_override_styles/focus = ExtResource("3_18ond")
+theme_override_styles/hover = ExtResource("3_18ond")
 text = "Generate Map Texture"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 210.0
+offset_bottom = 800.0
+mouse_filter = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_3wm2g")
+text = "Focus Room:"
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Mouse" type="AnimatedSprite2D" parent="VBoxContainer/HBoxContainer/Control"]
+sprite_frames = SubResource("SpriteFrames_m2twi")
+animation = &"left_click"
+autoplay = "left_click"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+theme = SubResource("Theme_3wm2g")
+text = "Focus Next Room:"
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/HBoxContainer4/Control"]
+sprite_frames = SubResource("SpriteFrames_6u8yt")
+autoplay = "default"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme = SubResource("Theme_3wm2g")
+text = "CLose Focused room:"
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Escape" type="AnimatedSprite2D" parent="VBoxContainer/HBoxContainer3/Control"]
+position = Vector2(-5, 0)
+sprite_frames = SubResource("SpriteFrames_qcox3")
+autoplay = "default"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+theme = SubResource("Theme_3wm2g")
+text = "Zoom/UN-Zoom:"
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/HBoxContainer5/Control"]
+position = Vector2(15, 0)
+sprite_frames = SubResource("SpriteFrames_t3ct5")
+autoplay = "default"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = SubResource("Theme_3wm2g")
+text = "X-RAy thru texture:"
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Mouse" type="AnimatedSprite2D" parent="VBoxContainer/HBoxContainer2/Control"]
+sprite_frames = SubResource("SpriteFrames_m2twi")
+animation = &"right_click"
+autoplay = "right_click"
 
 [connection signal="pressed" from="HBoxContainer2/GenerateNewMap" to="." method="_on_generate_new_map_pressed"]
 [connection signal="pressed" from="HBoxContainer2/GenerateNewTexture" to="." method="_on_generate_new_texture_pressed"]
