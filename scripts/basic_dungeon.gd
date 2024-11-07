@@ -437,6 +437,8 @@ func apply_settings() -> void:
 	# Clear existing rooms and regenerate
 	for room in rooms.get_children():
 		room.queue_free()
+	for item in items.get_children():
+		item.queue_free()
 	path = null
 	walk.clear()
 	background.clear()
