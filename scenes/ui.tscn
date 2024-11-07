@@ -223,9 +223,9 @@ alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_top = 710.0
+offset_top = 690.0
 offset_right = 1200.0
-offset_bottom = 790.0
+offset_bottom = 770.0
 theme_override_constants/separation = 150
 alignment = 1
 
@@ -322,7 +322,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/HBoxContainer5/Control"]
+[node name="Space" type="AnimatedSprite2D" parent="VBoxContainer/HBoxContainer5/Control"]
 position = Vector2(15, 0)
 sprite_frames = SubResource("SpriteFrames_t3ct5")
 autoplay = "default"
@@ -345,6 +345,24 @@ size_flags_vertical = 4
 sprite_frames = SubResource("SpriteFrames_m2twi")
 animation = &"right_click"
 autoplay = "right_click"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 490.0
+offset_right = 219.0
+offset_bottom = 504.0
+theme = SubResource("Theme_3wm2g")
+theme_override_font_sizes/font_size = 16
+text = "camera follows mouse cursor on zoom"
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 460.0
+offset_top = 780.0
+offset_right = 727.0
+offset_bottom = 794.0
+theme = SubResource("Theme_3wm2g")
+theme_override_font_sizes/font_size = 16
+text = "Procedural Dungeon Generator by Arranged Godly"
 
 [connection signal="pressed" from="HBoxContainer2/GenerateNewMap" to="." method="_on_generate_new_map_pressed"]
 [connection signal="pressed" from="HBoxContainer2/GenerateNewTexture" to="." method="_on_generate_new_texture_pressed"]

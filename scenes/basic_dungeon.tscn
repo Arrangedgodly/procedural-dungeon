@@ -1,8 +1,7 @@
-[gd_scene load_steps=36 format=3 uid="uid://dt6fdiatgcv6k"]
+[gd_scene load_steps=34 format=3 uid="uid://dt6fdiatgcv6k"]
 
 [ext_resource type="Script" path="res://scripts/basic_dungeon.gd" id="1_2xh76"]
 [ext_resource type="Texture2D" uid="uid://do40mc2cm44gh" path="res://assets/tiles/1.png" id="2_5icwf"]
-[ext_resource type="Texture2D" uid="uid://bj78beynng02j" path="res://assets/tiles/black_square.png" id="2_14v5t"]
 [ext_resource type="PackedScene" uid="uid://dlsj5v0j7urbv" path="res://scenes/ui.tscn" id="2_x8pav"]
 [ext_resource type="Texture2D" uid="uid://coppuqsrh7rhf" path="res://assets/tiles/2.png" id="3_id5ve"]
 [ext_resource type="Texture2D" uid="uid://uggjvhqpqaaa" path="res://assets/tiles/10.png" id="3_pav0p"]
@@ -17,14 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://o1krnylo3fjm" path="res://assets/tiles/12.png" id="13_wj0ec"]
 [ext_resource type="Texture2D" uid="uid://cjc5dtniph420" path="res://assets/tiles/13.png" id="14_2tctg"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eaxe5"]
-texture = ExtResource("2_14v5t")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-
 [sub_resource type="TileSet" id="TileSet_k1rmi"]
 tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_eaxe5")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s8kpt"]
 texture = ExtResource("10_g4kbu")

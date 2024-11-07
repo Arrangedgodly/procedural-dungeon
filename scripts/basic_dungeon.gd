@@ -21,6 +21,8 @@ var path: AStar2D
 var current_focused_room: Node = null
 var is_generating: bool = false
 var has_texture: bool = false
+var active_chunks = {}
+var target_zoom := Vector2.ONE
 var camera_state = CameraState.OVERVIEW
 
 enum CameraState {
@@ -39,6 +41,13 @@ const DIRECTIONS = [
 	Vector2i(-1, 0), #West
 	Vector2i(-1, -1) #Northwest
 ]
+const CHUNK_SIZE = 64
+const ZOOM_DURATION := 0.5
+const MIN_ZOOM := 0.01
+const MAX_ZOOM := .5
+const OVERVIEW_ZOOM_MULTIPLIER := 1.0
+const FOLLOW_MOUSE_ZOOM_MULTIPLIER := 5.0
+const FOCUSED_ROOM_ZOOM_MULTIPLIER := 3.0
 
 func _ready() -> void:
 	randomize()
@@ -120,42 +129,74 @@ func make_map():
 	walk.clear()
 	background.clear()
 	walls.clear()
-	# First pass: Set Background Cells
+	active_chunks.clear()
+	
+	# First pass: Calculate total bounds and identify active chunks
 	var full_rect = Rect2()
 	for room in rooms.get_children():
 		var rect = Rect2(room.position - room.size, room.get_node("CollisionShape2D").shape.extents * 2)
 		full_rect = full_rect.merge(rect)
-	var top_left = walk.local_to_map(full_rect.position)
-	var bottom_right = walk.local_to_map(full_rect.end)
-	for x in range(top_left.x, bottom_right.x):
-		for y in range(top_left.y, bottom_right.y):
-			set_background_cell(Vector2i(x, y))
+		
+		# Mark chunks containing this room as active
+		var top_left = walk.local_to_map(rect.position)
+		var bottom_right = walk.local_to_map(rect.end)
+		for x in range(get_chunk_coord(top_left).x, get_chunk_coord(bottom_right).x + 1):
+			for y in range(get_chunk_coord(top_left).y, get_chunk_coord(bottom_right).y + 1):
+				active_chunks[Vector2i(x, y)] = true
 	
-	#Second pass: Set Room Cells
-	var corridors = []
-	for room in rooms.get_children():
-		var size = (room.size / tile_size).floor()
-		var pos = walk.local_to_map(room.position)
-		var upper_left = (room.position / tile_size).floor() - size
+	# Process chunks in batches
+	var processed = 0
+	var total_chunks = active_chunks.size()
+	
+	for chunk_coord in active_chunks:
+		var chunk_bounds = get_chunk_bounds(chunk_coord)
+		generate_chunk(chunk_bounds)
 		
-		#Set Room Interior Cells
-		for x in range(2, size.x * 2 - 1):
-			for y in range(2, size.y * 2 - 1):
-				set_walkable_cell(Vector2i(upper_left.x + x, upper_left.y + y))
-		
-		#Draw Room Outlines
-		draw_room_outline(upper_left, size)
-		
-		#Connect Rooms with Corridors
-		var point = path.get_closest_point(Vector2(room.position.x, room.position.y))
-		for connection in path.get_point_connections(point):
-			if connection not in corridors:
-				var start = walk.local_to_map(Vector2(path.get_point_position(point).x, path.get_point_position(point).y))
-				var end = walk.local_to_map(Vector2(path.get_point_position(connection).x, path.get_point_position(connection).y))
-				carve_path(start, end)
-		corridors.append(point)
+		processed += 1
+		if processed % 10 == 0:  # Process in batches of 10 chunks
+			await get_tree().process_frame  # Yield to prevent freezing
 
-func carve_path(pos1, pos2):
+	# Generate corridors in batches
+	var corridors = []
+	var rooms_processed = 0
+	
+	for room in rooms.get_children():
+		generate_room_and_corridors(room, corridors)
+		
+		rooms_processed += 1
+		if rooms_processed % 5 == 0:  # Process in batches of 5 rooms
+			await get_tree().process_frame
+
+func generate_chunk(bounds: Rect2i) -> void:
+	# Generate background tiles for chunk
+	for x in range(bounds.position.x, bounds.position.x + bounds.size.x):
+		for y in range(bounds.position.y, bounds.position.y + bounds.size.y):
+			set_background_cell(Vector2i(x, y))
+
+func generate_room_and_corridors(room: Node, corridors: Array) -> void:
+	var size = (room.size / tile_size).floor()
+	var pos = walk.local_to_map(room.position)
+	var upper_left = (room.position / tile_size).floor() - size
+	
+	# Set room interior cells
+	for x in range(2, size.x * 2 - 1):
+		for y in range(2, size.y * 2 - 1):
+			set_walkable_cell(Vector2i(upper_left.x + x, upper_left.y + y))
+	
+	# Draw room outline
+	draw_room_outline(upper_left, size)
+	
+	# Generate corridors
+	var point = path.get_closest_point(Vector2(room.position.x, room.position.y))
+	for connection in path.get_point_connections(point):
+		if connection not in corridors:
+			var start = walk.local_to_map(Vector2(path.get_point_position(point).x, path.get_point_position(point).y))
+			var end = walk.local_to_map(Vector2(path.get_point_position(connection).x, path.get_point_position(connection).y))
+			carve_path(start, end)
+	corridors.append(point)
+
+# Modified carve_path to be more efficient
+func carve_path(pos1: Vector2i, pos2: Vector2i) -> void:
 	var x_diff = sign(pos2.x - pos1.x)
 	var y_diff = sign(pos2.y - pos1.y)
 	if x_diff == 0: x_diff = 1
@@ -163,16 +204,50 @@ func carve_path(pos1, pos2):
 	
 	var corridor_cells = []
 	var current = pos1
+	var batch_size = 5  # Process corridors in smaller batches
+	var cells_in_batch = []
 	
+	# Generate corridor cells in batches
 	while current.x != pos2.x:
-		carve_wide_corridor_segment(current, Vector2i(1, 0), corridor_cells)
+		cells_in_batch.append_array(get_corridor_segment_cells(current, Vector2i(1, 0)))
 		current.x += x_diff
-	while current.y != pos2.y:
-		carve_wide_corridor_segment(current, Vector2i(0, 1), corridor_cells)
-		current.y += y_diff
-	carve_wide_corridor_segment(pos2, Vector2i(0, 1), corridor_cells)
+		
+		if cells_in_batch.size() >= batch_size:
+			process_corridor_batch(cells_in_batch)
+			cells_in_batch.clear()
 	
-	add_corridor_walls(corridor_cells)
+	while current.y != pos2.y:
+		cells_in_batch.append_array(get_corridor_segment_cells(current, Vector2i(0, 1)))
+		current.y += y_diff
+		
+		if cells_in_batch.size() >= batch_size:
+			process_corridor_batch(cells_in_batch)
+			cells_in_batch.clear()
+	
+	# Process any remaining cells
+	if cells_in_batch.size() > 0:
+		process_corridor_batch(cells_in_batch)
+
+func get_corridor_segment_cells(center: Vector2i, direction: Vector2i) -> Array:
+	var cells = []
+	var half_width = dungeon_size.corridor_width / 2
+	var perpendicular = Vector2i(-direction.y, direction.x)
+	var start_pos = center - (perpendicular * int(half_width))
+	
+	for i in range(dungeon_size.corridor_width):
+		cells.append(start_pos + (perpendicular * i))
+	
+	return cells
+
+func process_corridor_batch(cells: Array) -> void:
+	for cell in cells:
+		set_walkable_cell(cell)
+		
+		# Add walls around corridor cells
+		for dir in DIRECTIONS:
+			var check_pos = cell + dir
+			if not is_walkable_tile(check_pos):
+				set_wall_cell(check_pos)
 
 func carve_wide_corridor_segment(center: Vector2i, direction: Vector2i, corridor_cells: Array):
 	var half_width = dungeon_size.corridor_width / 2
@@ -201,7 +276,6 @@ func is_walkable_tile(pos: Vector2i):
 	return walk.get_cell_source_id(pos) != -1
 	
 func set_walkable_cell(pos: Vector2i):
-	walk.tile_map_data
 	walk.set_cell(pos, randi_range(0, 7), Vector2(0, 0), 0)
 
 func set_background_cell(pos: Vector2i):
@@ -235,6 +309,16 @@ func focus_on_room(room: Node) -> void:
 	current_focused_room = room
 	current_focused_room.set_focused(true)
 	camera_state = CameraState.FOCUSED_ON_ROOM
+	
+	var room_size = max(room.size.x, room.size.y)
+	var viewport_size = get_viewport_rect().size
+	var zoom_level = viewport_size.x / (room_size * 4)  # 4 is a factor to ensure room fits
+	var new_zoom = Vector2.ONE * zoom_level * FOCUSED_ROOM_ZOOM_MULTIPLIER
+	
+	var tween = create_tween()
+	tween.set_parallel(true)  # Allow position and zoom to animate simultaneously
+	tween.tween_property(camera, "position", room.position, ZOOM_DURATION)
+	set_camera_zoom(new_zoom)
 
 func focus_next_room() -> void:
 	if not current_focused_room or rooms.get_child_count() == 0:
@@ -258,6 +342,9 @@ func toggle_mouse_follow() -> void:
 		reset_camera_to_overview()
 	else:
 		camera_state = CameraState.FOLLOWING_MOUSE
+		var current_zoom = camera.zoom.x
+		var new_zoom = Vector2.ONE * (current_zoom * FOLLOW_MOUSE_ZOOM_MULTIPLIER)
+		set_camera_zoom(new_zoom)
 
 func reset_camera_to_overview() -> void:
 	camera_state = CameraState.OVERVIEW
@@ -273,14 +360,12 @@ func fit_camera_to_rooms() -> void:
 	if rooms.get_child_count() == 0:
 		return
 		
+	# Calculate bounds of all rooms
 	var bounds = Rect2()
 	var first_room = true
 	
 	for room in rooms.get_children():
-		var room_rect = Rect2(
-			room.position - room.size,
-			room.size * 2
-		)
+		var room_rect = Rect2(room.position - room.size, room.size * 2)
 		
 		if first_room:
 			bounds = room_rect
@@ -292,9 +377,51 @@ func fit_camera_to_rooms() -> void:
 	var padding = bounds.size * 0.1
 	bounds = bounds.grow(padding.x)
 	
-	# Update camera initial position and bounds
+	# Get the viewport size
+	var viewport_size = get_viewport_rect().size
+	
+	# Calculate the zoom level needed to fit the entire dungeon
+	var zoom_x = viewport_size.x / bounds.size.x
+	var zoom_y = viewport_size.y / bounds.size.y
+	
+	# Use the smaller zoom value to ensure everything fits
+	var zoom_level = min(zoom_x, zoom_y)
+	zoom_level *= 0.9
+	
+	var new_zoom = Vector2.ONE
+	match camera_state:
+		CameraState.OVERVIEW:
+			new_zoom = Vector2(zoom_level, zoom_level) * OVERVIEW_ZOOM_MULTIPLIER
+		CameraState.FOLLOWING_MOUSE:
+			new_zoom = Vector2(zoom_level, zoom_level) * FOLLOW_MOUSE_ZOOM_MULTIPLIER
+		CameraState.FOCUSED_ON_ROOM:
+			new_zoom = Vector2(zoom_level, zoom_level) * FOCUSED_ROOM_ZOOM_MULTIPLIER
+	
+	# Update camera position and zoom
 	camera_init_pos = bounds.get_center()
 	camera.position = camera_init_pos
+	set_camera_zoom(new_zoom)
+	
+	match camera_state:
+		CameraState.OVERVIEW:
+			camera.zoom = Vector2(zoom_level, zoom_level)
+		CameraState.FOLLOWING_MOUSE:
+			camera.zoom = Vector2(0.25, 0.25)
+		CameraState.FOCUSED_ON_ROOM:
+			camera.zoom = Vector2(0.5, 0.5)
+
+func set_camera_zoom(new_zoom: Vector2, duration: float = ZOOM_DURATION) -> void:
+	# Clamp the zoom values
+	new_zoom.x = clamp(new_zoom.x, MIN_ZOOM, MAX_ZOOM)
+	new_zoom.y = clamp(new_zoom.y, MIN_ZOOM, MAX_ZOOM)
+	
+	target_zoom = new_zoom
+	
+	# Create and configure the tween
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(camera, "zoom", new_zoom, duration)
 
 func apply_settings() -> void:
 	if not dungeon_size:
@@ -332,14 +459,11 @@ func _process(_delta: float) -> void:
 	match camera_state:
 		CameraState.FOLLOWING_MOUSE:
 			camera.position = get_global_mouse_position()
-			camera.zoom = Vector2(0.25, 0.25)
 		CameraState.FOCUSED_ON_ROOM:
 			if current_focused_room:
 				camera.position = current_focused_room.position
-				camera.zoom = Vector2(0.5, 0.5)
 		CameraState.OVERVIEW:
 			camera.position = camera_init_pos
-			camera.zoom = Vector2(0.05, 0.05)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):  # Escape key
@@ -359,7 +483,16 @@ func _on_ui_trigger_generate_layers() -> void:
 	make_map()
 	texture_generated.emit()
 
-
 func _on_ui_trigger_generate_map() -> void:
 	map_generation_started.emit()
 	apply_settings()
+
+func get_chunk_coord(tile_pos: Vector2i) -> Vector2i:
+	return Vector2i(
+		floor(float(tile_pos.x) / CHUNK_SIZE),
+		floor(float(tile_pos.y) / CHUNK_SIZE)
+	)
+
+func get_chunk_bounds(chunk_coord: Vector2i) -> Rect2i:
+	var start = chunk_coord * CHUNK_SIZE
+	return Rect2i(start, Vector2i(CHUNK_SIZE, CHUNK_SIZE))

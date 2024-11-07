@@ -12,6 +12,12 @@ signal trigger_generate_layers
 
 var dungeon_size: DungeonSize
 
+func _ready() -> void:
+	generate_new_map.disabled = false
+	generate_new_map.focus_mode = Control.FOCUS_CLICK
+	generate_new_texture.disabled = false
+	generate_new_texture.focus_mode = Control.FOCUS_CLICK
+
 func setup_ui() -> void:
 	var constraints = DungeonSize.PROPERTY_CONSTRAINTS
 	
@@ -79,8 +85,8 @@ func set_dungeon_size(new_dungeon_size: DungeonSize) -> void:
 
 func _on_generate_new_map_pressed() -> void:
 	trigger_generate_map.emit()
-	generate_new_texture.disabled = false
-	generate_new_texture.focus_mode = Control.FOCUS_CLICK
+	generate_new_texture.disabled = true
+	generate_new_texture.focus_mode = Control.FOCUS_NONE
 
 func _on_generate_new_texture_pressed() -> void:
 	trigger_generate_layers.emit()
@@ -88,6 +94,8 @@ func _on_generate_new_texture_pressed() -> void:
 func _on_basic_dungeon_map_generation_finished() -> void:
 	generate_new_map.disabled = false
 	generate_new_map.focus_mode = Control.FOCUS_CLICK
+	generate_new_texture.disabled = false
+	generate_new_texture.focus_mode = Control.FOCUS_CLICK
 
 func _on_basic_dungeon_map_generation_started() -> void:
 	generate_new_map.disabled = true

@@ -25,7 +25,9 @@ func _draw() -> void:
 	if $CollisionShape2D.shape:
 		var collision_rect = Rect2(-$CollisionShape2D.shape.size/2, $CollisionShape2D.shape.size)
 		var color = Color.GREEN if is_highlighted else Color.TRANSPARENT
-		draw_rect(collision_rect, color, true, 15.0)
+		if color == Color.GREEN:
+			color.a = .2
+		draw_rect(collision_rect, color, true, -1.0, false)
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
