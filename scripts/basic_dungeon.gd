@@ -14,6 +14,7 @@ var dungeon_size: DungeonSize
 @export var walls: TileMapLayer
 @export var camera: Camera2D
 @export var ui: Control
+@export var items: Node2D
 
 var camera_init_pos: Vector2
 var tile_size = 32
@@ -42,12 +43,16 @@ const DIRECTIONS = [
 	Vector2i(-1, -1) #Northwest
 ]
 const CHUNK_SIZE = 64
-const ZOOM_DURATION := 0.5
+const ZOOM_DURATION := 0.8
 const MIN_ZOOM := 0.01
-const MAX_ZOOM := .5
+const MAX_ZOOM := .75
 const OVERVIEW_ZOOM_MULTIPLIER := 1.0
 const FOLLOW_MOUSE_ZOOM_MULTIPLIER := 5.0
-const FOCUSED_ROOM_ZOOM_MULTIPLIER := 3.0
+const FOCUSED_ROOM_ZOOM_MULTIPLIER := 1.25
+const MIN_ITEMS_PER_ROOM := 1
+const MAX_ITEMS_PER_ROOM := 5
+const ITEMS_BATCH_SIZE := 10
+const MIN_EDGE_PADDING := 32.0
 
 func _ready() -> void:
 	randomize()
@@ -166,6 +171,8 @@ func make_map():
 		rooms_processed += 1
 		if rooms_processed % 5 == 0:  # Process in batches of 5 rooms
 			await get_tree().process_frame
+			
+	await distribute_items()
 
 func generate_chunk(bounds: Rect2i) -> void:
 	# Generate background tiles for chunk
@@ -496,3 +503,65 @@ func get_chunk_coord(tile_pos: Vector2i) -> Vector2i:
 func get_chunk_bounds(chunk_coord: Vector2i) -> Rect2i:
 	var start = chunk_coord * CHUNK_SIZE
 	return Rect2i(start, Vector2i(CHUNK_SIZE, CHUNK_SIZE))
+
+func calculate_items_per_room(room_size: Vector2) -> int:
+	var area = room_size.x * room_size.y
+	var min_area = INF
+	var max_area = 0.0
+	
+	for room in rooms.get_children():
+		var room_area = room.size.x * room.size.y
+		min_area = min(min_area, room_area)
+		max_area = max(max_area, room_area)
+	
+	var normalized_area = inverse_lerp(min_area, max_area, area)
+	
+	return round(lerp(MIN_ITEMS_PER_ROOM, MAX_ITEMS_PER_ROOM, normalized_area))
+
+func get_valid_pos_in_room(room: Node) -> Vector2:
+	var half_size = room.size
+	var room_rect = Rect2(
+		room.position - half_size + Vector2(MIN_EDGE_PADDING, MIN_EDGE_PADDING),
+		half_size * 2 - Vector2(MIN_EDGE_PADDING * 2, MIN_EDGE_PADDING * 2)
+		)
+	var position = Vector2(
+		randf_range(room_rect.position.x, room_rect.position.x + room_rect.size.x),
+		randf_range(room_rect.position.y, room_rect.position.y + room_rect.size.y)
+		)
+		
+	return position
+
+func distribute_items() -> void:
+	for item in items.get_children():
+		item.queue_free()
+		
+	var rooms_to_process = rooms.get_children()
+	var current_batch = []
+	var items_placed = 0
+	
+	while rooms_to_process:
+		var room = rooms_to_process.pop_front()
+		var num_items = calculate_items_per_room(room.size)
+		
+		for i in range(num_items):
+			current_batch.append({
+				"room": room,
+				"position": get_valid_pos_in_room(room)
+			})
+			
+			if current_batch.size() >= ITEMS_BATCH_SIZE:
+				await process_item_batch(current_batch)
+				current_batch.clear()
+				items_placed += ITEMS_BATCH_SIZE
+		
+	if current_batch:
+		await process_item_batch(current_batch)
+
+func process_item_batch(batch: Array) -> void:
+	for item_data in batch:
+		var item = ItemManager.instantiate_random_item()
+		if item:
+			items.add_child(item)
+			item.position = item_data.position
+		
+	await get_tree().process_frame

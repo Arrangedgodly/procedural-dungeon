@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgqd8jsu8nt2w"]
+
+[ext_resource type="Script" path="res://scripts/item.gd" id="1_rf4tj"]
+[ext_resource type="Texture2D" uid="uid://cvjjtb2mtkqbg" path="res://assets/items/dice.png" id="2_vbr43"]
+
+[node name="Dice" type="StaticBody2D"]
+script = ExtResource("1_rf4tj")
+sprite_texture = ExtResource("2_vbr43")

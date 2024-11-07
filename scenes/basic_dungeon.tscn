@@ -117,7 +117,7 @@ sources/7 = SubResource("TileSetAtlasSource_d26tg")
 pattern_0 = SubResource("TileMapPattern_c3xt6")
 pattern_1 = SubResource("TileMapPattern_x4edk")
 
-[node name="BasicDungeon" type="Node2D" node_paths=PackedStringArray("rooms", "tiles", "walk", "background", "walls", "camera", "ui")]
+[node name="BasicDungeon" type="Node2D" node_paths=PackedStringArray("rooms", "tiles", "walk", "background", "walls", "camera", "ui", "items")]
 script = ExtResource("1_2xh76")
 rooms = NodePath("Rooms")
 tiles = NodePath("Tiles")
@@ -126,6 +126,7 @@ background = NodePath("Tiles/Background")
 walls = NodePath("Tiles/Walls")
 camera = NodePath("Camera")
 ui = NodePath("CanvasLayer/UI")
+items = NodePath("Items")
 
 [node name="Rooms" type="Node" parent="."]
 
@@ -144,6 +145,8 @@ tile_set = SubResource("TileSet_t2vpk")
 
 [node name="Walk" type="TileMapLayer" parent="Tiles"]
 tile_set = SubResource("TileSet_u53nq")
+
+[node name="Items" type="Node2D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
