@@ -8,7 +8,6 @@ func _ready() -> void:
 	self.hide()
 
 func _on_basic_dungeon_generation_phase_changed(phase: String) -> void:
-	print(phase)
 	self.show()
 	resource.text = phase
 	resource.position.x = -(resource.size.x / 2)

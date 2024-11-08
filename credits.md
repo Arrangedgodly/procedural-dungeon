@@ -14,8 +14,4 @@ Created with Godot Engine
 - Pixel Keyboard UI Pack: Oworowo
 	* https://oworowo.itch.io/keyboard-keys-asset-pack
 
-## Tutorials
-
-## Special Thanks
-
 ## Thank you for playing!
