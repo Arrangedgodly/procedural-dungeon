@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dt6fdiatgcv6k"]
+[gd_scene load_steps=35 format=3 uid="uid://dt6fdiatgcv6k"]
 
 [ext_resource type="Script" path="res://scripts/basic_dungeon.gd" id="1_2xh76"]
 [ext_resource type="Texture2D" uid="uid://do40mc2cm44gh" path="res://assets/tiles/1.png" id="2_5icwf"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bnehnaqi5sdpr" path="res://assets/tiles/11.png" id="12_ltodl"]
 [ext_resource type="Texture2D" uid="uid://o1krnylo3fjm" path="res://assets/tiles/12.png" id="13_wj0ec"]
 [ext_resource type="Texture2D" uid="uid://cjc5dtniph420" path="res://assets/tiles/13.png" id="14_2tctg"]
+[ext_resource type="PackedScene" uid="uid://dw0soukv5xxhc" path="res://scenes/loading.tscn" id="16_cklyq"]
 
 [sub_resource type="TileSet" id="TileSet_k1rmi"]
 tile_size = Vector2i(32, 32)
@@ -152,6 +153,14 @@ tile_set = SubResource("TileSet_u53nq")
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("2_x8pav")]
 
+[node name="Loading" parent="CanvasLayer" instance=ExtResource("16_cklyq")]
+offset_left = 600.0
+offset_top = 400.0
+offset_right = 640.0
+offset_bottom = 440.0
+
+[connection signal="generation_phase_changed" from="." to="CanvasLayer/Loading" method="_on_basic_dungeon_generation_phase_changed"]
+[connection signal="generation_progress_updated" from="." to="CanvasLayer/Loading" method="_on_basic_dungeon_generation_progress_updated"]
 [connection signal="map_generation_finished" from="." to="CanvasLayer/UI" method="_on_basic_dungeon_map_generation_finished"]
 [connection signal="map_generation_started" from="." to="CanvasLayer/UI" method="_on_basic_dungeon_map_generation_started"]
 [connection signal="texture_generated" from="." to="CanvasLayer/UI" method="_on_basic_dungeon_texture_generated"]

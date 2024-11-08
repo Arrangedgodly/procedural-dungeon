@@ -1,0 +1,110 @@
+[gd_scene load_steps=19 format=3 uid="uid://brvr10kdv6uhc"]
+
+[ext_resource type="Script" path="res://resources/mimic.gd" id="1_ntc65"]
+[ext_resource type="Texture2D" uid="uid://eabeub7qagr4" path="res://assets/items/mimics/Backpack Mimic 1.png" id="2_gxklv"]
+[ext_resource type="Texture2D" uid="uid://b7k4luvf2c5qp" path="res://assets/items/mimics/Backpack Mimic Dead.png" id="3_bxprf"]
+[ext_resource type="Texture2D" uid="uid://cttyfevvdj41n" path="res://assets/items/mimics/Backpack Closed.png" id="4_qjcun"]
+[ext_resource type="Texture2D" uid="uid://c3gkexagtcad8" path="res://assets/items/mimics/Backpack Mimic 2.png" id="5_0vooo"]
+[ext_resource type="Texture2D" uid="uid://dbjn07nghgcrv" path="res://assets/items/mimics/Backpack Mimic 3.png" id="6_00e4l"]
+[ext_resource type="Texture2D" uid="uid://cuyjghhhe301m" path="res://assets/items/mimics/Backpack Open.png" id="7_0t87y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xf4u8"]
+atlas = ExtResource("2_gxklv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8oogm"]
+atlas = ExtResource("3_bxprf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lhbj"]
+atlas = ExtResource("4_qjcun")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ax8o"]
+atlas = ExtResource("2_gxklv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbu65"]
+atlas = ExtResource("2_gxklv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_007ca"]
+atlas = ExtResource("5_0vooo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18if5"]
+atlas = ExtResource("6_00e4l")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hocb"]
+atlas = ExtResource("4_qjcun")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqkn1"]
+atlas = ExtResource("7_0t87y")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2kyqy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xf4u8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8oogm")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lhbj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ax8o")
+}],
+"loop": false,
+"name": &"mimic",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbu65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_007ca")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18if5")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hocb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqkn1")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2l0mk"]
+size = Vector2(32, 32)
+
+[node name="Backpack" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "collision_shape")]
+script = ExtResource("1_ntc65")
+animated_sprite = NodePath("AnimatedSprite2D")
+collision_shape = NodePath("CollisionShape2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2kyqy")
+animation = &"open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2l0mk")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cj4evfpp0gh0q"]
 
-[ext_resource type="Script" path="res://scripts/item.gd" id="1_wk7bf"]
+[ext_resource type="Script" path="res://resources/item.gd" id="1_wk7bf"]
 [ext_resource type="Texture2D" uid="uid://3pac8wdtksu8" path="res://assets/items/telescope.png" id="2_rgh2o"]
 
 [node name="Telescope" type="StaticBody2D"]

@@ -3,6 +3,8 @@ class_name RoomGenerator
 signal texture_generated
 signal map_generation_started
 signal map_generation_finished
+signal generation_progress_updated(phase: String, progress: float)
+signal generation_phase_changed(phase: String)
 
 var Room = preload("res://scenes/room.tscn")
 
@@ -25,6 +27,9 @@ var has_texture: bool = false
 var active_chunks = {}
 var target_zoom := Vector2.ONE
 var camera_state = CameraState.OVERVIEW
+var current_phase: String = ""
+var items_to_process: int = 0
+var items_processed: int = 0
 
 enum CameraState {
 	OVERVIEW,
@@ -42,6 +47,14 @@ const DIRECTIONS = [
 	Vector2i(-1, 0), #West
 	Vector2i(-1, -1) #Northwest
 ]
+const PHASES = {
+	"ROOMS": "Generating Rooms",
+	"SETTLING": "Settling Room Positions",
+	"CHUNKS": "Generating Map Chunks",
+	"TEXTURES": "Placing Tile Textures",
+	"ITEMS": "Spawning Items"
+}
+const ROOM_BATCH_SIZE = 20
 const CHUNK_SIZE = 64
 const ZOOM_DURATION := 0.8
 const MIN_ZOOM := 0.01
@@ -49,10 +62,10 @@ const MAX_ZOOM := .75
 const OVERVIEW_ZOOM_MULTIPLIER := 1.0
 const FOLLOW_MOUSE_ZOOM_MULTIPLIER := 5.0
 const FOCUSED_ROOM_ZOOM_MULTIPLIER := 1.25
-const MIN_ITEMS_PER_ROOM := 1
-const MAX_ITEMS_PER_ROOM := 5
-const ITEMS_BATCH_SIZE := 10
-const MIN_EDGE_PADDING := 32.0
+const MIN_ITEMS_PER_ROOM := 0
+const MAX_ITEMS_PER_ROOM := 2
+const ITEMS_BATCH_SIZE := 5
+const MIN_EDGE_PADDING := 512.0
 
 func _ready() -> void:
 	randomize()
@@ -67,17 +80,96 @@ func setup_camera() -> void:
 	fit_camera_to_rooms()
 	
 func make_rooms() -> void:
-	for i in range(dungeon_size.rooms_generated):
-		var width = dungeon_size.min_size + randi() % (dungeon_size.max_size - dungeon_size.min_size)
-		var height = dungeon_size.min_size + randi() % (dungeon_size.max_size - dungeon_size.min_size)
-		var pos = Vector2(randi_range(-dungeon_size.horizontal_spread, dungeon_size.horizontal_spread), 0)
+	set_phase("ROOMS")
+	items_to_process = dungeon_size.rooms_generated
+	items_processed = 0
+	
+	var rooms_remaining = dungeon_size.rooms_generated
+	var current_batch = []
+	
+	while rooms_remaining > 0:
+		var batch_size = mini(ROOM_BATCH_SIZE, rooms_remaining)
+		current_batch.clear()
 		
+		# Prepare batch of room data
+		for i in range(batch_size):
+			var width = dungeon_size.min_size + randi() % (dungeon_size.max_size - dungeon_size.min_size)
+			var height = dungeon_size.min_size + randi() % (dungeon_size.max_size - dungeon_size.min_size)
+			var pos = Vector2(randi_range(-dungeon_size.horizontal_spread, dungeon_size.horizontal_spread), 0)
+			
+			current_batch.append({
+				"width": width,
+				"height": height,
+				"position": pos
+			})
+		
+		# Process the batch
+		await process_room_batch(current_batch)
+		rooms_remaining -= batch_size
+		await get_tree().process_frame
+
+func process_room_batch(batch: Array) -> void:
+	for room_data in batch:
 		var room_instance = Room.instantiate()
 		rooms.add_child(room_instance)
-		room_instance.make_room(pos, Vector2(width, height) * tile_size)
-		
-		# Make room clickable
+		room_instance.make_room(
+			room_data.position, 
+			Vector2(room_data.width, room_data.height) * tile_size
+		)
 		room_instance.room_clicked.connect(_on_room_clicked)
+		
+		items_processed += 1
+		update_progress()
+
+func wait_for_rooms_to_settle() -> void:
+	set_phase("SETTLING")
+	items_to_process = 100  # Using percentage for progress
+	items_processed = 0
+	
+	var stable_frames = 0
+	var required_stable_frames = 30  # Number of frames rooms need to be stable
+	var max_settling_time = 5.0  # Maximum time to wait in seconds
+	var settling_timer = 0.0
+	
+	while stable_frames < required_stable_frames and settling_timer < max_settling_time:
+		var all_rooms_stable = true
+		var total_velocity = 0.0
+		var room_count = rooms.get_child_count()
+		
+		if room_count == 0:
+			break
+			
+		for room in rooms.get_children():
+			var rigid_body = room as RigidBody2D
+			if rigid_body:
+				var velocity_length = rigid_body.linear_velocity.length()
+				if velocity_length > 1.0:  # Adjust this threshold as needed
+					all_rooms_stable = false
+				total_velocity += velocity_length
+		
+		# Calculate progress based on average velocity
+		var avg_velocity = total_velocity / room_count
+		var max_expected_velocity = 1000.0  # Adjust based on your physics settings
+		var stability_progress = clamp(
+			100 - ((avg_velocity / max_expected_velocity) * 100),
+			0,
+			100
+		)
+		
+		items_processed = stability_progress
+		update_progress()
+		
+		if all_rooms_stable:
+			stable_frames += 1
+		else:
+			stable_frames = 0
+			
+		settling_timer += get_physics_process_delta_time()
+		await get_tree().physics_frame
+	
+	# Ensure we show 100% progress when done
+	items_processed = 100
+	update_progress()
 
 func cull_rooms():
 	var room_positions = []
@@ -124,8 +216,8 @@ func find_mst(nodes):
 	return path
 
 func create_layout():
-	make_rooms()
-	await get_tree().create_timer(1.0).timeout
+	await make_rooms()
+	await wait_for_rooms_to_settle()
 	cull_rooms()
 	fit_camera_to_rooms()
 	map_generation_finished.emit()
@@ -150,26 +242,32 @@ func make_map():
 				active_chunks[Vector2i(x, y)] = true
 	
 	# Process chunks in batches
-	var processed = 0
-	var total_chunks = active_chunks.size()
+	set_phase("CHUNKS")
+	items_processed = 0
+	items_to_process = active_chunks.size()
 	
 	for chunk_coord in active_chunks:
 		var chunk_bounds = get_chunk_bounds(chunk_coord)
 		generate_chunk(chunk_bounds)
 		
-		processed += 1
-		if processed % 10 == 0:  # Process in batches of 10 chunks
+		items_processed += 1
+		update_progress()
+		if items_processed % 10 == 0:  # Process in batches of 10 chunks
 			await get_tree().process_frame  # Yield to prevent freezing
 
 	# Generate corridors in batches
+	set_phase("TEXTURES")
 	var corridors = []
-	var rooms_processed = 0
+	items_to_process = rooms.get_child_count()
+	items_processed = 0
 	
 	for room in rooms.get_children():
 		generate_room_and_corridors(room, corridors)
 		
-		rooms_processed += 1
-		if rooms_processed % 5 == 0:  # Process in batches of 5 rooms
+		items_processed += 1
+		update_progress()
+		
+		if items_processed % 5 == 0:  # Process in batches of 5 rooms
 			await get_tree().process_frame
 			
 	await distribute_items()
@@ -526,23 +624,31 @@ func get_valid_pos_in_room(room: Node) -> Vector2:
 		room.position - half_size + Vector2(MIN_EDGE_PADDING, MIN_EDGE_PADDING),
 		half_size * 2 - Vector2(MIN_EDGE_PADDING * 2, MIN_EDGE_PADDING * 2)
 		)
-	var position = Vector2(
+	var pos = Vector2(
 		randf_range(room_rect.position.x, room_rect.position.x + room_rect.size.x),
 		randf_range(room_rect.position.y, room_rect.position.y + room_rect.size.y)
 		)
 		
-	return position
+	return pos
 
 func distribute_items() -> void:
+	set_phase("ITEMS")
+	
 	for item in items.get_children():
 		item.queue_free()
-		
-	var rooms_to_process = rooms.get_children()
-	var current_batch = []
-	var items_placed = 0
 	
-	while rooms_to_process:
-		var room = rooms_to_process.pop_front()
+	var rooms_to_process = rooms.get_children()
+	var total_items = 0
+	
+	# First pass to calculate total items
+	for room in rooms_to_process:
+		total_items += calculate_items_per_room(room.size)
+	
+	items_to_process = total_items
+	items_processed = 0
+	var current_batch = []
+	
+	for room in rooms_to_process:
 		var num_items = calculate_items_per_room(room.size)
 		
 		for i in range(num_items):
@@ -553,17 +659,30 @@ func distribute_items() -> void:
 			
 			if current_batch.size() >= ITEMS_BATCH_SIZE:
 				await process_item_batch(current_batch)
+				items_processed += current_batch.size()
+				update_progress()
 				current_batch.clear()
-				items_placed += ITEMS_BATCH_SIZE
-		
+				await get_tree().process_frame
+	
 	if current_batch:
 		await process_item_batch(current_batch)
+		items_processed += current_batch.size()
+		update_progress()
 
 func process_item_batch(batch: Array) -> void:
 	for item_data in batch:
-		var item = ItemManager.instantiate_random_item()
+		var item = MimicManager.instantiate_random_mimic()
 		if item:
 			items.add_child(item)
 			item.position = item_data.position
 		
 	await get_tree().process_frame
+
+func set_phase(phase: String) -> void:
+	current_phase = phase
+	items_processed = 0
+	generation_phase_changed.emit(PHASES[phase])
+
+func update_progress() -> void:
+	var progress = float(items_processed) / float(items_to_process) * 100
+	generation_progress_updated.emit(PHASES[current_phase], progress)

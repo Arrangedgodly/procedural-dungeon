@@ -9,6 +9,7 @@ signal trigger_generate_layers
 @onready var corridor_width_spin_box: SpinBox = $HBoxContainer/CorridorWidth/CorridorWidthSpinBox
 @onready var generate_new_map: Button = $HBoxContainer2/GenerateNewMap
 @onready var generate_new_texture: Button = $HBoxContainer2/GenerateNewTexture
+@onready var play: Button = $HBoxContainer2/Play
 
 var dungeon_size: DungeonSize
 
@@ -17,6 +18,8 @@ func _ready() -> void:
 	generate_new_map.focus_mode = Control.FOCUS_CLICK
 	generate_new_texture.disabled = false
 	generate_new_texture.focus_mode = Control.FOCUS_CLICK
+	play.disabled = true
+	play.focus_mode = Control.FOCUS_NONE
 
 func setup_ui() -> void:
 	var constraints = DungeonSize.PROPERTY_CONSTRAINTS
@@ -100,7 +103,11 @@ func _on_basic_dungeon_map_generation_finished() -> void:
 func _on_basic_dungeon_map_generation_started() -> void:
 	generate_new_map.disabled = true
 	generate_new_map.focus_mode = Control.FOCUS_NONE
+	play.disabled = true
+	play.focus_mode = Control.FOCUS_NONE
 
 func _on_basic_dungeon_texture_generated() -> void:
 	generate_new_texture.disabled = true
 	generate_new_texture.focus_mode = Control.FOCUS_NONE
+	play.disabled = false
+	play.focus_mode = Control.FOCUS_CLICK

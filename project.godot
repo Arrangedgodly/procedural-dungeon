@@ -18,6 +18,12 @@ config/icon="res://icon.svg"
 [autoload]
 
 ItemManager="*res://autoloads/ItemManager.gd"
+MimicManager="*res://autoloads/MimicManager.gd"
+
+[debug]
+
+gdscript/warnings/integer_division=0
+gdscript/warnings/narrowing_conversion=0
 
 [display]
 
