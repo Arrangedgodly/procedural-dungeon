@@ -3,6 +3,7 @@ class_name RoomGenerator
 signal texture_generated
 signal map_generation_started
 signal map_generation_finished
+signal generation_phase_color(new_color: Color)
 signal generation_progress_updated(phase: String, progress: float)
 signal generation_phase_changed(phase: String)
 
@@ -53,6 +54,13 @@ const PHASES = {
 	"CHUNKS": "Generating Map Chunks",
 	"TEXTURES": "Placing Tile Textures",
 	"ITEMS": "Spawning Items"
+}
+const PHASE_COLORS = {
+	"ROOMS": Color.RED,
+	"SETTLING": Color.ORANGE,
+	"CHUNKS": Color.YELLOW,
+	"TEXTURES": Color.GREEN,
+	"ITEMS": Color.BLUE
 }
 const ROOM_BATCH_SIZE = 20
 const CHUNK_SIZE = 64
@@ -682,6 +690,7 @@ func set_phase(phase: String) -> void:
 	current_phase = phase
 	items_processed = 0
 	generation_phase_changed.emit(PHASES[phase])
+	generation_phase_color.emit(PHASE_COLORS[phase])
 
 func update_progress() -> void:
 	var progress = float(items_processed) / float(items_to_process) * 100

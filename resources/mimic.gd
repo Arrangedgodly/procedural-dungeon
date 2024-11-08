@@ -3,6 +3,9 @@ class_name Mimic
 
 @export var animated_sprite: AnimatedSprite2D
 @export var collision_shape: CollisionShape2D
+@export var health: int
+@export var speed: int
+@export var damage: int
 
 var hostile: bool
 var is_opened: bool = false

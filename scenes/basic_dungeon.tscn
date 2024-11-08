@@ -154,12 +154,13 @@ tile_set = SubResource("TileSet_u53nq")
 [node name="UI" parent="CanvasLayer" instance=ExtResource("2_x8pav")]
 
 [node name="Loading" parent="CanvasLayer" instance=ExtResource("16_cklyq")]
-offset_left = 600.0
-offset_top = 400.0
-offset_right = 640.0
-offset_bottom = 440.0
+offset_left = 1075.0
+offset_top = 700.0
+offset_right = 1115.0
+offset_bottom = 740.0
 
 [connection signal="generation_phase_changed" from="." to="CanvasLayer/Loading" method="_on_basic_dungeon_generation_phase_changed"]
+[connection signal="generation_phase_color" from="." to="CanvasLayer/Loading" method="_on_basic_dungeon_generation_phase_color"]
 [connection signal="generation_progress_updated" from="." to="CanvasLayer/Loading" method="_on_basic_dungeon_generation_progress_updated"]
 [connection signal="map_generation_finished" from="." to="CanvasLayer/UI" method="_on_basic_dungeon_map_generation_finished"]
 [connection signal="map_generation_started" from="." to="CanvasLayer/UI" method="_on_basic_dungeon_map_generation_started"]

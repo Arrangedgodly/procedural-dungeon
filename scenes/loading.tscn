@@ -1,8 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://dw0soukv5xxhc"]
+[gd_scene load_steps=20 format=3 uid="uid://dw0soukv5xxhc"]
 
 [ext_resource type="Script" path="res://scripts/loading.gd" id="1_leccu"]
 [ext_resource type="FontFile" uid="uid://bywnabqxhy04y" path="res://assets/fonts/PixelHigh.ttf" id="2_rmk6o"]
 [ext_resource type="Texture2D" uid="uid://b3ksaxfbo0hl7" path="res://assets/ui/32x32_loading9.png" id="3_3er30"]
+[ext_resource type="Texture2D" uid="uid://csukc7245p83s" path="res://assets/ui/32x32 circle bar under.png" id="4_4law8"]
+[ext_resource type="Texture2D" uid="uid://bh3odgymdwx7x" path="res://assets/ui/32x32 circle bar over.png" id="5_ygksx"]
+[ext_resource type="Texture2D" uid="uid://b8aaadcm4ap2r" path="res://assets/ui/32x32 circle bar progress light grey.png" id="6_3ll6w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6dwou"]
 atlas = ExtResource("3_3er30")
@@ -106,32 +109,50 @@ script = ExtResource("1_leccu")
 [node name="Resource" type="Label" parent="."]
 layout_mode = 2
 offset_left = -96.0
-offset_top = -140.0
-offset_right = 96.0
-offset_bottom = -84.0
+offset_top = -100.0
+offset_right = 35.0
+offset_bottom = 15.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_outline_size = 20
 theme_override_fonts/font = ExtResource("2_rmk6o")
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 32
+text = "RESOURCE TEXT"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(5, 5)
+scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_xpmli")
 autoplay = "default"
 frame_progress = 0.955868
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
 layout_mode = 1
-offset_right = 1.0
-offset_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -32.0
+offset_bottom = -32.0
+scale = Vector2(4, 4)
+fill_mode = 4
+texture_under = ExtResource("4_4law8")
+texture_over = ExtResource("5_ygksx")
+texture_progress = ExtResource("6_3ll6w")
 
 [node name="Loading" type="Label" parent="."]
 layout_mode = 2
 offset_left = -96.0
-offset_top = 100.0
+offset_top = -28.0
 offset_right = 96.0
-offset_bottom = 156.0
+offset_bottom = 28.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_outline_size = 20
 theme_override_fonts/font = ExtResource("2_rmk6o")
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 32
+text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1

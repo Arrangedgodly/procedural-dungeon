@@ -148,6 +148,8 @@ alignment = 1
 [node name="RoomsGeneratedLabel" type="Label" parent="HBoxContainer/RoomsGenerated"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "Rooms Generated"
 horizontal_alignment = 1
 
@@ -164,6 +166,8 @@ alignment = 1
 [node name="MinSizeLabel" type="Label" parent="HBoxContainer/MinSize"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "Min Size"
 horizontal_alignment = 1
 
@@ -180,6 +184,8 @@ alignment = 1
 [node name="MaxSizeLabel" type="Label" parent="HBoxContainer/MaxSize"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "Max Size"
 horizontal_alignment = 1
 
@@ -196,6 +202,8 @@ alignment = 1
 [node name="HorizontalSpreadLabel" type="Label" parent="HBoxContainer/HorizontalSpread"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "Horizontal Spread"
 horizontal_alignment = 1
 
@@ -212,6 +220,8 @@ alignment = 1
 [node name="CorridorWidthLabel" type="Label" parent="HBoxContainer/CorridorWidth"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "Corridor Width"
 horizontal_alignment = 1
 
@@ -232,6 +242,7 @@ alignment = 1
 [node name="GenerateNewMap" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_constants/outline_size = 15
 theme_override_styles/focus = ExtResource("3_18ond")
 theme_override_styles/hover = ExtResource("3_18ond")
 text = "Generate New Map"
@@ -239,6 +250,7 @@ text = "Generate New Map"
 [node name="GenerateNewTexture" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_constants/outline_size = 15
 theme_override_styles/focus = ExtResource("3_18ond")
 theme_override_styles/hover = ExtResource("3_18ond")
 text = "Generate Map Texture"
@@ -246,6 +258,7 @@ text = "Generate Map Texture"
 [node name="Play" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_constants/outline_size = 15
 theme_override_styles/focus = ExtResource("3_18ond")
 theme_override_styles/hover = ExtResource("3_18ond")
 text = "PLAY LEVEL"
@@ -266,6 +279,8 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "Focus Room:"
 
 [node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
@@ -285,6 +300,8 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "Focus Next Room:"
 
 [node name="Control" type="Control" parent="VBoxContainer/HBoxContainer4"]
@@ -303,6 +320,8 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "CLose Focused room:"
 
 [node name="Control" type="Control" parent="VBoxContainer/HBoxContainer3"]
@@ -322,6 +341,8 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer5"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "Zoom/UN-Zoom:"
 
 [node name="Control" type="Control" parent="VBoxContainer/HBoxContainer5"]
@@ -341,6 +362,8 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 text = "X-RAy thru texture:"
 
 [node name="Control" type="Control" parent="VBoxContainer/HBoxContainer2"]
@@ -360,6 +383,8 @@ offset_top = 490.0
 offset_right = 219.0
 offset_bottom = 504.0
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 16
 text = "camera follows mouse cursor on zoom"
 
@@ -370,6 +395,8 @@ offset_top = 770.0
 offset_right = 867.0
 offset_bottom = 798.0
 theme = SubResource("Theme_3wm2g")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 32
 text = "Procedural Dungeon Generator by Arranged Godly"
 

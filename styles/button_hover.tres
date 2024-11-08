@@ -20,3 +20,4 @@ frame_3/duration = 1.0
 texture = SubResource("AnimatedTexture_xqkut")
 expand_margin_left = 10.0
 expand_margin_right = 10.0
+modulate_color = Color(1, 1, 1, 0.705882)
