@@ -31,7 +31,6 @@ var camera_state = CameraState.OVERVIEW
 var current_phase: String = ""
 var items_to_process: int = 0
 var items_processed: int = 0
-var room_previous_positions = {}
 
 enum CameraState {
 	OVERVIEW,
@@ -139,68 +138,39 @@ func start_room_settling() -> void:
 	items_processed = 0
 	update_progress()
 	
-	# Store initial positions before unfreezing
-	room_previous_positions.clear()
+	# Unfreeze all rooms at once
 	for room in rooms.get_children():
-		room_previous_positions[room] = room.position
-	
-	# Unfreeze in batches
-	var rooms_per_batch = 20
-	var room_children = rooms.get_children()
-	
-	for i in range(0, room_children.size(), rooms_per_batch):
-		var batch_end = mini(i + rooms_per_batch, room_children.size())
-		for j in range(i, batch_end):
-			room_children[j].sleeping = false
-			room_children[j].freeze = false
-		await get_tree().physics_frame
+		room.freeze = false
 	
 	await wait_for_rooms_to_settle()
 
 func wait_for_rooms_to_settle() -> void:
 	var stable_frames := 0
 	const REQUIRED_STABLE_FRAMES := 30
-	const MAX_SETTLING_TIME := 15.0
+	const MAX_SETTLING_TIME := 5.0
 	var settling_timer := 0.0
 	
 	while stable_frames < REQUIRED_STABLE_FRAMES and settling_timer < MAX_SETTLING_TIME:
-		var moving_rooms := count_moving_rooms()
-		var total_rooms := rooms.get_child_count()
-		
-		if total_rooms > 0:
-			items_processed = int(((total_rooms - moving_rooms) / float(total_rooms)) * 100)
-			update_progress()
-		
-		if moving_rooms == 0:
-			stable_frames += 1
-		else:
-			stable_frames = 0
-		
 		settling_timer += get_physics_process_delta_time()
 		await get_tree().physics_frame
 		
-		# Update previous positions for next check
-		for room in rooms.get_children():
-			room_previous_positions[room] = room.position
+		if Engine.get_physics_frames() % 5 == 0:
+			await get_tree().process_frame
+		
+		stable_frames += 1
 	
+	# Freeze all rooms once settled
 	for room in rooms.get_children():
 		room.freeze = true
 	
 	items_processed = 100
 	update_progress()
-	room_previous_positions.clear()
 
-func count_moving_rooms() -> int:
-	var moving := 0
-	var movement_threshold = 0.1  # Adjust if needed
-	
-	for room in rooms.get_children():
-		if not room.freeze:
-			var prev_pos = room_previous_positions.get(room, room.position)
-			var movement = room.position.distance_to(prev_pos)
-			if movement > movement_threshold:
-				moving += 1
-	return moving
+func cancel_generation() -> void:
+	if is_generating:
+		for room in rooms.get_children():
+			room.freeze = true
+		is_generating = false
 
 func cull_rooms():
 	var room_positions = []
@@ -259,14 +229,6 @@ func create_layout():
 	map_generation_finished.emit()
 	
 	is_generating = false
-
-# Optional: Add a function to cancel generation if needed
-func cancel_generation() -> void:
-	if is_generating:
-		# Force freeze all rooms
-		for room in rooms.get_children():
-			room.freeze = true
-		is_generating = false
 
 func make_map() -> void:
 	clear_map_state()
