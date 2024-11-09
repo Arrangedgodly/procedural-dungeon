@@ -4,7 +4,6 @@
 
 [node name="Room" type="RigidBody2D"]
 input_pickable = true
-can_sleep = false
 lock_rotation = true
 script = ExtResource("1_626cy")
 

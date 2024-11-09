@@ -31,6 +31,7 @@ var camera_state = CameraState.OVERVIEW
 var current_phase: String = ""
 var items_to_process: int = 0
 var items_processed: int = 0
+var room_previous_positions = {}
 
 enum CameraState {
 	OVERVIEW,
@@ -95,6 +96,9 @@ func make_rooms() -> void:
 	var rooms_remaining = dungeon_size.rooms_generated
 	var current_batch = []
 	
+	for room in rooms.get_children():
+		room.freeze = true
+	
 	while rooms_remaining > 0:
 		var batch_size = mini(ROOM_BATCH_SIZE, rooms_remaining)
 		current_batch.clear()
@@ -120,6 +124,7 @@ func process_room_batch(batch: Array) -> void:
 	for room_data in batch:
 		var room_instance = Room.instantiate()
 		rooms.add_child(room_instance)
+		room_instance.freeze = true
 		room_instance.make_room(
 			room_data.position, 
 			Vector2(room_data.width, room_data.height) * tile_size
@@ -129,47 +134,73 @@ func process_room_batch(batch: Array) -> void:
 		items_processed += 1
 		update_progress()
 
-func wait_for_rooms_to_settle() -> void:
+func start_room_settling() -> void:
 	set_phase("SETTLING")
-	items_to_process = 100
 	items_processed = 0
+	update_progress()
 	
+	# Store initial positions before unfreezing
+	room_previous_positions.clear()
+	for room in rooms.get_children():
+		room_previous_positions[room] = room.position
+	
+	# Unfreeze in batches
+	var rooms_per_batch = 20
+	var room_children = rooms.get_children()
+	
+	for i in range(0, room_children.size(), rooms_per_batch):
+		var batch_end = mini(i + rooms_per_batch, room_children.size())
+		for j in range(i, batch_end):
+			room_children[j].sleeping = false
+			room_children[j].freeze = false
+		await get_tree().physics_frame
+	
+	await wait_for_rooms_to_settle()
+
+func wait_for_rooms_to_settle() -> void:
 	var stable_frames := 0
 	const REQUIRED_STABLE_FRAMES := 30
-	const MAX_SETTLING_TIME := 5.0
+	const MAX_SETTLING_TIME := 15.0
 	var settling_timer := 0.0
 	
 	while stable_frames < REQUIRED_STABLE_FRAMES and settling_timer < MAX_SETTLING_TIME:
-		var total_velocity := calculate_total_room_velocity()
-		var stability_progress := calculate_stability_progress(total_velocity)
+		var moving_rooms := count_moving_rooms()
+		var total_rooms := rooms.get_child_count()
 		
-		items_processed = stability_progress
-		update_progress()
+		if total_rooms > 0:
+			items_processed = int(((total_rooms - moving_rooms) / float(total_rooms)) * 100)
+			update_progress()
 		
-		if total_velocity < 1.0:
+		if moving_rooms == 0:
 			stable_frames += 1
 		else:
 			stable_frames = 0
-			
+		
 		settling_timer += get_physics_process_delta_time()
 		await get_tree().physics_frame
+		
+		# Update previous positions for next check
+		for room in rooms.get_children():
+			room_previous_positions[room] = room.position
+	
+	for room in rooms.get_children():
+		room.freeze = true
 	
 	items_processed = 100
 	update_progress()
+	room_previous_positions.clear()
 
-func calculate_total_room_velocity() -> float:
-	var total := 0.0
+func count_moving_rooms() -> int:
+	var moving := 0
+	var movement_threshold = 0.1  # Adjust if needed
+	
 	for room in rooms.get_children():
-		total += (room as RigidBody2D).linear_velocity.length()
-	return total
-
-func calculate_stability_progress(total_velocity: float) -> float:
-	var room_count := rooms.get_child_count()
-	if room_count == 0:
-		return 100.0
-	const MAX_EXPECTED_VELOCITY := 1000.0
-	var avg_velocity := total_velocity / room_count
-	return clamp(100 - ((avg_velocity / MAX_EXPECTED_VELOCITY) * 100), 0, 100)
+		if not room.freeze:
+			var prev_pos = room_previous_positions.get(room, room.position)
+			var movement = room.position.distance_to(prev_pos)
+			if movement > movement_threshold:
+				moving += 1
+	return moving
 
 func cull_rooms():
 	var room_positions = []
@@ -216,11 +247,26 @@ func find_mst(nodes):
 	return path
 
 func create_layout():
+	if is_generating:
+		return
+		
+	is_generating = true
+	
 	await make_rooms()
-	await wait_for_rooms_to_settle()
-	cull_rooms()
+	await start_room_settling()
+	await cull_rooms()
 	fit_camera_to_rooms()
 	map_generation_finished.emit()
+	
+	is_generating = false
+
+# Optional: Add a function to cancel generation if needed
+func cancel_generation() -> void:
+	if is_generating:
+		# Force freeze all rooms
+		for room in rooms.get_children():
+			room.freeze = true
+		is_generating = false
 
 func make_map() -> void:
 	clear_map_state()
