@@ -131,43 +131,22 @@ func process_room_batch(batch: Array) -> void:
 
 func wait_for_rooms_to_settle() -> void:
 	set_phase("SETTLING")
-	items_to_process = 100  # Using percentage for progress
+	items_to_process = 100
 	items_processed = 0
 	
-	var stable_frames = 0
-	var required_stable_frames = 30  # Number of frames rooms need to be stable
-	var max_settling_time = 5.0  # Maximum time to wait in seconds
-	var settling_timer = 0.0
+	var stable_frames := 0
+	const REQUIRED_STABLE_FRAMES := 30
+	const MAX_SETTLING_TIME := 5.0
+	var settling_timer := 0.0
 	
-	while stable_frames < required_stable_frames and settling_timer < max_settling_time:
-		var all_rooms_stable = true
-		var total_velocity = 0.0
-		var room_count = rooms.get_child_count()
-		
-		if room_count == 0:
-			break
-			
-		for room in rooms.get_children():
-			var rigid_body = room as RigidBody2D
-			if rigid_body:
-				var velocity_length = rigid_body.linear_velocity.length()
-				if velocity_length > 1.0:  # Adjust this threshold as needed
-					all_rooms_stable = false
-				total_velocity += velocity_length
-		
-		# Calculate progress based on average velocity
-		var avg_velocity = total_velocity / room_count
-		var max_expected_velocity = 1000.0  # Adjust based on your physics settings
-		var stability_progress = clamp(
-			100 - ((avg_velocity / max_expected_velocity) * 100),
-			0,
-			100
-		)
+	while stable_frames < REQUIRED_STABLE_FRAMES and settling_timer < MAX_SETTLING_TIME:
+		var total_velocity := calculate_total_room_velocity()
+		var stability_progress := calculate_stability_progress(total_velocity)
 		
 		items_processed = stability_progress
 		update_progress()
 		
-		if all_rooms_stable:
+		if total_velocity < 1.0:
 			stable_frames += 1
 		else:
 			stable_frames = 0
@@ -175,9 +154,22 @@ func wait_for_rooms_to_settle() -> void:
 		settling_timer += get_physics_process_delta_time()
 		await get_tree().physics_frame
 	
-	# Ensure we show 100% progress when done
 	items_processed = 100
 	update_progress()
+
+func calculate_total_room_velocity() -> float:
+	var total := 0.0
+	for room in rooms.get_children():
+		total += (room as RigidBody2D).linear_velocity.length()
+	return total
+
+func calculate_stability_progress(total_velocity: float) -> float:
+	var room_count := rooms.get_child_count()
+	if room_count == 0:
+		return 100.0
+	const MAX_EXPECTED_VELOCITY := 1000.0
+	var avg_velocity := total_velocity / room_count
+	return clamp(100 - ((avg_velocity / MAX_EXPECTED_VELOCITY) * 100), 0, 100)
 
 func cull_rooms():
 	var room_positions = []
@@ -230,26 +222,27 @@ func create_layout():
 	fit_camera_to_rooms()
 	map_generation_finished.emit()
 
-func make_map():
+func make_map() -> void:
+	clear_map_state()
+	process_map_bounds()
+	await process_chunks()
+	await process_room_corridors()
+	await distribute_items()
+
+func clear_map_state() -> void:
 	walk.clear()
 	background.clear()
 	walls.clear()
 	active_chunks.clear()
-	
-	# First pass: Calculate total bounds and identify active chunks
-	var full_rect = Rect2()
+
+func process_map_bounds() -> void:
+	var full_rect := Rect2()
 	for room in rooms.get_children():
-		var rect = Rect2(room.position - room.size, room.get_node("CollisionShape2D").shape.extents * 2)
+		var rect := get_room_bounds(room)
 		full_rect = full_rect.merge(rect)
-		
-		# Mark chunks containing this room as active
-		var top_left = walk.local_to_map(rect.position)
-		var bottom_right = walk.local_to_map(rect.end)
-		for x in range(get_chunk_coord(top_left).x, get_chunk_coord(bottom_right).x + 1):
-			for y in range(get_chunk_coord(top_left).y, get_chunk_coord(bottom_right).y + 1):
-				active_chunks[Vector2i(x, y)] = true
-	
-	# Process chunks in batches
+		mark_active_chunks(rect)
+
+func process_chunks() -> void:
 	set_phase("CHUNKS")
 	items_processed = 0
 	items_to_process = active_chunks.size()
@@ -261,9 +254,9 @@ func make_map():
 		items_processed += 1
 		update_progress()
 		if items_processed % 10 == 0:  # Process in batches of 10 chunks
-			await get_tree().process_frame  # Yield to prevent freezing
+			await get_tree().process_frame
 
-	# Generate corridors in batches
+func process_room_corridors() -> void:
 	set_phase("TEXTURES")
 	var corridors = []
 	items_to_process = rooms.get_child_count()
@@ -275,10 +268,21 @@ func make_map():
 		items_processed += 1
 		update_progress()
 		
-		if items_processed % 5 == 0:  # Process in batches of 5 rooms
+		if items_processed % 5 == 0:
 			await get_tree().process_frame
-			
-	await distribute_items()
+
+func get_room_bounds(room: Node) -> Rect2:
+	return Rect2(
+		room.position - room.size,
+		room.get_node("CollisionShape2D").shape.extents * 2
+	)
+
+func mark_active_chunks(rect: Rect2) -> void:
+	var top_left := walk.local_to_map(rect.position)
+	var bottom_right := walk.local_to_map(rect.end)
+	for x in range(get_chunk_coord(top_left).x, get_chunk_coord(bottom_right).x + 1):
+		for y in range(get_chunk_coord(top_left).y, get_chunk_coord(bottom_right).y + 1):
+			active_chunks[Vector2i(x, y)] = true
 
 func generate_chunk(bounds: Rect2i) -> void:
 	# Generate background tiles for chunk
@@ -308,38 +312,36 @@ func generate_room_and_corridors(room: Node, corridors: Array) -> void:
 			carve_path(start, end)
 	corridors.append(point)
 
-# Modified carve_path to be more efficient
 func carve_path(pos1: Vector2i, pos2: Vector2i) -> void:
-	var x_diff = sign(pos2.x - pos1.x)
-	var y_diff = sign(pos2.y - pos1.y)
-	if x_diff == 0: x_diff = 1
-	if y_diff == 0: y_diff = 1
+	var direction := Vector2i(sign(pos2.x - pos1.x), sign(pos2.y - pos1.y))
+	direction = Vector2i(1 if direction.x == 0 else direction.x, 1 if direction.y == 0 else direction.y)
 	
-	var corridor_cells = []
-	var current = pos1
-	var batch_size = 5  # Process corridors in smaller batches
-	var cells_in_batch = []
+	var current := pos1
+	var cells := []
 	
-	# Generate corridor cells in batches
 	while current.x != pos2.x:
-		cells_in_batch.append_array(get_corridor_segment_cells(current, Vector2i(1, 0)))
-		current.x += x_diff
-		
-		if cells_in_batch.size() >= batch_size:
-			process_corridor_batch(cells_in_batch)
-			cells_in_batch.clear()
+		cells.append_array(get_corridor_segment_cells(current, Vector2i(1, 0)))
+		current.x += direction.x
+		process_cells_batch(cells)
 	
 	while current.y != pos2.y:
-		cells_in_batch.append_array(get_corridor_segment_cells(current, Vector2i(0, 1)))
-		current.y += y_diff
-		
-		if cells_in_batch.size() >= batch_size:
-			process_corridor_batch(cells_in_batch)
-			cells_in_batch.clear()
-	
-	# Process any remaining cells
-	if cells_in_batch.size() > 0:
-		process_corridor_batch(cells_in_batch)
+		cells.append_array(get_corridor_segment_cells(current, Vector2i(0, 1)))
+		current.y += direction.y
+		process_cells_batch(cells)
+
+func process_cells_batch(cells: Array) -> void:
+	const BATCH_SIZE := 5
+	if cells.size() >= BATCH_SIZE:
+		for cell in cells:
+			set_walkable_cell(cell)
+			add_surrounding_walls(cell)
+		cells.clear()
+
+func add_surrounding_walls(cell: Vector2i) -> void:
+	for dir in DIRECTIONS:
+		var check_pos = cell + dir
+		if not is_walkable_tile(check_pos):
+			set_wall_cell(check_pos)
 
 func get_corridor_segment_cells(center: Vector2i, direction: Vector2i) -> Array:
 	var cells = []

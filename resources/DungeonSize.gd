@@ -5,7 +5,7 @@ signal value_changed(property: String, value: Variant)
 
 # Dictionary to store property constraints
 const PROPERTY_CONSTRAINTS = {
-	"rooms_generated": {"min": 5, "max": 1000, "default": 100},
+	"rooms_generated": {"min": 5, "max": 10000, "default": 100},
 	"min_size": {"min": 5, "max": 20, "default": 10},
 	"max_size": {"min": 10, "max": 50, "default": 30},
 	"horizontal_spread": {"min": 100, "max": 1000, "default": 300},
