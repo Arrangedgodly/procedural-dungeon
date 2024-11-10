@@ -1,5 +1,6 @@
-[gd_scene load_steps=34 format=3 uid="uid://cjh13fn3q6rpa"]
+[gd_scene load_steps=35 format=3 uid="uid://cjh13fn3q6rpa"]
 
+[ext_resource type="Script" path="res://resources/Tummunch.gd" id="1_fyt7q"]
 [ext_resource type="Texture2D" uid="uid://barvykectgau2" path="res://assets/sprites/enemies/Tummunch/Enemy_009_A.png" id="1_ggiuw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t6r1x"]
@@ -243,7 +244,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_425u8"]
 size = Vector2(11, 18)
 
-[node name="GreenTummunch" type="CharacterBody2D"]
+[node name="GreenTummunch" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+script = ExtResource("1_fyt7q")
+sprite = NodePath("AnimatedSprite2D")
+collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_h4svb")
