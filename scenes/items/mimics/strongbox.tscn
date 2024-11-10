@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://c0bgp15r0twb0"]
 
-[ext_resource type="Script" path="res://resources/mimic.gd" id="1_2cq86"]
+[ext_resource type="Script" path="res://resources/Mimic.gd" id="1_2cq86"]
 [ext_resource type="Texture2D" uid="uid://bdlfgtifo3dqv" path="res://assets/items/mimics/Strongbox Mimic 1.png" id="2_0iy58"]
 [ext_resource type="Texture2D" uid="uid://clq6bf4ws0885" path="res://assets/items/mimics/Strongbox Mimic Dead.png" id="3_nvw73"]
 [ext_resource type="Texture2D" uid="uid://cx6atuplbjx5x" path="res://assets/items/mimics/Strongbox Closed.png" id="4_ty524"]
@@ -97,9 +97,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l01vq"]
 size = Vector2(32, 32)
 
-[node name="Strongbox" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "collision_shape")]
+[node name="Strongbox" type="CharacterBody2D" node_paths=PackedStringArray("collision_shape")]
 script = ExtResource("1_2cq86")
-animated_sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

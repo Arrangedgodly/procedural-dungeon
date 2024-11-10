@@ -19,5 +19,7 @@ Created with Godot Engine
 	* https://oworowo.itch.io/keyboard-keys-asset-pack
 - Pixel Progress Bar: WoodlandCat
 	* https://woodlandcat.itch.io/pixel-progress-bar-asset-pack
+- Rogue Adventure Asset Pack: ElvGames
+	* https://elvgames.itch.io/rogue-adventure-world
 
 ## Thank you for playing!

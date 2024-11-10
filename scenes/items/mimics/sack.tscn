@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://cgo86o6iqmidq"]
 
-[ext_resource type="Script" path="res://resources/mimic.gd" id="1_hc8pw"]
+[ext_resource type="Script" path="res://resources/Mimic.gd" id="1_hc8pw"]
 [ext_resource type="Texture2D" uid="uid://bm6ecgstbmwa6" path="res://assets/items/mimics/Sack Mimic 1.png" id="2_ypjpx"]
 [ext_resource type="Texture2D" uid="uid://mmh1yfp1p2gp" path="res://assets/items/mimics/Sack Mimic Dead.png" id="3_7ebng"]
 [ext_resource type="Texture2D" uid="uid://xumkbf2s4bap" path="res://assets/items/mimics/Sack Closed.png" id="4_0dlvx"]
@@ -97,9 +97,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4im20"]
 size = Vector2(32, 32)
 
-[node name="Sack" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "collision_shape")]
+[node name="Sack" type="CharacterBody2D" node_paths=PackedStringArray("collision_shape")]
 script = ExtResource("1_hc8pw")
-animated_sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

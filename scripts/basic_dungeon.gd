@@ -18,6 +18,7 @@ var dungeon_size: DungeonSize
 @export var camera: Camera2D
 @export var ui: Control
 @export var items: Node2D
+@export var enemies: Node2D
 
 var camera_init_pos: Vector2
 var tile_size = 32
@@ -53,14 +54,16 @@ const PHASES = {
 	"SETTLING": "Settling Room Positions",
 	"CHUNKS": "Generating Map Chunks",
 	"TEXTURES": "Placing Tile Textures",
-	"ITEMS": "Spawning Items"
+	"ITEMS": "Spawning Items",
+	"ENEMIES": "Generating Enemies"
 }
 const PHASE_COLORS = {
 	"ROOMS": Color.RED,
 	"SETTLING": Color.ORANGE,
 	"CHUNKS": Color.YELLOW,
 	"TEXTURES": Color.GREEN,
-	"ITEMS": Color.BLUE
+	"ITEMS": Color.BLUE,
+	"ENEMIES": Color.PURPLE
 }
 const ROOM_BATCH_SIZE = 20
 const CHUNK_SIZE = 64
@@ -72,8 +75,11 @@ const FOLLOW_MOUSE_ZOOM_MULTIPLIER := 5.0
 const FOCUSED_ROOM_ZOOM_MULTIPLIER := 1.25
 const MIN_ITEMS_PER_ROOM := 0
 const MAX_ITEMS_PER_ROOM := 2
-const ITEMS_BATCH_SIZE := 5
-const MIN_EDGE_PADDING := 512.0
+const ITEMS_BATCH_SIZE := 10
+const MIN_EDGE_PADDING := 256.0
+const MIN_ENEMIES_PER_ROOM := 3
+const MAX_ENEMIES_PER_ROOM := 20
+const ENEMIES_BATCH_SIZE := 5
 
 func _ready() -> void:
 	randomize()
@@ -94,9 +100,6 @@ func make_rooms() -> void:
 	
 	var rooms_remaining = dungeon_size.rooms_generated
 	var current_batch = []
-	
-	for room in rooms.get_children():
-		room.freeze = true
 	
 	while rooms_remaining > 0:
 		var batch_size = mini(ROOM_BATCH_SIZE, rooms_remaining)
@@ -135,6 +138,7 @@ func process_room_batch(batch: Array) -> void:
 
 func start_room_settling() -> void:
 	set_phase("SETTLING")
+	items_to_process = 100  # Set to 100 since we're using percentages
 	items_processed = 0
 	update_progress()
 	
@@ -156,6 +160,9 @@ func wait_for_rooms_to_settle() -> void:
 		
 		if Engine.get_physics_frames() % 5 == 0:
 			await get_tree().process_frame
+			
+		items_processed = int((settling_timer / MAX_SETTLING_TIME) * 100)
+		update_progress()
 		
 		stable_frames += 1
 	
@@ -236,6 +243,7 @@ func make_map() -> void:
 	await process_chunks()
 	await process_room_corridors()
 	await distribute_items()
+	await distribute_enemies()
 
 func clear_map_state() -> void:
 	walk.clear()
@@ -555,6 +563,8 @@ func apply_settings() -> void:
 		room.queue_free()
 	for item in items.get_children():
 		item.queue_free()
+	for enemy in enemies.get_children():
+		enemy.queue_free()
 	path = null
 	walk.clear()
 	background.clear()
@@ -705,3 +715,64 @@ func set_phase(phase: String) -> void:
 func update_progress() -> void:
 	var progress = float(items_processed) / float(items_to_process) * 100
 	generation_progress_updated.emit(PHASES[current_phase], progress)
+
+func calculate_enemies_per_room(room_size: Vector2) -> int:
+	var area = room_size.x * room_size.y
+	var min_area = INF
+	var max_area = 0.0
+	
+	for room in rooms.get_children():
+		var room_area = room.size.x * room.size.y
+		min_area = min(min_area, room_area)
+		max_area = max(max_area, room_area)
+	
+	var normalized_area = inverse_lerp(min_area, max_area, area)
+	
+	return round(lerp(MIN_ENEMIES_PER_ROOM, MAX_ENEMIES_PER_ROOM, normalized_area))
+
+func distribute_enemies() -> void:
+	set_phase("ENEMIES")
+	
+	for enemy in enemies.get_children():
+		enemy.queue_free()
+	
+	var rooms_to_process = rooms.get_children()
+	var total_enemies = 0
+	
+	# First pass to calculate total enemies
+	for room in rooms_to_process:
+		total_enemies += calculate_enemies_per_room(room.size)
+	
+	items_to_process = total_enemies
+	items_processed = 0
+	var current_batch = []
+	
+	for room in rooms_to_process:
+		var num_enemies = calculate_enemies_per_room(room.size)
+		
+		for i in range(num_enemies):
+			current_batch.append({
+				"room": room,
+				"position": get_valid_pos_in_room(room)
+			})
+			
+			if current_batch.size() >= ENEMIES_BATCH_SIZE:
+				await process_enemy_batch(current_batch)
+				items_processed += current_batch.size()
+				update_progress()
+				current_batch.clear()
+				await get_tree().process_frame
+	
+	if current_batch:
+		await process_enemy_batch(current_batch)
+		items_processed += current_batch.size()
+		update_progress()
+
+func process_enemy_batch(batch: Array) -> void:
+	for enemy_data in batch:
+		var enemy = EnemyManager.instantiate_random_enemy()
+		if enemy:
+			enemies.add_child(enemy)
+			enemy.position = enemy_data.position
+		
+	await get_tree().process_frame

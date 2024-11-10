@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://4jk003ikk1j1"]
 
-[ext_resource type="Script" path="res://resources/item.gd" id="1_aih8u"]
+[ext_resource type="Script" path="res://resources/Item.gd" id="1_aih8u"]
 [ext_resource type="Texture2D" uid="uid://dbk7wslqe156k" path="res://assets/items/runestone.png" id="2_6n1vl"]
 
 [node name="Runestone" type="StaticBody2D"]

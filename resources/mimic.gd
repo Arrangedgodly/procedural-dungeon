@@ -1,11 +1,5 @@
-extends CharacterBody2D
+extends Enemy
 class_name Mimic
-
-@export var animated_sprite: AnimatedSprite2D
-@export var collision_shape: CollisionShape2D
-@export var health: int
-@export var speed: int
-@export var damage: int
 
 var hostile: bool
 var is_opened: bool = false
@@ -29,10 +23,10 @@ func create_loot() -> void:
 
 func open() -> void:
 	if hostile:
-		animated_sprite.play("mimic")
+		sprite.play("mimic")
 	else:
-		animated_sprite.play("open")
+		sprite.play("open")
 	
-	await animated_sprite.animation_finished
+	await sprite.animation_finished
 	
 	is_opened = true

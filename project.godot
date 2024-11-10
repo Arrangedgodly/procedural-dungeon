@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 ItemManager="*res://autoloads/ItemManager.gd"
 MimicManager="*res://autoloads/MimicManager.gd"
+EnemyManager="*res://autoloads/EnemyManager.gd"
 
 [debug]
 
