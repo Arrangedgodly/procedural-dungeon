@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu5nvvfy376tk"]
+
+[ext_resource type="Script" path="res://scripts/enemy_panel.gd" id="1_n1vwp"]
+[ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="2_vfrt1"]
+
+[node name="EnemyPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(150, 150)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_n1vwp")
+
+[node name="Vbox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Preview" type="TextureRect" parent="Vbox"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Vbox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vfrt1")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(150, 150)
