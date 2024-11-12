@@ -7,6 +7,8 @@ Created with Godot Engine
 	* https://cardinalzebra.itch.io/dungeon-tiles-1
 - ExperimentZ #20: Papoycore
 	* https://papoycore.itch.io/experimentz-20
+- Free Dungeon Backgrounds: The Outlander
+	* https://the-outlander.itch.io/free-dungeon-backgrounds
 - Goblin Loot Pixel Icons: free-game-assets
 	* https://free-game-assets.itch.io/free-goblin-loot-icons-3232-pixel-art
 - Loading Pixel Art Pack: Wento

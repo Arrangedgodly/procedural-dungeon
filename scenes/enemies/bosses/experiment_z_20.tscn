@@ -1,6 +1,6 @@
 [gd_scene load_steps=53 format=3 uid="uid://h6qsud0gaoir"]
 
-[ext_resource type="Script" path="res://resources/Enemy.gd" id="1_lmo8p"]
+[ext_resource type="Script" path="res://resources/Boss.gd" id="1_iibjm"]
 [ext_resource type="Texture2D" uid="uid://dxdfeuw2b7q4p" path="res://assets/sprites/enemies/Bosses/ExperimentZ #20/attack.png" id="2_7skte"]
 [ext_resource type="Texture2D" uid="uid://egbariyjghi1" path="res://assets/sprites/enemies/Bosses/ExperimentZ #20/death.png" id="3_d788j"]
 [ext_resource type="Texture2D" uid="uid://djwg838xlieov" path="res://assets/sprites/enemies/Bosses/ExperimentZ #20/idle.png" id="4_b4y3a"]
@@ -243,7 +243,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qqk63")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -348,13 +348,13 @@ animations = [{
 size = Vector2(59, 70)
 
 [node name="ExperimentZ 20" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
-script = ExtResource("1_lmo8p")
+script = ExtResource("1_iibjm")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_w1pmf")
-animation = &"walk"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

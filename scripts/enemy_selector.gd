@@ -5,6 +5,7 @@ var current_page_index = 0
 var enemies_per_page = 20
 var all_enemy_paths = []
 var enemy_buttons = []
+var test_arena_open: bool = false
 
 @onready var grid_container: GridContainer = $MainContainer/GridContainer
 @onready var swap_pages: Button = $MainContainer/SwapPages
@@ -13,22 +14,31 @@ var enemy_buttons = []
 @onready var prev_button: Button = $MainContainer/PaginationContainer/PrevButton
 @onready var next_button: Button = $MainContainer/PaginationContainer/NextButton
 @onready var page_label: Label = $MainContainer/PaginationContainer/PageLabel
+@onready var canvas_layer: CanvasLayer = $CanvasLayer
+@onready var camera_2d: Camera2D = $Camera2D
 
 const EnemyPanel = preload("res://scenes/enemy_panel.tscn")
+const TestArena = preload("res://scenes/test_arena.tscn")
 
 func _ready() -> void:
-	# Set up grid for smaller tiles
-	grid_container.columns = 5  # More columns for smaller tiles
+	canvas_layer.hide()
+	grid_container.columns = 5
 	grid_container.add_theme_constant_override("h_separation", 10)
 	grid_container.add_theme_constant_override("v_separation", 10)
 	
-	# Connect signals
 	swap_pages.pressed.connect(_on_swap_pages_pressed)
 	prev_button.pressed.connect(_on_prev_page_pressed)
 	next_button.pressed.connect(_on_next_page_pressed)
 	
 	load_enemy_paths()
 	update_page_display()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		if test_arena_open:
+			_close_test_arena()
+		else:
+			get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func load_enemy_paths() -> void:
 	all_enemy_paths.clear()
@@ -99,5 +109,16 @@ func _on_swap_pages_pressed():
 	load_enemy_paths()
 
 func _on_enemy_selected(enemy_path: String):
-	print("Selected enemy: ", enemy_path)
-	# Implement combat scene loading here
+	test_arena_open = true
+	var test_arena = TestArena.instantiate()
+	canvas_layer.add_child(test_arena)
+	test_arena.instantiate_enemy(enemy_path)
+	canvas_layer.show()
+	camera_2d.zoom = Vector2(1.75, 1.75)
+
+func _close_test_arena() -> void:
+	test_arena_open = false
+	var test_arena = get_node("CanvasLayer/TestArena")
+	test_arena.queue_free()
+	canvas_layer.hide()
+	camera_2d.zoom = Vector2(1, 1)

@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvwrhusvho0yj"]
+[gd_scene load_steps=8 format=3 uid="uid://cvwrhusvho0yj"]
 
 [ext_resource type="Script" path="res://scripts/enemy_selector.gd" id="1_vowwf"]
 [ext_resource type="FontFile" uid="uid://bm5j2nihcrg82" path="res://assets/fonts/FantasyRPGtitle (size 11).ttf" id="2_7pdmm"]
+[ext_resource type="Script" path="res://scripts/background.gd" id="2_ktsw4"]
+[ext_resource type="Shader" path="res://shaders/pixelate.gdshader" id="2_oop4f"]
 [ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="3_uartq"]
 [ext_resource type="FontFile" uid="uid://cjh41aoe31b8h" path="res://assets/fonts/PixelSmall.ttf" id="3_yl851"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_77woo"]
+shader = ExtResource("2_oop4f")
+shader_parameter/amount = 150
 
 [node name="EnemySelector" type="Control"]
 layout_mode = 3
@@ -13,6 +19,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vowwf")
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_77woo")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_ktsw4")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -60,6 +76,24 @@ text = "NEXT"
 
 [node name="SwapPages" type="Button" parent="MainContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("2_7pdmm")
 theme_override_font_sizes/font_size = 32
 text = "Switch to Boss Selection"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(602, 402)
+
+[connection signal="pressed" from="MainContainer/SwapPages" to="Background" method="_on_swap_pages_pressed"]

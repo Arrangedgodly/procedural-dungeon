@@ -28,7 +28,7 @@ func get_enemy_by_index(index: int):
 		return enemies[index]
 	return null
 
-func instantiate_enemy(index: int) -> Node:
+func instantiate_enemy_by_index(index: int) -> Node:
 	var enemy = get_enemy_by_index(index)
 	if enemy:
 		return enemy.instantiate()
@@ -36,4 +36,25 @@ func instantiate_enemy(index: int) -> Node:
 
 func instantiate_random_enemy() -> Node:
 	var random_num = randi_range(0, enemies.size() - 1)
-	return instantiate_enemy(random_num)
+	return instantiate_enemy_by_index(random_num)
+
+func get_enemy_index_by_path(path: String) -> int:
+	path = path.replace("res://", "")
+	
+	for i in range(enemies.size()):
+		if enemies[i].resource_path.ends_with(path):
+			return i
+	
+	return -1  # Return -1 if not found
+
+func instantiate_enemy_by_path(path: String) -> Node:
+	if not path.begins_with("res://"):
+		path = "res://" + path
+	
+	# Try to load the scene
+	var enemy_scene = load(path)
+	if enemy_scene:
+		return enemy_scene.instantiate()
+	
+	print("Error: Could not load enemy scene at path: ", path)
+	return null

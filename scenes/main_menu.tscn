@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://that475cqd7c"]
+
+[ext_resource type="FontFile" uid="uid://bywnabqxhy04y" path="res://assets/fonts/PixelHigh.ttf" id="1_1cvm4"]
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_h0765"]
+[ext_resource type="Script" path="res://scripts/background.gd" id="2_jlxlm"]
+[ext_resource type="Shader" path="res://shaders/pixelate.gdshader" id="2_n6hoo"]
+[ext_resource type="Theme" uid="uid://dstl7l8pdwg7x" path="res://themes/menu_button.tres" id="2_tus83"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qme1y"]
+shader = ExtResource("2_n6hoo")
+shader_parameter/amount = 150
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h0765")
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_qme1y")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_jlxlm")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="DungeonGenerator" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(560, 130)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_tus83")
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_1cvm4")
+theme_override_font_sizes/font_size = 64
+text = "Dungeon Generator"
+
+[node name="EnemySelector" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(480, 130)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_tus83")
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_1cvm4")
+theme_override_font_sizes/font_size = 64
+text = "Enemy Selector"
+
+[node name="Credits" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(240, 130)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_tus83")
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_1cvm4")
+theme_override_font_sizes/font_size = 64
+text = "Credits"
+
+[connection signal="pressed" from="VBoxContainer/DungeonGenerator" to="." method="_on_dungeon_generator_pressed"]
+[connection signal="pressed" from="VBoxContainer/EnemySelector" to="." method="_on_enemy_selector_pressed"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_credits_pressed"]

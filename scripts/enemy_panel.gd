@@ -11,9 +11,8 @@ signal enemy_selected(enemy_path: String)
 var enemy_instance: Node
 var enemy_path: String
 
-# Define colors for normal and hover states
-var normal_color = Color(0.2, 0.2, 0.2, 1.0)  # Dark gray
-var hover_color = Color(0.4, 0.4, 0.6, 1.0)   # Lighter blue-gray
+var normal_color = Color.LIGHT_SLATE_GRAY
+var hover_color = Color.LIGHT_CORAL
 
 func _ready():
 	# Make the panel size match our desired dimensions
@@ -82,9 +81,8 @@ func _on_panel_input(event: InputEvent):
 
 func _on_panel_mouse_entered():
 	add_theme_stylebox_override("panel", get_panel_style(hover_color))
-	if enemy_instance and enemy_instance.has_node("AnimatedSprite2D"):
-		var sprite = enemy_instance.get_node("AnimatedSprite2D")
-		sprite.play("walk")
+	if enemy_instance:
+		enemy_instance.animate_enemy()
 
 func _on_panel_mouse_exited():
 	add_theme_stylebox_override("panel", get_panel_style(normal_color))
