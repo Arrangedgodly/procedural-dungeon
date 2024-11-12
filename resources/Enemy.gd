@@ -19,9 +19,7 @@ func animate_enemy() -> void:
 	await sprite.animation_finished
 	sprite.play("walk")
 	await sprite.animation_looped
-	print("Animation ended.")
 	animation_ended.emit()
 
 func _on_animation_ended():
-	print("_on_animation_ended func fired")
 	animate_enemy()

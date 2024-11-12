@@ -11,7 +11,7 @@ signal enemy_selected(enemy_path: String)
 var enemy_instance: Node
 var enemy_path: String
 
-var normal_color = Color.LIGHT_SLATE_GRAY
+var normal_color = Color("BLACK", .80)
 var hover_color = Color.LIGHT_CORAL
 
 func _ready():

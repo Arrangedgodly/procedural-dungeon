@@ -24,4 +24,8 @@ Created with Godot Engine
 - Rogue Adventure Asset Pack: ElvGames
 	* https://elvgames.itch.io/rogue-adventure-world
 
+## Shaders
+- Pixelate
+	* https://godotshaders.com/shader/pixelate/
+	
 ## Thank you for playing!
