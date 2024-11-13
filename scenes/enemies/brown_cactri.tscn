@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://bkwrcrwp1d2c1"]
 
-[ext_resource type="Script" path="res://resources/Cactri.gd" id="1_86p4y"]
+[ext_resource type="Script" path="res://resources/enemies/Cactri.gd" id="1_86p4y"]
 [ext_resource type="Texture2D" uid="uid://dt6apka61na4u" path="res://assets/sprites/enemies/Cactri/Enemy_007_B.png" id="2_xbcxy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ns8kk"]
@@ -244,8 +244,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ueth1"]
 size = Vector2(11, 15)
 
-[node name="BrownCactri" type="CharacterBody2D"]
+[node name="BrownCactri" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
 script = ExtResource("1_86p4y")
+sprite = NodePath("AnimatedSprite2D")
+collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p56br")

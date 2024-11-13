@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://dmewei6bhua7v"]
 
-[ext_resource type="Script" path="res://resources/MediumDevil.gd" id="1_416gg"]
+[ext_resource type="Script" path="res://resources/enemies/MediumDevil.gd" id="1_416gg"]
 [ext_resource type="Texture2D" uid="uid://3xwm8afrsear" path="res://assets/sprites/enemies/MediumDevil/Enemy_017_A.png" id="2_j7mfo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xbiep"]

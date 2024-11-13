@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://blxueh25cy07p"]
 
-[ext_resource type="Script" path="res://resources/Fireskull.gd" id="1_3rdy4"]
+[ext_resource type="Script" path="res://resources/enemies/Fireskull.gd" id="1_3rdy4"]
 [ext_resource type="Texture2D" uid="uid://cwpaflxrqpgnu" path="res://assets/sprites/enemies/Fireskull/Enemy_008_B.png" id="2_oblwl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k83ja"]
@@ -251,7 +251,7 @@ collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sblnt")
-animation = &"hurt"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

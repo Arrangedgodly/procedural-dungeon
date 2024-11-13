@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://cc72e7frjifv4"]
 
-[ext_resource type="Script" path="res://resources/Doggone.gd" id="1_mx7qi"]
+[ext_resource type="Script" path="res://resources/enemies/Doggone.gd" id="1_mx7qi"]
 [ext_resource type="Texture2D" uid="uid://do7ffht2u0ddx" path="res://assets/sprites/enemies/Doggone/Enemy_010_C.png" id="2_6r4gm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rtqju"]

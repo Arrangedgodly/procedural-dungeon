@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://d4bsg0oe8mbok"]
 
-[ext_resource type="Script" path="res://resources/Shrooman.gd" id="1_7xpwa"]
+[ext_resource type="Script" path="res://resources/enemies/Shrooman.gd" id="1_7xpwa"]
 [ext_resource type="Texture2D" uid="uid://dfx6hf7wbrp2o" path="res://assets/sprites/enemies/Shrooman/Enemy_016_A.png" id="2_flrdk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mh8nc"]

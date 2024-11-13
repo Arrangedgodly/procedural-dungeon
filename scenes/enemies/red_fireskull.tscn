@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://b561ini3aber8"]
 
-[ext_resource type="Script" path="res://resources/Fireskull.gd" id="1_e2svi"]
+[ext_resource type="Script" path="res://resources/enemies/Fireskull.gd" id="1_e2svi"]
 [ext_resource type="Texture2D" uid="uid://dryf8dcog2v3i" path="res://assets/sprites/enemies/Fireskull/Enemy_008_C.png" id="2_627a3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5infl"]

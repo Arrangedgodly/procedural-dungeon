@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://dbv4p3m2oswv3"]
 
-[ext_resource type="Script" path="res://resources/Mimic.gd" id="1_on1fb"]
+[ext_resource type="Script" path="res://resources/enemies/Mimic.gd" id="1_on1fb"]
 [ext_resource type="Texture2D" uid="uid://b841ysh53q7eu" path="res://assets/items/mimics/Chest Mimic 1.png" id="2_2yqbm"]
 [ext_resource type="Texture2D" uid="uid://dwqxd7bjnp503" path="res://assets/items/mimics/Chest Mimic Dead.png" id="3_bsfs7"]
 [ext_resource type="Texture2D" uid="uid://bpnmkxa2q5x2l" path="res://assets/items/mimics/Chest Closed.png" id="4_yjbnf"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://cgc4lqa1y0w4v"]
 
-[ext_resource type="Script" path="res://resources/Clawtzer.gd" id="1_j34fg"]
+[ext_resource type="Script" path="res://resources/enemies/Clawtzer.gd" id="1_j34fg"]
 [ext_resource type="Texture2D" uid="uid://byna45p8n1mpv" path="res://assets/sprites/enemies/Clawtzer/Enemy_013_D.png" id="2_ufnjl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xw5pi"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://co6xm7e4xeod0"]
 
-[ext_resource type="Script" path="res://resources/LaGoon.gd" id="1_ewpf5"]
+[ext_resource type="Script" path="res://resources/enemies/LaGoon.gd" id="1_ewpf5"]
 [ext_resource type="Texture2D" uid="uid://dtvc66lb7bjjs" path="res://assets/sprites/enemies/LaGoon/Enemy_014_C.png" id="2_5cuk2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4i3g8"]

@@ -397,8 +397,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agc3i"]
 size = Vector2(14, 18)
 
-[node name="RedPlayer" type="CharacterBody2D"]
+[node name="RedPlayer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape") groups=["player"]]
 script = ExtResource("1_m6076")
+sprite = NodePath("AnimatedSprite2D")
+collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qmxi8")

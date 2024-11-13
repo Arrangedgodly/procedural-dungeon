@@ -1,6 +1,6 @@
 [gd_scene load_steps=55 format=3 uid="uid://c0gcchsrivn0i"]
 
-[ext_resource type="Script" path="res://resources/BossMimic.gd" id="1_ji5ix"]
+[ext_resource type="Script" path="res://resources/bosses/BossMimic.gd" id="1_ji5ix"]
 [ext_resource type="Texture2D" uid="uid://dxlabjwfw0yak" path="res://assets/sprites/enemies/Bosses/Boss Mimic/APPEAR.png" id="2_m8s10"]
 [ext_resource type="Texture2D" uid="uid://bb738bounuvq1" path="res://assets/sprites/enemies/Bosses/Boss Mimic/ATTACK.png" id="3_v41tc"]
 [ext_resource type="Texture2D" uid="uid://bw3v41i14anit" path="res://assets/sprites/enemies/Bosses/Boss Mimic/DEATH.png" id="4_1ki1g"]

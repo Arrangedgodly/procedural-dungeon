@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://c0bgp15r0twb0"]
 
-[ext_resource type="Script" path="res://resources/Mimic.gd" id="1_2cq86"]
+[ext_resource type="Script" path="res://resources/enemies/Mimic.gd" id="1_2cq86"]
 [ext_resource type="Texture2D" uid="uid://bdlfgtifo3dqv" path="res://assets/items/mimics/Strongbox Mimic 1.png" id="2_0iy58"]
 [ext_resource type="Texture2D" uid="uid://clq6bf4ws0885" path="res://assets/items/mimics/Strongbox Mimic Dead.png" id="3_nvw73"]
 [ext_resource type="Texture2D" uid="uid://cx6atuplbjx5x" path="res://assets/items/mimics/Strongbox Closed.png" id="4_ty524"]

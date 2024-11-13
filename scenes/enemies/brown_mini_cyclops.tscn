@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://bud4jrk3fnw3m"]
 
-[ext_resource type="Script" path="res://resources/MiniCyclops.gd" id="1_18g3c"]
+[ext_resource type="Script" path="res://resources/enemies/MiniCyclops.gd" id="1_18g3c"]
 [ext_resource type="Texture2D" uid="uid://dusa0x4t5ft5" path="res://assets/sprites/enemies/MiniCyclops/Enemy_003_D.png" id="2_5hbsg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aiu2o"]

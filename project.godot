@@ -20,6 +20,8 @@ config/icon="res://icon.svg"
 ItemManager="*res://autoloads/ItemManager.gd"
 MimicManager="*res://autoloads/MimicManager.gd"
 EnemyManager="*res://autoloads/EnemyManager.gd"
+BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
+BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
 
 [debug]
 
@@ -33,6 +35,14 @@ window/size/viewport_height=800
 window/size/mode=2
 window/size/resizable=false
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/beehave/plugin.cfg")
+
+[global_group]
+
+player=""
 
 [input]
 

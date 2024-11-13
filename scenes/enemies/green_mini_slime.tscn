@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://du5atq58qcaxy"]
 
-[ext_resource type="Script" path="res://resources/MiniSlime.gd" id="1_svfvr"]
+[ext_resource type="Script" path="res://resources/enemies/MiniSlime.gd" id="1_svfvr"]
 [ext_resource type="Texture2D" uid="uid://tmp4w75albuj" path="res://assets/sprites/enemies/MiniSlime/Enemy_006_D.png" id="2_ime3r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ck2j"]

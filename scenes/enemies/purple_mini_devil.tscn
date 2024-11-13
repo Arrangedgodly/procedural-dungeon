@@ -1,6 +1,6 @@
 [gd_scene load_steps=36 format=3 uid="uid://66x6aeikeofk"]
 
-[ext_resource type="Script" path="res://resources/MiniDevil.gd" id="1_nwu0o"]
+[ext_resource type="Script" path="res://resources/enemies/MiniDevil.gd" id="1_nwu0o"]
 [ext_resource type="Texture2D" uid="uid://dnt5tgpm3gmxf" path="res://assets/sprites/enemies/MiniDevil/Enemy_018_C.png" id="2_80xnd"]
 [ext_resource type="Texture2D" uid="uid://dqfwexbctiwix" path="res://assets/sprites/enemies/MiniDevil/Enemy_018_A.png" id="3_4w4cn"]
 

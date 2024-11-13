@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://ba6ovj4umwbk0"]
 
-[ext_resource type="Script" path="res://resources/Shorticorn.gd" id="1_40p4b"]
+[ext_resource type="Script" path="res://resources/enemies/Shorticorn.gd" id="1_40p4b"]
 [ext_resource type="Texture2D" uid="uid://c1l27f3vp871a" path="res://assets/sprites/enemies/Shorticorn/Enemy_011_D.png" id="2_a8l12"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sk5jt"]

@@ -2,14 +2,17 @@ extends CharacterBody2D
 class_name Enemy
 signal animation_ended
 
-@export var health: int
-@export var speed: int
-@export var damage: int
-
 @export var sprite: AnimatedSprite2D
 @export var collision_shape: CollisionShape2D
-
+var health: int
+var speed: int
+var damage: int
+var attack_range: int = 100
 var signal_connected: bool = false
+var target
+
+func _ready() -> void:
+	target = get_tree().get_first_node_in_group("player")
 	
 func animate_enemy() -> void:
 	if !signal_connected:
@@ -23,3 +26,13 @@ func animate_enemy() -> void:
 
 func _on_animation_ended():
 	animate_enemy()
+
+func get_distance_to_player() -> int:
+	if target:
+		var distance = self.position.distance_to(target.position)
+		return distance
+	else:
+		return -1
+	
+func get_attack_range() -> int:
+	return attack_range

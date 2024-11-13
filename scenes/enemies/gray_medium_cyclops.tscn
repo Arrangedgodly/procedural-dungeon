@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://bu0lx62j5fijr"]
 
-[ext_resource type="Script" path="res://resources/MediumCyclops.gd" id="1_65djg"]
+[ext_resource type="Script" path="res://resources/enemies/MediumCyclops.gd" id="1_65djg"]
 [ext_resource type="Texture2D" uid="uid://c1sk1ww0lb5p2" path="res://assets/sprites/enemies/MediumCyclops/Enemy_005_A.png" id="2_x4r2a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_frsmy"]

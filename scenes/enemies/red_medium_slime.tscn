@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://66ukhpdwl3y7"]
 
-[ext_resource type="Script" path="res://resources/MediumSlime.gd" id="1_5xoi6"]
+[ext_resource type="Script" path="res://resources/enemies/MediumSlime.gd" id="1_5xoi6"]
 [ext_resource type="Texture2D" uid="uid://dn2bl4lbvb4vp" path="res://assets/sprites/enemies/MediumSlime/Enemy_012_B.png" id="2_xqbwh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_igpfe"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://cjh13fn3q6rpa"]
 
-[ext_resource type="Script" path="res://resources/Tummunch.gd" id="1_fyt7q"]
+[ext_resource type="Script" path="res://resources/enemies/Tummunch.gd" id="1_fyt7q"]
 [ext_resource type="Texture2D" uid="uid://barvykectgau2" path="res://assets/sprites/enemies/Tummunch/Enemy_009_A.png" id="1_ggiuw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t6r1x"]

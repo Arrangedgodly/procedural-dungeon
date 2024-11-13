@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://htuyv6d1sda"]
 
-[ext_resource type="Script" path="res://resources/Swordsman.gd" id="1_17vks"]
+[ext_resource type="Script" path="res://resources/enemies/Swordsman.gd" id="1_17vks"]
 [ext_resource type="Texture2D" uid="uid://5niqhmj46hm8" path="res://assets/sprites/enemies/Swordsman/Enemy_002_C.png" id="2_dfqtj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lb6mm"]

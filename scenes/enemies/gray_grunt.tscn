@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://dbtvv1n5irx6d"]
 
-[ext_resource type="Script" path="res://resources/Grunt.gd" id="1_mn7m2"]
+[ext_resource type="Script" path="res://resources/enemies/Grunt.gd" id="1_mn7m2"]
 [ext_resource type="Texture2D" uid="uid://bkw5ersl2gw44" path="res://assets/sprites/enemies/Grunt/Enemy_001_A.png" id="2_gmjqx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_74cdl"]

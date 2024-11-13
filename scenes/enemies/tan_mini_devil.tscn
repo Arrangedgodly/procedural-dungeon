@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://bsk3hjhy8fi8a"]
 
-[ext_resource type="Script" path="res://resources/MiniDevil.gd" id="1_dedux"]
+[ext_resource type="Script" path="res://resources/enemies/MiniDevil.gd" id="1_dedux"]
 [ext_resource type="Texture2D" uid="uid://dqfwexbctiwix" path="res://assets/sprites/enemies/MiniDevil/Enemy_018_A.png" id="2_2aci5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_42gw1"]

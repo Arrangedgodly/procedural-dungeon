@@ -1,7 +1,7 @@
 [gd_scene load_steps=35 format=3 uid="uid://ykmci0il656u"]
 
 [ext_resource type="Texture2D" uid="uid://bq2ep54vo3deg" path="res://assets/sprites/enemies/Fireskull/Enemy_008_A.png" id="1_12jlm"]
-[ext_resource type="Script" path="res://resources/Fireskull.gd" id="1_ib20k"]
+[ext_resource type="Script" path="res://resources/enemies/Fireskull.gd" id="1_ib20k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6jv6i"]
 atlas = ExtResource("1_12jlm")

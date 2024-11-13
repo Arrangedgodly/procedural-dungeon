@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://dtnein4q1mcj"]
 
-[ext_resource type="Script" path="res://resources/Eyeslime.gd" id="1_wpreu"]
+[ext_resource type="Script" path="res://resources/enemies/Eyeslime.gd" id="1_wpreu"]
 [ext_resource type="Texture2D" uid="uid://bl33opv4gwikf" path="res://assets/sprites/enemies/Eyeslime/Enemy_004_C.png" id="2_ikk3x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qcajo"]

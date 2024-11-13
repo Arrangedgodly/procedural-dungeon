@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://c0480uvo84xqe"]
 
-[ext_resource type="Script" path="res://resources/Cactri.gd" id="1_0ogl7"]
+[ext_resource type="Script" path="res://resources/enemies/Cactri.gd" id="1_0ogl7"]
 [ext_resource type="Texture2D" uid="uid://bubm7ysqphhmk" path="res://assets/sprites/enemies/Cactri/Enemy_007_C.png" id="2_1oeah"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qiib1"]

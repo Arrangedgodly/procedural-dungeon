@@ -1,6 +1,6 @@
 [gd_scene load_steps=36 format=3 uid="uid://f56n5bl0ui4e"]
 
-[ext_resource type="Script" path="res://resources/Blitzer.gd" id="1_u6dlh"]
+[ext_resource type="Script" path="res://resources/enemies/Blitzer.gd" id="1_u6dlh"]
 [ext_resource type="Texture2D" uid="uid://boem13s6bmx8u" path="res://assets/sprites/enemies/Blitzer/Enemy_015_D.png" id="2_eyv7h"]
 [ext_resource type="Texture2D" uid="uid://d4iuckyc8nfex" path="res://assets/sprites/enemies/Blitzer/Enemy_015_A.png" id="3_1sqwv"]
 

@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4mefvyhnuqn0"]
+
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_fr2ck"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_jqre1"]
+[ext_resource type="Script" path="res://resources/conditions/IsPlayerInAttackRange.gd" id="3_txfs6"]
+[ext_resource type="Script" path="res://resources/actions/MoveTowardsPlayer.gd" id="4_62dh5"]
+
+[node name="HuntPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("1_fr2ck")
+blackboard = NodePath("@Node@25432")
+actor = NodePath("")
+
+[node name="SelectorComposite" type="Node" parent="."]
+script = ExtResource("2_jqre1")
+
+[node name="IsPlayerInAttackRange" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_txfs6")
+
+[node name="MoveTowardsPlayer" type="Node" parent="SelectorComposite"]
+script = ExtResource("4_62dh5")
