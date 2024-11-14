@@ -8,7 +8,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qme1y"]
 shader = ExtResource("2_n6hoo")
-shader_parameter/amount = 150
+shader_parameter/amount = 200
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3

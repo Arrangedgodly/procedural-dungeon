@@ -1,20 +1,75 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4mefvyhnuqn0"]
+[gd_scene load_steps=12 format=3 uid="uid://d4mefvyhnuqn0"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_fr2ck"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_jqre1"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_i21y1"]
 [ext_resource type="Script" path="res://resources/conditions/IsPlayerInAttackRange.gd" id="3_txfs6"]
 [ext_resource type="Script" path="res://resources/actions/MoveTowardsPlayer.gd" id="4_62dh5"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/condition.gd" id="4_bywsj"]
+[ext_resource type="Script" path="res://resources/conditions/IsDying.gd" id="4_wrun0"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/action.gd" id="5_6r47o"]
+[ext_resource type="Script" path="res://resources/actions/PlayDeath.gd" id="5_r753g"]
+[ext_resource type="Script" path="res://resources/conditions/IsPlayerNotInAttackRange.gd" id="6_j0tl8"]
+[ext_resource type="Script" path="res://resources/actions/MoveRandomly.gd" id="9_rne68"]
 
 [node name="HuntPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_fr2ck")
-blackboard = NodePath("@Node@25432")
-actor = NodePath("")
+blackboard = NodePath("@Node@46031")
+actor = NodePath("..")
 
 [node name="SelectorComposite" type="Node" parent="."]
 script = ExtResource("2_jqre1")
 
-[node name="IsPlayerInAttackRange" type="Node" parent="SelectorComposite"]
+[node name="DeathSequence" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_i21y1")
+
+[node name="IsDying" type="Node" parent="SelectorComposite/DeathSequence"]
+script = ExtResource("4_wrun0")
+
+[node name="PlayDeath" type="Node" parent="SelectorComposite/DeathSequence"]
+script = ExtResource("5_r753g")
+
+[node name="RemovalSequence" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_i21y1")
+
+[node name="IsDead" type="Node" parent="SelectorComposite/RemovalSequence"]
+script = ExtResource("4_bywsj")
+
+[node name="RemoveCorpse" type="Node" parent="SelectorComposite/RemovalSequence"]
+script = ExtResource("5_6r47o")
+
+[node name="HitSequence" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_i21y1")
+
+[node name="IsHit" type="Node" parent="SelectorComposite/HitSequence"]
+script = ExtResource("4_bywsj")
+
+[node name="PlayHit" type="Node" parent="SelectorComposite/HitSequence"]
+script = ExtResource("5_6r47o")
+
+[node name="AttackSequence" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_i21y1")
+
+[node name="CanAttack" type="Node" parent="SelectorComposite/AttackSequence"]
+script = ExtResource("4_bywsj")
+
+[node name="AttackPlayer" type="Node" parent="SelectorComposite/AttackSequence"]
+script = ExtResource("5_6r47o")
+
+[node name="ApproachPlayerSequence" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_i21y1")
+
+[node name="IsPlayerInAttackRange" type="Node" parent="SelectorComposite/ApproachPlayerSequence"]
 script = ExtResource("3_txfs6")
 
-[node name="MoveTowardsPlayer" type="Node" parent="SelectorComposite"]
+[node name="MoveTowardsPlayer" type="Node" parent="SelectorComposite/ApproachPlayerSequence"]
 script = ExtResource("4_62dh5")
+
+[node name="WanderSequence" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_i21y1")
+
+[node name="IsPlayerNotInAttackRange" type="Node" parent="SelectorComposite/WanderSequence"]
+script = ExtResource("6_j0tl8")
+
+[node name="MoveRandomly" type="Node" parent="SelectorComposite/WanderSequence"]
+script = ExtResource("9_rne68")

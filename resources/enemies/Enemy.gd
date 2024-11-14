@@ -10,9 +10,12 @@ var damage: int
 var attack_range: int = 100
 var signal_connected: bool = false
 var target
+var current_health: int
+var is_dead: bool = false
 
 func _ready() -> void:
 	target = get_tree().get_first_node_in_group("player")
+	current_health = health
 	
 func animate_enemy() -> void:
 	if !signal_connected:
@@ -36,3 +39,9 @@ func get_distance_to_player() -> int:
 	
 func get_attack_range() -> int:
 	return attack_range
+	
+func get_current_health() -> int:
+	return current_health
+
+func take_damage(dmg: int):
+	current_health -= dmg

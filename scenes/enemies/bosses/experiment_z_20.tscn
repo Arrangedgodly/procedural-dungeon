@@ -704,9 +704,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_it280"]
 size = Vector2(59, 70)
 
-[node name="ExperimentZ 20" type="CharacterBody2D" node_paths=PackedStringArray("attack_animation")]
+[node name="ExperimentZ 20" type="CharacterBody2D" node_paths=PackedStringArray("attack_animation", "sprite", "collision_shape")]
 script = ExtResource("1_41ywd")
 attack_animation = NodePath("AttackAnimations")
+sprite = NodePath("AnimatedSprite2D")
+collision_shape = NodePath("CollisionShape2D")
 
 [node name="AttackAnimations" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 49)

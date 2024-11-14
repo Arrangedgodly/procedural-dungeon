@@ -9,7 +9,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_77woo"]
 shader = ExtResource("2_oop4f")
-shader_parameter/amount = 150
+shader_parameter/amount = 200
 
 [node name="EnemySelector" type="Control"]
 layout_mode = 3

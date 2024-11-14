@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://blxueh25cy07p"]
+[gd_scene load_steps=36 format=3 uid="uid://blxueh25cy07p"]
 
 [ext_resource type="Script" path="res://resources/enemies/Fireskull.gd" id="1_3rdy4"]
 [ext_resource type="Texture2D" uid="uid://cwpaflxrqpgnu" path="res://assets/sprites/enemies/Fireskull/Enemy_008_B.png" id="2_oblwl"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_u6jpk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k83ja"]
 atlas = ExtResource("2_oblwl")
@@ -257,3 +258,7 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.25)
 shape = SubResource("RectangleShape2D_851h7")
+
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("3_u6jpk")]
+actor_node_path = NodePath("..")
+blackboard = NodePath("@Node@36939")

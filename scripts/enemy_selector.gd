@@ -113,6 +113,7 @@ func _on_enemy_selected(enemy_path: String):
 	var test_arena = TestArena.instantiate()
 	canvas_layer.add_child(test_arena)
 	test_arena.instantiate_enemy(enemy_path)
+	test_arena.instantiate_player()
 	canvas_layer.show()
 	camera_2d.zoom = Vector2(1.75, 1.75)
 

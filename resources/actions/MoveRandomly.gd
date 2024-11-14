@@ -1,11 +1,8 @@
 extends ActionLeaf
-class_name MoveTowardsPlayer
+class_name MoveRandomly
 
 func tick(actor: Node, _blackboard: Node) -> int:
-	if !actor.target:
-		return FAILURE
-	
-	var direction = (actor.target.global_position - actor.global_position).normalized()
+	var direction = Vector2(randf(), randf()).normalized()
 	actor.velocity = direction * actor.speed
 	actor.move_and_slide()
 	
