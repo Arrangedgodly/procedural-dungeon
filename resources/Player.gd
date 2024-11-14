@@ -1,8 +1,10 @@
 extends CharacterBody2D
 class_name Player
+signal target_position_changed(pos: Vector2)
 
 @export var sprite: AnimatedSprite2D
 @export var collision_shape: CollisionShape2D
+@onready var CircleMarker: Node2D
 
 var health: int = 50
 var speed: int = 200
@@ -13,6 +15,7 @@ var is_moving: bool = false
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("right-click"):
 		target_position = get_global_mouse_position()
+		target_position_changed.emit(target_position)
 		is_moving = true
 		
 		if has_node("AnimatedSprite2D"):

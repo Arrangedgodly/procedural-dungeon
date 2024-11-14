@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cw0lch4b1a46p"]
+
+[ext_resource type="Texture2D" uid="uid://cl8flr5b3nke" path="res://assets/ui/circle.png" id="1_2npjp"]
+[ext_resource type="Script" path="res://scripts/circle_marker.gd" id="1_fuxqh"]
+[ext_resource type="Texture2D" uid="uid://4jcnefbioa84" path="res://assets/ui/arrow_down.png" id="2_2rus8"]
+
+[node name="CircleMarker" type="Node2D"]
+script = ExtResource("1_fuxqh")
+
+[node name="Circle" type="Sprite2D" parent="."]
+texture = ExtResource("1_2npjp")
+
+[node name="Arrow" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("2_2rus8")
