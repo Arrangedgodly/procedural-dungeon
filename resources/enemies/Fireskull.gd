@@ -13,6 +13,8 @@ func _ready() -> void:
 func attack_player() -> void:
 	if !can_attack or !target:
 		return
+	
+	can_attack = false
 		
 	if sprite:
 		sprite.play("attack")
@@ -21,11 +23,9 @@ func attack_player() -> void:
 	
 	var fireball = FIREBALL.instantiate()
 	fireball.set_damage(damage)
-	get_tree().current_scene.add_child(fireball)
-	
-	var spawn_pos = global_position
+	add_child(fireball)
+	fireball.global_position = global_position
 	fireball.launch(target.global_position)
 	
-	can_attack = false
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true

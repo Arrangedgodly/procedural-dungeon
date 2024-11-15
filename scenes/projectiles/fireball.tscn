@@ -82,23 +82,25 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l246q"]
-size = Vector2(30, 12)
+size = Vector2(13.5, 6)
 
 [node name="Fireball" type="Area2D"]
 top_level = true
+z_index = 10
+collision_layer = 4
+collision_mask = 4
 input_pickable = false
 script = ExtResource("1_wabvy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-top_level = true
 z_index = 25
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_kxm0u")
 autoplay = "default"
-frame_progress = 0.149364
+frame_progress = 0.581374
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 0)
+position = Vector2(1.25, 0)
 shape = SubResource("RectangleShape2D_l246q")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
