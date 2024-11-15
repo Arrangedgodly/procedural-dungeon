@@ -1,0 +1,104 @@
+[gd_scene load_steps=15 format=3 uid="uid://b8blg050rds7p"]
+
+[ext_resource type="Texture2D" uid="uid://bfl56hgsxv1n5" path="res://assets/vfx/projectiles/pj2_fireball_large_red/spritesheet.png" id="1_f4xgb"]
+[ext_resource type="Script" path="res://scripts/fireball.gd" id="1_wabvy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_koox0"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(0, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5w1f0"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(72, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71dya"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(144, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cww7g"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(216, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yprfe"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(288, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1u5it"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(360, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjppt"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(432, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2o2v3"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(504, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u445c"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(576, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rwq5"]
+atlas = ExtResource("1_f4xgb")
+region = Rect2(648, 0, 72, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kxm0u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_koox0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5w1f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71dya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cww7g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yprfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1u5it")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjppt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2o2v3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u445c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rwq5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l246q"]
+size = Vector2(30, 12)
+
+[node name="Fireball" type="Area2D"]
+top_level = true
+input_pickable = false
+script = ExtResource("1_wabvy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+top_level = true
+z_index = 25
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_kxm0u")
+autoplay = "default"
+frame_progress = 0.149364
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_l246q")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

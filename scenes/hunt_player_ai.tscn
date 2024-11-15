@@ -1,28 +1,39 @@
-[gd_scene load_steps=16 format=3 uid="uid://d4mefvyhnuqn0"]
+[gd_scene load_steps=18 format=3 uid="uid://d4mefvyhnuqn0"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_fr2ck"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_jqre1"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_i21y1"]
 [ext_resource type="Script" path="res://resources/conditions/IsPlayerInApproachRange.gd" id="3_txfs6"]
 [ext_resource type="Script" path="res://resources/actions/MoveTowardsPlayer.gd" id="4_62dh5"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/condition.gd" id="4_bywsj"]
+[ext_resource type="Script" path="res://resources/conditions/CanSetTarget.gd" id="4_p1ryn"]
 [ext_resource type="Script" path="res://resources/conditions/IsDying.gd" id="4_wrun0"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/action.gd" id="5_6r47o"]
+[ext_resource type="Script" path="res://resources/actions/SetTarget.gd" id="5_brnwa"]
 [ext_resource type="Script" path="res://resources/actions/PlayDeath.gd" id="5_r753g"]
 [ext_resource type="Script" path="res://resources/conditions/IsDead.gd" id="6_6bvg3"]
 [ext_resource type="Script" path="res://resources/conditions/IsPlayerNotInApproachRange.gd" id="6_j0tl8"]
 [ext_resource type="Script" path="res://resources/actions/RemoveCorpse.gd" id="7_6yxcj"]
+[ext_resource type="Script" path="res://resources/conditions/IsHit.gd" id="8_frmwc"]
+[ext_resource type="Script" path="res://resources/actions/PlayHit.gd" id="9_e2hyf"]
 [ext_resource type="Script" path="res://resources/actions/MoveRandomly.gd" id="9_rne68"]
 [ext_resource type="Script" path="res://resources/conditions/CanAttack.gd" id="10_qfvie"]
 [ext_resource type="Script" path="res://resources/actions/AttackPlayer.gd" id="11_7d55h"]
 
 [node name="HuntPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_fr2ck")
-blackboard = NodePath("@Node@17272")
+blackboard = NodePath("@Node@17292")
 actor = NodePath("")
 
 [node name="SelectorComposite" type="Node" parent="."]
 script = ExtResource("2_jqre1")
+
+[node name="TargetSequence" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_i21y1")
+
+[node name="CanSetTarget" type="Node" parent="SelectorComposite/TargetSequence"]
+script = ExtResource("4_p1ryn")
+
+[node name="SetTarget" type="Node" parent="SelectorComposite/TargetSequence"]
+script = ExtResource("5_brnwa")
 
 [node name="DeathSequence" type="Node" parent="SelectorComposite"]
 script = ExtResource("3_i21y1")
@@ -46,10 +57,10 @@ script = ExtResource("7_6yxcj")
 script = ExtResource("3_i21y1")
 
 [node name="IsHit" type="Node" parent="SelectorComposite/HitSequence"]
-script = ExtResource("4_bywsj")
+script = ExtResource("8_frmwc")
 
 [node name="PlayHit" type="Node" parent="SelectorComposite/HitSequence"]
-script = ExtResource("5_6r47o")
+script = ExtResource("9_e2hyf")
 
 [node name="AttackSequence" type="Node" parent="SelectorComposite"]
 script = ExtResource("3_i21y1")

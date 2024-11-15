@@ -1,8 +1,7 @@
-[gd_scene load_steps=55 format=3 uid="uid://bi3ubqat64q2c"]
+[gd_scene load_steps=54 format=3 uid="uid://bi3ubqat64q2c"]
 
 [ext_resource type="Script" path="res://resources/Player.gd" id="1_m6076"]
 [ext_resource type="Texture2D" uid="uid://c0pg2fw8onr5m" path="res://assets/sprites/character/Hero_01.png" id="2_6pkq6"]
-[ext_resource type="PackedScene" uid="uid://cw0lch4b1a46p" path="res://scenes/circle_marker.tscn" id="3_dlfim"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5lv1v"]
 atlas = ExtResource("2_6pkq6")
@@ -412,7 +411,3 @@ frame_progress = 0.347252
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 7)
 shape = SubResource("RectangleShape2D_agc3i")
-
-[node name="CircleMarker" parent="." instance=ExtResource("3_dlfim")]
-
-[connection signal="target_position_changed" from="." to="CircleMarker" method="_on_red_player_target_position_changed"]

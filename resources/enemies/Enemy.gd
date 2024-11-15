@@ -7,12 +7,16 @@ signal animation_ended
 var health: int
 var speed: int
 var damage: int
-var attack_range: int = 100
-var approach_range: int = 500
+var attack_range: int = 25
+var approach_range: int = 150
 var signal_connected: bool = false
 var target
 var current_health: int = 1
 var is_dead: bool = false
+var is_hit: bool = false
+var is_playing_hit: bool = false
+var can_attack: bool = true
+var attack_cooldown: float = 2.0
 
 func _ready() -> void:
 	target = get_tree().get_first_node_in_group("player")
@@ -40,6 +44,11 @@ func get_distance_to_player() -> int:
 
 func take_damage(dmg: int):
 	current_health -= dmg
+	is_hit = true
+
+func reset_hit_state() -> void:
+	is_hit = false
+	is_playing_hit = false
 
 func remove_corpse():
 	var tween = create_tween()

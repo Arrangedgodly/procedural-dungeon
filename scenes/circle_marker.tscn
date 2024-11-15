@@ -5,11 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://4jcnefbioa84" path="res://assets/ui/arrow_down.png" id="2_2rus8"]
 
 [node name="CircleMarker" type="Node2D"]
+top_level = true
 script = ExtResource("1_fuxqh")
 
 [node name="Circle" type="Sprite2D" parent="."]
 texture = ExtResource("1_2npjp")
 
 [node name="Arrow" type="Sprite2D" parent="."]
-position = Vector2(0, -16)
+position = Vector2(0, -8)
 texture = ExtResource("2_2rus8")

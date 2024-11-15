@@ -15,9 +15,9 @@ func preload_backgrounds() -> void:
 		
 		while file_name != "":
 			if file_name.ends_with(".png") or file_name.ends_with(".jpg") or file_name.ends_with(".webp"):
-				var texture = load("res://assets/backgrounds/" + file_name)
-				if texture:
-					backgrounds.append(texture)
+				var text = load("res://assets/backgrounds/" + file_name)
+				if text:
+					backgrounds.append(text)
 			file_name = dir.get_next()
 			
 		dir.list_dir_end()
