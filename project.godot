@@ -34,6 +34,11 @@ window/size/viewport_width=1200
 window/size/viewport_height=800
 window/stretch/mode="viewport"
 
+[editor]
+
+movie_writer/movie_file="/Users/arrangedgodly/Documents/Godot/movies/pcg dungeon.avi"
+movie_writer/fps=30
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/beehave/plugin.cfg")

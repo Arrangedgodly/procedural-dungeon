@@ -36,7 +36,7 @@ func _on_animation_ended():
 	animate_enemy()
 
 func get_distance_to_player() -> int:
-	if target:
+	if target and target != null:
 		var distance = self.position.distance_to(target.position)
 		return distance
 	else:
