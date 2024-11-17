@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfl7usp8h34wd"
-path="res://.godot/imported/meter_center.png-f066fd6c9a16ae41efec9a3a54b1cdfb.ctex"
+uid="uid://dxjl26mwt4ph2"
+path="res://.godot/imported/bar_blue.png-25b2be3e4bfab3a5f30fc805c9af1762.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/meter_center.png"
-dest_files=["res://.godot/imported/meter_center.png-f066fd6c9a16ae41efec9a3a54b1cdfb.ctex"]
+source_file="res://assets/ui/bar_blue.png"
+dest_files=["res://.godot/imported/bar_blue.png-25b2be3e4bfab3a5f30fc805c9af1762.ctex"]
 
 [params]
 

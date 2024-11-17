@@ -252,7 +252,7 @@ collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sblnt")
-animation = &"attack"
+animation = &"walk"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -261,5 +261,5 @@ shape = SubResource("RectangleShape2D_851h7")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_u6jpk")]
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@82644")
+blackboard = NodePath("@Node@46982")
 actor = NodePath("..")

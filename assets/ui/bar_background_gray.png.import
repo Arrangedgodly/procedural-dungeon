@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2rdrgutkkbgk"
-path="res://.godot/imported/meter_right.png-0720f017e725a1b65e1a291754af852e.ctex"
+uid="uid://dls4sbd4vnkm7"
+path="res://.godot/imported/bar_background_gray.png-11a154f427c288138ea93b72ac18cb2c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/meter_right.png"
-dest_files=["res://.godot/imported/meter_right.png-0720f017e725a1b65e1a291754af852e.ctex"]
+source_file="res://assets/ui/bar_background_gray.png"
+dest_files=["res://.godot/imported/bar_background_gray.png-11a154f427c288138ea93b72ac18cb2c.ctex"]
 
 [params]
 

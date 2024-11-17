@@ -16,16 +16,16 @@ func attack_player() -> void:
 	
 	can_attack = false
 		
-	if sprite:
-		sprite.play("attack")
-		await sprite.animation_finished
-		sprite.play("idle")
+	sprite.play("attack")
+	await sprite.animation_finished
+	sprite.play("idle")
 	
 	var fireball = FIREBALL.instantiate()
 	fireball.set_damage(damage)
 	add_child(fireball)
 	fireball.global_position = global_position
 	fireball.launch(target.global_position)
-	
-	await get_tree().create_timer(attack_cooldown).timeout
+	fireball.despawning.connect(set_can_attack)
+
+func set_can_attack() -> void:
 	can_attack = true

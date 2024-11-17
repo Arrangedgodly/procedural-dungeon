@@ -2,32 +2,45 @@ extends CharacterBody2D
 class_name Player
 signal target_position_changed(pos: Vector2)
 signal target_position_reached
+signal health_changed(new_health: int)
+signal mana_changed(new_mana: int)
+signal stamina_changed(new_stamina: int)
+signal died
 
 @export var sprite: AnimatedSprite2D
 @export var collision_shape: CollisionShape2D
 @onready var CircleMarker: Node2D
+@onready var stamina_regen: Timer = $StaminaRegen
 
-var health: int = 50
+var health: int = 500
 var speed: int = 200
+var stamina: int = 100
+var mana: int = 100
 var basic_damage: int = 5
 var target_position: Vector2 = Vector2.ZERO
 var is_moving: bool = false
 var current_health: int
-var knockback_strength: float = 400.0
-var knockback_duration: float = 0.3
-var knockback_velocity: Vector2 = Vector2.ZERO
-var is_being_knocked_back: bool = false
-var knockback_timer: float = 0.0
-var knockback_friction: float = 0.8
-var bounce_factor: float = 0.5
+var current_stamina: int
+var current_mana: int
+var is_boosted: bool = false
+var is_refreshing: bool = false
 
 func _ready() -> void:
 	current_health = health
+	current_stamina = stamina
+	current_mana = mana
 
-func _physics_process(delta: float) -> void:
-	if is_being_knocked_back:
-		handle_knockback(delta)
-	elif Input.is_action_just_pressed("right-click"):
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("space"):
+		drain_stamina()
+	if event.is_action_released("space"):
+		is_boosted = false
+
+func _physics_process(_delta: float) -> void:
+	if !is_boosted and !is_refreshing:
+		replenish_stamina()
+		
+	if Input.is_action_just_pressed("right-click"):
 		target_position = get_global_mouse_position()
 		target_position_changed.emit(target_position)
 		is_moving = true
@@ -35,7 +48,7 @@ func _physics_process(delta: float) -> void:
 		if has_node("AnimatedSprite2D"):
 			sprite.play("walk")
 	
-	if is_moving and !is_being_knocked_back:
+	if is_moving:
 		var direction = (target_position - global_position).normalized()
 		var distance_to_target = global_position.distance_to(target_position)
 		
@@ -46,7 +59,10 @@ func _physics_process(delta: float) -> void:
 			if has_node("AnimatedSprite2D"):
 				sprite.play("idle")
 		else:
-			velocity = direction * speed
+			if is_boosted:
+				velocity = direction * speed * 2
+			else:
+				velocity = direction * speed
 			
 			if has_node("AnimatedSprite2D"):
 				if direction.x < 0:
@@ -54,44 +70,48 @@ func _physics_process(delta: float) -> void:
 				elif direction.x > 0:
 					sprite.flip_h = false
 	
-	var collision = move_and_collide(velocity * delta)
-	if collision:
-		handle_collision(collision)
+	move_and_slide()
 
 func take_damage(damage_taken: int) -> void:
+	sprite.play("hurt")
 	current_health -= damage_taken
-
-func knock_back(direction: Vector2) -> void:
-	# Normalize the direction and apply knockback in the opposite direction
-	knockback_velocity = -direction.normalized() * knockback_strength
-	is_being_knocked_back = true
-	is_moving = false  # Stop normal movement
-	knockback_timer = knockback_duration
+	health_changed.emit(current_health)
 	
-	# Play hit animation if available
-	if has_node("AnimatedSprite2D"):
-		sprite.play("hit")  # Assuming you have a "hit" animation
+	if current_health <= 0:
+		kill_player()
 
-func handle_knockback(delta: float) -> void:
-	knockback_timer -= delta
+func heal_damage(heal_amount: int) -> void:
+	current_health += heal_amount
+	health_changed.emit(current_health)
+
+func kill_player() -> void:
+	sprite.play("death")
+	died.emit()
+	process_mode = PROCESS_MODE_DISABLED
+
+func drain_stamina() -> void:
+	is_boosted = true
+	while current_stamina > 0 and is_boosted:
+		stamina_changed.emit(current_stamina)
+		await get_tree().create_timer(0.02).timeout
+		current_stamina -= 1
+		print(current_stamina)
 	
-	if knockback_timer <= 0:
-		is_being_knocked_back = false
-		knockback_velocity = Vector2.ZERO
-		if has_node("AnimatedSprite2D"):
-			sprite.play("idle")
+	if current_stamina == 0:
+		is_boosted = false
+
+func replenish_stamina() -> void:
+	if current_stamina >= stamina:
 		return
+		
+	is_refreshing = true
+		
+	if current_stamina < stamina and !is_boosted:
+		stamina_changed.emit(current_stamina)
+		get_tree().get_frame()
+		current_stamina += 1
 	
-	# Apply friction to gradually slow down the knockback
-	knockback_velocity *= knockback_friction
-	velocity = knockback_velocity
+	stamina_regen.start()
 
-func handle_collision(collision: KinematicCollision2D) -> void:
-	if is_being_knocked_back:
-		# Calculate bounce direction
-		var bounce_velocity = knockback_velocity.bounce(collision.get_normal())
-		# Apply bounce factor to reduce velocity after bounce
-		knockback_velocity = bounce_velocity * bounce_factor
-	else:
-		# Handle normal movement collision by sliding
-		velocity = velocity.slide(collision.get_normal())
+func _on_stamina_regen_timeout() -> void:
+	is_refreshing = false

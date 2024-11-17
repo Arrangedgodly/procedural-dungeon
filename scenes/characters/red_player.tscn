@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://bi3ubqat64q2c"]
+[gd_scene load_steps=60 format=3 uid="uid://bi3ubqat64q2c"]
 
 [ext_resource type="Script" path="res://resources/Player.gd" id="1_m6076"]
 [ext_resource type="Texture2D" uid="uid://c0pg2fw8onr5m" path="res://assets/sprites/character/Hero_01.png" id="2_6pkq6"]
@@ -42,6 +42,30 @@ region = Rect2(128, 160, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ujix7"]
 atlas = ExtResource("2_6pkq6")
 region = Rect2(160, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lscrm"]
+atlas = ExtResource("2_6pkq6")
+region = Rect2(0, 288, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7jwy"]
+atlas = ExtResource("2_6pkq6")
+region = Rect2(32, 288, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbdsf"]
+atlas = ExtResource("2_6pkq6")
+region = Rect2(64, 288, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ay63u"]
+atlas = ExtResource("2_6pkq6")
+region = Rect2(96, 288, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wuyek"]
+atlas = ExtResource("2_6pkq6")
+region = Rect2(128, 288, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3j3g0"]
+atlas = ExtResource("2_6pkq6")
+region = Rect2(160, 288, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_88or3"]
 atlas = ExtResource("2_6pkq6")
@@ -243,6 +267,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_lscrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7jwy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbdsf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ay63u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wuyek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3j3g0")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_88or3")
 }, {
 "duration": 1.0,
@@ -406,10 +453,14 @@ collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qmxi8")
-animation = &"forward"
+animation = &"death"
 autoplay = "idle"
-frame_progress = 0.347252
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
 position = Vector2(-1, 7)
 shape = SubResource("RectangleShape2D_agc3i")
+
+[node name="StaminaRegen" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="StaminaRegen" to="." method="_on_stamina_regen_timeout"]

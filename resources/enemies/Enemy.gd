@@ -4,6 +4,8 @@ signal animation_ended
 
 @export var sprite: AnimatedSprite2D
 @export var collision_shape: CollisionShape2D
+@onready var outline_shader = preload("res://shaders/outline_shader.tres")
+@onready var progress_bar = preload("res://scenes/progress_bar.tscn")
 var health: int
 var speed: int
 var damage: int
@@ -16,11 +18,24 @@ var is_dead: bool = false
 var is_hit: bool = false
 var is_playing_hit: bool = false
 var can_attack: bool = true
-var attack_cooldown: float = 2.0
+var attack_cooldown: float = 1.0
+var is_targeted: bool = false
 
 func _ready() -> void:
 	target = get_tree().get_first_node_in_group("player")
+	target.died.connect(remove_target)
 	current_health = health
+	
+	sprite.material = outline_shader
+	
+	var health_bar = progress_bar.instantiate()
+	add_child(health_bar)
+	health_bar.scale = 0.05
+	health_bar.position += Vector2(-6, -11)
+
+func _process(_delta: float) -> void:
+	if target and target.health == 0:
+		remove_target()
 	
 func animate_enemy() -> void:
 	if !signal_connected:
@@ -55,3 +70,6 @@ func remove_corpse():
 	tween.tween_property(self, "modulate:a", 0, 10)
 	await tween.finished
 	self.queue_free()
+
+func remove_target():
+	target = null

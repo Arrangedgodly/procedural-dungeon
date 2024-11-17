@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgyt1nxew8gbh"]
+
+[ext_resource type="Script" path="res://scripts/player_ui.gd" id="1_0qd3d"]
+[ext_resource type="PackedScene" uid="uid://b0007jhwq53f2" path="res://scenes/progress_bar.tscn" id="1_63lyb"]
+
+[node name="PlayerUI" type="CanvasLayer"]
+script = ExtResource("1_0qd3d")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="HealthBar" parent="HBoxContainer" instance=ExtResource("1_63lyb")]
+layout_mode = 2
+background_color = Color(1, 1, 1, 1)
+under_color = Color(0.721068, 1.06369e-05, 0.23545, 1)
+progress_color = Color(1, 0, 0, 1)
+
+[node name="ManaBar" parent="HBoxContainer" instance=ExtResource("1_63lyb")]
+layout_mode = 2
+background_color = Color(1, 1, 1, 1)
+under_color = Color(0, 0.168298, 0.866951, 1)
+progress_color = Color(0, 1, 1, 1)
+
+[node name="StaminaBar" parent="HBoxContainer" instance=ExtResource("1_63lyb")]
+layout_mode = 2
+background_color = Color(1, 1, 1, 1)
+under_color = Color(0, 0.26907, 0, 1)
+progress_color = Color(0, 1, 0, 1)
