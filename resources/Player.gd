@@ -36,25 +36,6 @@ func _input(event: InputEvent) -> void:
 		drain_stamina()
 	if event.is_action_released("space"):
 		is_boosted = false
-	if event.is_action_pressed("click"):
-		var space = get_world_2d().direct_space_state
-		var query = PhysicsPointQueryParameters2D.new()
-		query.position = get_global_mouse_position()
-		query.collision_mask = 2
-		query.collide_with_bodies = true
-		
-		var result = space.intersect_point(query)
-		
-		if current_target:
-			current_target.is_targeted = false
-			current_target = null
-			
-		if result.size() > 0:
-			for collision in result:
-				var collider = collision.collider
-				if collider is Enemy:
-					target_enemy(collider)
-					break
 
 func _physics_process(_delta: float) -> void:
 	if !is_boosted and !is_refreshing:

@@ -46,6 +46,7 @@ enabled=PackedStringArray("res://addons/beehave/plugin.cfg")
 [global_group]
 
 player=""
+enemies=""
 
 [input]
 

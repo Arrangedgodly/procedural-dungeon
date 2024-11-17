@@ -1,7 +1,7 @@
 extends PanelContainer
 
 var panel_height: int = 100  # Base height
-var panel_width: int = 150   # Base width
+var panel_width: int = 150
 @onready var sub_viewport: SubViewport = $SubViewport
 @onready var vbox: VBoxContainer = $Vbox
 @onready var preview: TextureRect = $Vbox/Preview
@@ -15,28 +15,30 @@ var normal_color = Color("BLACK", .80)
 var hover_color = Color.LIGHT_CORAL
 
 func _ready():
-	# Make the panel size match our desired dimensions
-	custom_minimum_size = Vector2(panel_width, panel_height + 30)  # Extra 30 pixels for label
+	custom_minimum_size = Vector2(panel_width, panel_height + 30)
 	sub_viewport.size = Vector2i(panel_width, panel_height)
 	preview.custom_minimum_size = Vector2(panel_width, panel_height)
 	
-	# Set up the label
-	label.add_theme_font_size_override("font_size", 16)  # Increased font size
-	label.custom_minimum_size = Vector2(0, 30)  # Ensure label has space
+	label.add_theme_font_size_override("font_size", 16)
+	label.custom_minimum_size = Vector2(0, 30)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	
-	# Set up panel style
 	add_theme_stylebox_override("panel", get_panel_style(normal_color))
 
 func get_panel_style(color: Color) -> StyleBoxFlat:
 	var style = StyleBoxFlat.new()
 	style.bg_color = color
-	style.corner_radius_top_left = 5
-	style.corner_radius_top_right = 5
-	style.corner_radius_bottom_left = 5
-	style.corner_radius_bottom_right = 5
+	style.corner_radius_top_left = 16
+	style.corner_radius_top_right = 16
+	style.corner_radius_bottom_left = 16
+	style.corner_radius_bottom_right = 16
+	
+	# Add shadow properties
+	style.shadow_color = Color(0, 0, 0, 0.6)
+	style.shadow_size = 25
+	
 	return style
 
 func load_enemy(path: String):

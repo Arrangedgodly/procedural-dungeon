@@ -1,12 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://bu5nvvfy376tk"]
+[gd_scene load_steps=4 format=3 uid="uid://bu5nvvfy376tk"]
 
 [ext_resource type="Script" path="res://scripts/enemy_panel.gd" id="1_n1vwp"]
 [ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="2_vfrt1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1yyst"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 15
+shadow_offset = Vector2(5, 5)
 
 [node name="EnemyPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(150, 150)
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1yyst")
 script = ExtResource("1_n1vwp")
 
 [node name="Vbox" type="VBoxContainer" parent="."]
