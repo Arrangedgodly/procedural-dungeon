@@ -6,9 +6,7 @@ extends TextureProgressBar
 @onready var progress: TextureProgressBar = $Progress
 
 func _ready() -> void:
-	self.tint_progress = background_color
-	self.tint_under = under_color
-	progress.tint_progress = progress_color
+	set_colors()
 
 func init(max: int) -> void:
 	progress.max_value = max
@@ -36,3 +34,17 @@ func _on_progress_value_changed(new_value: float) -> void:
 		
 	if current_value == target_value:
 		self.value = current_value
+
+func set_colors() -> void:
+	self.tint_progress = background_color
+	self.tint_under = under_color
+	progress.tint_progress = progress_color
+
+func set_background_color(new_color: Color) -> void:
+	background_color = new_color
+
+func set_under_color(new_color: Color) -> void:
+	under_color = new_color
+
+func set_progress_color(new_color: Color) -> void:
+	progress_color = new_color

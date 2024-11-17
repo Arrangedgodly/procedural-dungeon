@@ -246,6 +246,7 @@ animations = [{
 size = Vector2(11, 16.5)
 
 [node name="BlueFireskull" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+collision_mask = 3
 script = ExtResource("1_3rdy4")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
@@ -259,7 +260,6 @@ autoplay = "idle"
 position = Vector2(0, 2.25)
 shape = SubResource("RectangleShape2D_851h7")
 
-[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_u6jpk")]
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("3_u6jpk")]
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@46982")
-actor = NodePath("..")
+blackboard = NodePath("@Node@32753")
