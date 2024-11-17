@@ -4,6 +4,7 @@ signal animation_ended
 
 @export var sprite: AnimatedSprite2D
 @export var collision_shape: CollisionShape2D
+@export var attack_cooldown_timer: Timer
 @onready var outline_shader = preload("res://shaders/outline_shader.tres")
 @onready var progress_bar = preload("res://scenes/progress_bar.tscn")
 @onready var click_area: Area2D
