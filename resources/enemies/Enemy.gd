@@ -7,8 +7,6 @@ signal animation_ended
 @export var attack_cooldown_timer: Timer
 @onready var outline_shader = preload("res://shaders/outline_shader.tres")
 @onready var progress_bar = preload("res://scenes/progress_bar.tscn")
-@onready var click_area: Area2D
-@onready var click_collision: CollisionShape2D
 var is_initialized: bool = false
 var health: int
 var speed: int
@@ -22,7 +20,6 @@ var is_dead: bool = false
 var is_hit: bool = false
 var is_playing_hit: bool = false
 var can_attack: bool = true
-var attack_cooldown: float = 1.0
 var is_targeted: bool = false
 var outline_width: float = .002
 
@@ -45,22 +42,12 @@ func init() -> void:
 	health_bar.set_colors()
 	health_bar.scale = Vector2(.05, .05)
 	health_bar.position.x -= 6
-	health_bar.position.y += sprite_frame.get_height()
+	health_bar.position.y += sprite_frame.get_height() - 10
 	health_bar.init(health)
+	health_bar.hide()
 	
-	collision_shape.disabled = false
-	set_collision_layer_value(2, true)
-	set_collision_mask_value(1, true)
-	
-	click_area = Area2D.new()
-	add_child(click_area)
-	click_collision = CollisionShape2D.new()
-	click_collision.shape = CircleShape2D.new()
-	click_collision.shape.radius = sprite_frame.get_width() / 2
-	click_area.add_child(click_collision)
-	click_area.input_event.connect(_on_click_area_input_event)
-	click_collision.debug_color = Color(0, 1, 0, 0.3)
-	click_collision.set_deferred("debug_draw", true)
+	self.input_pickable = true
+	self.input_event.connect(_on_input_event.bind(input_event))
 	
 	add_to_group("enemies")
 	
@@ -112,6 +99,7 @@ func set_is_targeted(value: bool) -> void:
 	if sprite.material:
 		sprite.material.set_shader_parameter("width", outline_width if value else 0.0)
 
-func _on_click_area_input_event(_viewport, event: InputEvent, _shape_idx: int) -> void:
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
+		print("Click detected")
 		set_is_targeted(true)

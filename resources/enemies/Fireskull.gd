@@ -11,21 +11,25 @@ func _ready() -> void:
 	attack_range = 100
 
 func attack_player() -> void:
-	if !can_attack or !target:
+	if !can_attack or !target or !attack_cooldown_timer.is_stopped():
 		return
 	
 	can_attack = false
-		
 	sprite.play("attack")
-	await sprite.animation_finished
-	sprite.play("idle")
+	sprite.animation_finished.connect(_idle_sprite)
 	
 	var fireball = FIREBALL.instantiate()
 	fireball.set_damage(damage)
 	add_child(fireball)
 	fireball.global_position = global_position
 	fireball.launch(target.global_position)
-	fireball.despawning.connect(set_can_attack)
+	attack_cooldown_timer.start()
+	attack_cooldown_timer.timeout.connect(set_can_attack)
 
 func set_can_attack() -> void:
 	can_attack = true
+	attack_cooldown_timer.timeout.disconnect(set_can_attack)
+
+func _idle_sprite() -> void:
+	sprite.play("idle")
+	sprite.animation_finished.disconnect(_idle_sprite)

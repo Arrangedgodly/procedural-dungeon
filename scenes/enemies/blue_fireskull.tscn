@@ -245,11 +245,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_851h7"]
 size = Vector2(11, 16.5)
 
-[node name="BlueFireskull" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
-collision_layer = 2
+[node name="BlueFireskull" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
 script = ExtResource("1_3rdy4")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_cooldown_timer = NodePath("CooldownTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sblnt")
@@ -262,5 +262,9 @@ shape = SubResource("RectangleShape2D_851h7")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_u6jpk")]
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@84708")
+blackboard = NodePath("@Node@21784")
 actor = NodePath("..")
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
