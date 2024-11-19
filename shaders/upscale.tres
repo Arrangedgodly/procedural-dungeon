@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cae20dhp24a1f"]
+
+[ext_resource type="Shader" path="res://shaders/upscale.gdshader" id="1_vo4w2"]
+
+[resource]
+shader = ExtResource("1_vo4w2")

@@ -21,6 +21,7 @@ var is_hit: bool = false
 var is_playing_hit: bool = false
 var can_attack: bool = true
 var is_targeted: bool = false
+var is_hovered: bool = false
 var outline_width: float = .002
 
 func init() -> void:
@@ -40,18 +41,19 @@ func init() -> void:
 	health_bar.set_under_color(Color(1, 1, 1, 1))
 	health_bar.set_progress_color(Color(1, 0, 0, 1))
 	health_bar.set_colors()
-	health_bar.scale = Vector2(.05, .05)
-	health_bar.position.x -= 6
+	health_bar.scale = Vector2(.075, .075)
+	health_bar.position.x -= sprite_frame.get_width() / 4
 	health_bar.position.y += sprite_frame.get_height() - 10
 	health_bar.init(health)
-	health_bar.hide()
 	
-	self.input_pickable = true
-	self.input_event.connect(_on_input_event.bind(input_event))
+	input_pickable = true
+	self.mouse_entered.connect(_on_mouse_entered)
+	self.mouse_exited.connect(_on_mouse_exited)
 	
 	add_to_group("enemies")
 	
 	is_initialized = true
+	print(self.name + " initialized")
 
 func _process(_delta: float) -> void:
 	if target != null and target.health == 0:
@@ -99,7 +101,10 @@ func set_is_targeted(value: bool) -> void:
 	if sprite.material:
 		sprite.material.set_shader_parameter("width", outline_width if value else 0.0)
 
-func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event.is_action_pressed("click"):
-		print("Click detected")
-		set_is_targeted(true)
+func _on_mouse_entered() -> void:
+	print("Mouse entered")
+	is_hovered = true
+
+func _on_mouse_exited() -> void:
+	print("Mouse exited")
+	is_hovered = false
