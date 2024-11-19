@@ -5,7 +5,6 @@ var current_page_index = 0
 var enemies_per_page = 20
 var all_enemy_paths = []
 var enemy_buttons = []
-var test_arena_open: bool = false
 
 @onready var grid_container: GridContainer = $MainContainer/GridContainer
 @onready var swap_pages: Button = $MainContainer/SwapPages
@@ -18,7 +17,6 @@ var test_arena_open: bool = false
 @onready var camera_2d: Camera2D = $Camera2D
 
 const EnemyPanel = preload("res://scenes/enemy_panel.tscn")
-const TestArena = preload("res://scenes/test_arena.tscn")
 
 func _ready() -> void:
 	canvas_layer.hide()
@@ -35,10 +33,7 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		if test_arena_open:
-			_close_test_arena()
-		else:
-			get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func load_enemy_paths() -> void:
 	all_enemy_paths.clear()
@@ -63,7 +58,6 @@ func load_enemy_paths() -> void:
 	display_current_page()
 
 func display_current_page() -> void:
-	# Clear existing buttons
 	for button in enemy_buttons:
 		button.queue_free()
 	enemy_buttons.clear()
@@ -87,7 +81,6 @@ func update_page_display():
 	var total_pages = ceili(float(all_enemy_paths.size()) / enemies_per_page)
 	page_label.text = "Page %d/%d" % [current_page_index + 1, total_pages]
 	
-	# Update button states
 	prev_button.disabled = current_page_index <= 0
 	next_button.disabled = current_page_index >= total_pages - 1 or total_pages <= 1
 
@@ -109,12 +102,5 @@ func _on_swap_pages_pressed():
 	load_enemy_paths()
 
 func _on_enemy_selected(enemy_path: String):
-	test_arena_open = true
-	var test_arena = TestArena.instantiate()
-	canvas_layer.add_child(test_arena)
-	test_arena.instantiate_enemy(enemy_path)
-	canvas_layer.show()
-	camera_2d.zoom = Vector2(1.75, 1.75)
-
-func _close_test_arena() -> void:
-	get_tree().change_scene_to_file("res://scenes/enemy_selector.tscn")
+	get_tree().get_root().set_meta("selected_enemy_path", enemy_path)
+	get_tree().change_scene_to_file("res://scenes/test_arena.tscn")

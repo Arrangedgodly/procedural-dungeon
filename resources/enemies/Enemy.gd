@@ -58,6 +58,11 @@ func init() -> void:
 func _process(_delta: float) -> void:
 	if target != null and target.health == 0:
 		remove_target()
+
+func _input(event: InputEvent) -> void:
+	if is_hovered:
+		if event.is_action_pressed("click"):
+			set_is_targeted(true)
 	
 func animate_enemy() -> void:
 	if !signal_connected:
@@ -102,9 +107,7 @@ func set_is_targeted(value: bool) -> void:
 		sprite.material.set_shader_parameter("width", outline_width if value else 0.0)
 
 func _on_mouse_entered() -> void:
-	print("Mouse entered")
 	is_hovered = true
 
 func _on_mouse_exited() -> void:
-	print("Mouse exited")
 	is_hovered = false

@@ -262,7 +262,7 @@ shape = SubResource("RectangleShape2D_851h7")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_u6jpk")]
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@17293")
+blackboard = NodePath("@Node@19850")
 actor = NodePath("..")
 
 [node name="CooldownTimer" type="Timer" parent="."]

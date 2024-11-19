@@ -75,9 +75,7 @@ func _physics_process(_delta: float) -> void:
 
 func take_damage(damage_taken: int) -> void:
 	sprite.play("hurt")
-	print("Player health before hit: " + str(current_health))
 	current_health -= damage_taken
-	print("Player health after hit: " + str(current_health))
 	health_changed.emit(current_health)
 	
 	if current_health <= 0:

@@ -3994,8 +3994,11 @@ position = Vector2(0, 126)
 [node name="CircleMarker" parent="." instance=ExtResource("4_ntf8l")]
 z_index = 20
 
-[node name="PlayerUI" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_5tvs0")]
-player = NodePath("../RedPlayer")
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.75, 1.75)
+
+[node name="PlayerUI" parent="Camera2D" node_paths=PackedStringArray("player") instance=ExtResource("5_5tvs0")]
+player = NodePath("../../RedPlayer")
 
 [connection signal="target_position_changed" from="RedPlayer" to="CircleMarker" method="_on_red_player_target_position_changed"]
 [connection signal="target_position_reached" from="RedPlayer" to="CircleMarker" method="_on_red_player_target_position_reached"]

@@ -7,7 +7,7 @@ var direction: Vector2
 func _ready() -> void:
 	health = 30
 	speed = 200
-	damage = 20
+	damage = 75
 	sprite.sprite_frames.set_animation_loop("attack", true)
 	approach_range = 1000
 	attack_range = 500
