@@ -27,5 +27,3 @@ value = 100.0
 nine_patch_stretch = true
 texture_progress = ExtResource("2_gckde")
 tint_progress = Color(0, 1, 1, 1)
-
-[connection signal="value_changed" from="Progress" to="." method="_on_progress_value_changed"]

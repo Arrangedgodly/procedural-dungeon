@@ -48,6 +48,7 @@ tint_progress = Color(1.25621e-05, 0.935448, 3.85046e-07, 1)
 script = ExtResource("4_pel5q")
 
 [node name="Progress" type="TextureProgressBar" parent="StaminaBar"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 value = 50.0
@@ -68,6 +69,7 @@ tint_progress = Color(0.491097, 3.85046e-07, 0.274367, 1)
 script = ExtResource("4_pel5q")
 
 [node name="Progress" type="TextureProgressBar" parent="HealthBar"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 value = 50.0
