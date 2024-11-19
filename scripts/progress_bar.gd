@@ -6,9 +6,11 @@ extends TextureProgressBar
 @onready var progress: TextureProgressBar = $Progress
 
 func _ready() -> void:
-	set_colors()
+	if background_color or under_color or progress_color:
+		set_colors()
 
 func init(max: int) -> void:
+	print("Progress Bar initialized")
 	progress.max_value = max
 	progress.value = max
 	self.max_value = max
@@ -21,19 +23,17 @@ func get_progress() -> float:
 	return progress.value
 
 func _on_progress_value_changed(new_value: float) -> void:
+	print(self.name + " max value is " + str(self.max_value))
 	var target_value = new_value
+	print(self.name + " target value is " + str(target_value))
 	var current_value = self.value
+	print(self.name + " current Value is " + str(current_value))
 	
-	if current_value < target_value:
+	if current_value <= target_value:
 		current_value = target_value
 	elif current_value > target_value:
-		while current_value > target_value:
-			self.value = current_value
-			await get_tree().create_timer(.025).timeout
-			current_value -= 1
-		
-	if current_value == target_value:
-		self.value = current_value
+		var tween = create_tween()
+		tween.tween_property(self, "value", target_value, 1)
 
 func set_colors() -> void:
 	self.tint_progress = background_color

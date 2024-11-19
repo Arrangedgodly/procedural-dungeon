@@ -1,37 +1,76 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgyt1nxew8gbh"]
+[gd_scene load_steps=9 format=3 uid="uid://dgyt1nxew8gbh"]
 
 [ext_resource type="Script" path="res://scripts/player_ui.gd" id="1_0qd3d"]
-[ext_resource type="PackedScene" uid="uid://b0007jhwq53f2" path="res://scenes/progress_bar.tscn" id="1_63lyb"]
+[ext_resource type="Texture2D" uid="uid://kotcm70yq7yy" path="res://assets/ui/HealthBars/Style 1/6/6back.png" id="2_u125a"]
+[ext_resource type="Texture2D" uid="uid://ci84mkmmcc61n" path="res://assets/ui/HealthBars/Style 1/6/6sBlue.png" id="3_b6wqg"]
+[ext_resource type="Script" path="res://scripts/progress_bar.gd" id="4_pel5q"]
+[ext_resource type="Texture2D" uid="uid://d286yepit2657" path="res://assets/ui/HealthBars/Style 1/6/6sRed.png" id="5_ctwh2"]
+[ext_resource type="Texture2D" uid="uid://4g3qiag2j0m4" path="res://assets/ui/HealthBars/Style 1/6/6sPurble.png" id="5_xaauv"]
+[ext_resource type="Texture2D" uid="uid://b45pbhaw84mtp" path="res://assets/ui/HealthBars/Style 1/1/1.PNG" id="6_cdap2"]
+[ext_resource type="Texture2D" uid="uid://ro3tpixsa4b0" path="res://assets/ui/HealthBars/Style 1/Icons/HeartRed.png" id="7_1vvd8"]
 
 [node name="PlayerUI" type="CanvasLayer"]
 script = ExtResource("1_0qd3d")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -60.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 50
-alignment = 1
+[node name="ManaBar" type="TextureProgressBar" parent="."]
+offset_left = 34.0
+offset_top = 155.0
+offset_right = 74.0
+offset_bottom = 251.0
+scale = Vector2(2.25, 2.25)
+value = 100.0
+fill_mode = 3
+texture_under = ExtResource("2_u125a")
+texture_progress = ExtResource("3_b6wqg")
+tint_progress = Color(0.383597, 0.383597, 0.383597, 1)
+script = ExtResource("4_pel5q")
 
-[node name="HealthBar" parent="HBoxContainer" instance=ExtResource("1_63lyb")]
-layout_mode = 2
-background_color = Color(1, 1, 1, 1)
-under_color = Color(0.721068, 1.06369e-05, 0.23545, 1)
-progress_color = Color(1, 0, 0, 1)
+[node name="Progress" type="TextureProgressBar" parent="ManaBar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+value = 50.0
+fill_mode = 3
+texture_progress = ExtResource("3_b6wqg")
+tint_progress = Color(0, 0.498039, 1, 1)
 
-[node name="ManaBar" parent="HBoxContainer" instance=ExtResource("1_63lyb")]
-layout_mode = 2
-background_color = Color(1, 1, 1, 1)
-under_color = Color(0, 0.168298, 0.866951, 1)
-progress_color = Color(0, 1, 1, 1)
+[node name="StaminaBar" type="TextureProgressBar" parent="."]
+offset_left = 90.0
+offset_top = 151.0
+offset_right = 130.0
+offset_bottom = 247.0
+scale = Vector2(1.5, 1.5)
+value = 100.0
+fill_mode = 3
+texture_under = ExtResource("2_u125a")
+texture_progress = ExtResource("5_ctwh2")
+tint_progress = Color(1.25621e-05, 0.935448, 3.85046e-07, 1)
+script = ExtResource("4_pel5q")
 
-[node name="StaminaBar" parent="HBoxContainer" instance=ExtResource("1_63lyb")]
-layout_mode = 2
-background_color = Color(1, 1, 1, 1)
-under_color = Color(0, 0.26907, 0, 1)
-progress_color = Color(0, 1, 0, 1)
+[node name="Progress" type="TextureProgressBar" parent="StaminaBar"]
+offset_right = 40.0
+offset_bottom = 40.0
+value = 50.0
+fill_mode = 3
+texture_progress = ExtResource("5_xaauv")
+tint_progress = Color(1.25621e-05, 0.935448, 3.85046e-07, 1)
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(3, 3)
+value = 100.0
+fill_mode = 3
+texture_under = ExtResource("6_cdap2")
+texture_progress = ExtResource("7_1vvd8")
+texture_progress_offset = Vector2(15, 22)
+tint_progress = Color(0.491097, 3.85046e-07, 0.274367, 1)
+script = ExtResource("4_pel5q")
+
+[node name="Progress" type="TextureProgressBar" parent="HealthBar"]
+offset_right = 40.0
+offset_bottom = 40.0
+value = 50.0
+fill_mode = 3
+texture_progress = ExtResource("7_1vvd8")
+texture_progress_offset = Vector2(15, 22)
