@@ -32,7 +32,6 @@ gdscript/warnings/narrowing_conversion=0
 
 window/size/viewport_width=1200
 window/size/viewport_height=800
-window/size/mode=2
 window/stretch/mode="viewport"
 
 [editor]
@@ -48,6 +47,7 @@ enabled=PackedStringArray("res://addons/beehave/plugin.cfg")
 
 player=""
 enemies=""
+projectiles=""
 
 [input]
 

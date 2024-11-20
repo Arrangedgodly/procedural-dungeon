@@ -23,6 +23,7 @@ var can_attack: bool = true
 var is_targeted: bool = false
 var is_hovered: bool = false
 var outline_width: float = .002
+var health_bar
 
 func init() -> void:
 	target = get_tree().get_first_node_in_group("player")
@@ -35,7 +36,7 @@ func init() -> void:
 	sprite.material.set_shader_parameter("width", 0)
 	var sprite_frame = sprite.sprite_frames.get_frame_texture("idle", 0)
 	
-	var health_bar = progress_bar.instantiate()
+	health_bar = progress_bar.instantiate()
 	add_child(health_bar)
 	health_bar.set_background_color(Color(1, .5, .25, 1))
 	health_bar.set_under_color(Color(1, 1, 1, 1))
@@ -45,6 +46,7 @@ func init() -> void:
 	health_bar.position.x -= sprite_frame.get_width() / 4
 	health_bar.position.y += sprite_frame.get_height() - 10
 	health_bar.init(health)
+	health_bar.hide()
 	
 	input_pickable = true
 	self.mouse_entered.connect(_on_mouse_entered)
@@ -85,16 +87,20 @@ func get_distance_to_player() -> int:
 		return -1
 
 func take_damage(dmg: int):
+	health_bar.show()
 	current_health -= dmg
+	health_bar.set_progress_value(current_health)
 	is_hit = true
 
 func reset_hit_state() -> void:
 	is_hit = false
 	is_playing_hit = false
+	sprite.animation_finished.disconnect(reset_hit_state)
 
 func remove_corpse():
+	health_bar.hide()
 	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 0, 10)
+	tween.tween_property(sprite, "modulate:a", 0, 10)
 	await tween.finished
 	self.queue_free()
 
@@ -102,9 +108,15 @@ func remove_target():
 	target = null
 
 func set_is_targeted(value: bool) -> void:
+	if target:
+		target.target_enemy(self)
+		
 	is_targeted = value
 	if sprite.material:
 		sprite.material.set_shader_parameter("width", outline_width if value else 0.0)
+	
+	if !value and is_dead:
+		remove_corpse()
 
 func _on_mouse_entered() -> void:
 	is_hovered = true

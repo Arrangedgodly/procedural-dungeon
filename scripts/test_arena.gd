@@ -5,6 +5,10 @@ func _ready() -> void:
 	if enemy_path:
 		instantiate_enemy(enemy_path)
 		get_tree().get_root().remove_meta("selected_enemy_path")
+	
+	var projectiles = Node2D.new()
+	add_child(projectiles)
+	projectiles.add_to_group("projectiles")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

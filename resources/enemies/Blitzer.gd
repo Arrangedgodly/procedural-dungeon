@@ -13,12 +13,18 @@ func _ready() -> void:
 	attack_range = 500
 
 func attack_player() -> void:
+	if is_dead:
+		return
+		
 	if is_attacking or !attack_cooldown_timer.is_stopped():
 		return
 	
 	is_attacking = true
 	
 func _process(delta: float) -> void:
+	if is_dead:
+		return
+		
 	if is_attacking and target != null:
 		sprite.play("attack")
 		direction = (target.global_position - global_position).normalized()

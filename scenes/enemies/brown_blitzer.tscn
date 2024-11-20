@@ -247,7 +247,6 @@ animations = [{
 size = Vector2(22, 20)
 
 [node name="BrownBlitzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
-collision_layer = 2
 script = ExtResource("1_a4pfo")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
@@ -262,10 +261,9 @@ autoplay = "idle"
 position = Vector2(-1, 14)
 shape = SubResource("RectangleShape2D_5fb76")
 
-[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_xp5l2")]
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("4_xp5l2")]
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@21560")
-actor = NodePath("..")
+blackboard = NodePath("@Node@63044")
 
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 3.0

@@ -1,0 +1,82 @@
+[gd_scene load_steps=13 format=3 uid="uid://cf8rbiomfvr0o"]
+
+[ext_resource type="Script" path="res://resources/FriendlyProjectile.gd" id="1_ffwak"]
+[ext_resource type="Texture2D" uid="uid://dyxoemkxr58mo" path="res://assets/vfx/projectiles/pj2_magic_missile_small_red/spritesheet.png" id="2_17qcf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvh0w"]
+atlas = ExtResource("2_17qcf")
+region = Rect2(0, 0, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctg2s"]
+atlas = ExtResource("2_17qcf")
+region = Rect2(24, 0, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jy0sn"]
+atlas = ExtResource("2_17qcf")
+region = Rect2(48, 0, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_avg8k"]
+atlas = ExtResource("2_17qcf")
+region = Rect2(72, 0, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i01gs"]
+atlas = ExtResource("2_17qcf")
+region = Rect2(96, 0, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vbo8"]
+atlas = ExtResource("2_17qcf")
+region = Rect2(120, 0, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54oox"]
+atlas = ExtResource("2_17qcf")
+region = Rect2(144, 0, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbms8"]
+atlas = ExtResource("2_17qcf")
+region = Rect2(168, 0, 24, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ntyvw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvh0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctg2s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jy0sn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_avg8k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i01gs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vbo8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54oox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbms8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04383"]
+size = Vector2(17, 16)
+
+[node name="MagicMissile" type="Area2D"]
+script = ExtResource("1_ffwak")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ntyvw")
+frame_progress = 0.168821
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.5, 0)
+shape = SubResource("RectangleShape2D_04383")

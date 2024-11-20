@@ -22,29 +22,11 @@
 
 [node name="HuntPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_fr2ck")
-blackboard = NodePath("@Node@17272")
+blackboard = NodePath("@Node@17292")
 actor = NodePath("")
 
 [node name="SelectorComposite" type="Node" parent="."]
 script = ExtResource("2_jqre1")
-
-[node name="InitSequence" type="Node" parent="SelectorComposite"]
-script = ExtResource("3_i21y1")
-
-[node name="IsEnemyNotInitialized" type="Node" parent="SelectorComposite/InitSequence"]
-script = ExtResource("4_catqw")
-
-[node name="InitEnemy" type="Node" parent="SelectorComposite/InitSequence"]
-script = ExtResource("5_8use6")
-
-[node name="TargetSequence" type="Node" parent="SelectorComposite"]
-script = ExtResource("3_i21y1")
-
-[node name="CanSetTarget" type="Node" parent="SelectorComposite/TargetSequence"]
-script = ExtResource("4_p1ryn")
-
-[node name="SetTarget" type="Node" parent="SelectorComposite/TargetSequence"]
-script = ExtResource("5_brnwa")
 
 [node name="DeathSequence" type="Node" parent="SelectorComposite"]
 script = ExtResource("3_i21y1")
@@ -63,6 +45,24 @@ script = ExtResource("6_6bvg3")
 
 [node name="RemoveCorpse" type="Node" parent="SelectorComposite/RemovalSequence"]
 script = ExtResource("7_6yxcj")
+
+[node name="InitSequence" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_i21y1")
+
+[node name="IsEnemyNotInitialized" type="Node" parent="SelectorComposite/InitSequence"]
+script = ExtResource("4_catqw")
+
+[node name="InitEnemy" type="Node" parent="SelectorComposite/InitSequence"]
+script = ExtResource("5_8use6")
+
+[node name="TargetSequence" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_i21y1")
+
+[node name="CanSetTarget" type="Node" parent="SelectorComposite/TargetSequence"]
+script = ExtResource("4_p1ryn")
+
+[node name="SetTarget" type="Node" parent="SelectorComposite/TargetSequence"]
+script = ExtResource("5_brnwa")
 
 [node name="HitSequence" type="Node" parent="SelectorComposite"]
 script = ExtResource("3_i21y1")

@@ -6,9 +6,8 @@ func tick(actor: Node, _blackboard: Node) -> int:
 		actor.is_playing_hit = true
 		actor.sprite.play("hurt")
 		
-		await actor.sprite.animation_finished
+		actor.sprite.animation_finished.connect(actor.reset_hit_state)
 		
-		actor.reset_hit_state()
 		return SUCCESS
 	
 	return FAILURE

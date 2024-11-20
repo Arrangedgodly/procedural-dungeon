@@ -9,8 +9,8 @@ signal died
 
 @export var sprite: AnimatedSprite2D
 @export var collision_shape: CollisionShape2D
-@onready var CircleMarker: Node2D
 @onready var stamina_regen: Timer = $StaminaRegen
+@onready var basic_attack_timer: Timer = $BasicAttackTimer
 
 var health: int = 500
 var speed: int = 200
@@ -26,10 +26,13 @@ var is_boosted: bool = false
 var is_refreshing: bool = false
 var current_target
 
+const MAGIC_MISSILE = preload("res://scenes/projectiles/magic_missile.tscn")
+
 func _ready() -> void:
 	current_health = health
 	current_stamina = stamina
 	current_mana = mana
+	stamina_regen.timeout.connect(_on_stamina_regen_timeout)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("space"):
@@ -40,6 +43,9 @@ func _input(event: InputEvent) -> void:
 func _physics_process(_delta: float) -> void:
 	if !is_boosted and !is_refreshing:
 		replenish_stamina()
+	
+	if current_target:
+		basic_attack()
 		
 	if Input.is_action_just_pressed("right-click"):
 		target_position = get_global_mouse_position()
@@ -118,8 +124,37 @@ func _on_stamina_regen_timeout() -> void:
 	is_refreshing = false
 
 func target_enemy(enemy: Enemy) -> void:
-	if current_target and current_target != enemy:
-		current_target.is_targeted = false
+	if enemy.is_dead:
+		return
 	
 	current_target = enemy
-	enemy.is_targeted = true
+	
+	if not enemy.tree_exiting.is_connected(_on_target_died):
+		enemy.tree_exiting.connect(_on_target_died.bind(enemy))
+
+func _on_target_died(enemy: Enemy) -> void:
+	if current_target == enemy:
+		current_target = null
+
+func clear_current_target() -> void:
+	if current_target:
+		current_target.set_is_targeted(false)
+		current_target = null
+
+func basic_attack() -> void:
+	if !current_target or !basic_attack_timer.is_stopped():
+		return
+		
+	if !is_instance_valid(current_target) or current_target.is_dead:
+		clear_current_target()
+		return
+	
+	sprite.play("shoot")
+	
+	var magic_missile = MAGIC_MISSILE.instantiate()
+	magic_missile.set_damage(basic_damage)
+	get_tree().get_first_node_in_group("projectiles").add_child(magic_missile)
+	magic_missile.global_position = global_position
+	magic_missile.launch(current_target.global_position)
+	
+	basic_attack_timer.start()

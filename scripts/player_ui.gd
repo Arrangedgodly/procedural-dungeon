@@ -8,7 +8,6 @@ extends CanvasLayer
 func _ready() -> void:
 	player.health_changed.connect(set_health_value)
 	player.stamina_changed.connect(set_stamina_value)
-	print("Player Health: " + str(player.health))
 	health_bar.init(player.health)
 	mana_bar.init(player.mana)
 	stamina_bar.init(player.stamina)

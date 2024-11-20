@@ -1,10 +1,15 @@
 extends Area2D
+class_name Projectile
 
 @onready var sprite = $AnimatedSprite2D
+@onready var collision: CollisionShape2D = $CollisionShape2D
 var speed: float = 400
 var damage: int
 var direction: Vector2 = Vector2.RIGHT
 signal despawning
+
+func _ready() -> void:
+	self.body_entered.connect(_on_body_entered)
 
 func _process(delta: float) -> void:
 	position += direction * speed * delta
@@ -19,7 +24,7 @@ func set_damage(new_damage: int) -> void:
 	damage = new_damage
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.has_method("take_damage") and body.is_in_group("player"):
+	if body.has_method("take_damage"):
 		body.take_damage(damage)
 	despawning.emit()
 	queue_free()

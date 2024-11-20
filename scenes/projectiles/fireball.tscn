@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://b8blg050rds7p"]
 
+[ext_resource type="Script" path="res://resources/EnemyProjectile.gd" id="1_elf34"]
 [ext_resource type="Texture2D" uid="uid://bfl56hgsxv1n5" path="res://assets/vfx/projectiles/pj2_fireball_large_red/spritesheet.png" id="1_f4xgb"]
-[ext_resource type="Script" path="res://scripts/fireball.gd" id="1_wabvy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_koox0"]
 atlas = ExtResource("1_f4xgb")
@@ -90,17 +90,16 @@ z_index = 10
 collision_layer = 4
 collision_mask = 4
 input_pickable = false
-script = ExtResource("1_wabvy")
+script = ExtResource("1_elf34")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 25
+texture_filter = 1
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_kxm0u")
 autoplay = "default"
-frame_progress = 0.581374
+frame_progress = 0.237041
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.25, 0)
 shape = SubResource("RectangleShape2D_l246q")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
