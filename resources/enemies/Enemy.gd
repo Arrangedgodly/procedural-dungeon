@@ -24,6 +24,7 @@ var is_targeted: bool = false
 var is_hovered: bool = false
 var outline_width: float = .002
 var health_bar
+@export var modification_color: Color
 
 func init() -> void:
 	target = get_tree().get_first_node_in_group("player")
@@ -32,6 +33,8 @@ func init() -> void:
 		
 	current_health = health
 	
+	if modification_color:
+		sprite.self_modulate = modification_color
 	sprite.material = outline_shader
 	sprite.material.set_shader_parameter("width", 0)
 	var sprite_frame = sprite.sprite_frames.get_frame_texture("idle", 0)
