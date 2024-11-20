@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cejwv06k0opm3"]
+
+[ext_resource type="Script" path="res://scripts/intro.gd" id="1_erdwc"]
+[ext_resource type="Shader" path="res://shaders/pixelate.gdshader" id="2_deynv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lkl5q"]
+shader = ExtResource("2_deynv")
+shader_parameter/amount = 300
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_5t6ck"]
+file = "res://assets/intro_animation.ogg"
+
+[node name="Intro" type="Node2D"]
+script = ExtResource("1_erdwc")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+material = SubResource("ShaderMaterial_lkl5q")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -544.0
+offset_right = 960.0
+offset_bottom = 544.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = SubResource("VideoStreamTheora_5t6ck")
+autoplay = true
+expand = true
+
+[node name="IntroTimer" type="Timer" parent="."]
+wait_time = 9.5
+one_shot = true
+
+[connection signal="timeout" from="IntroTimer" to="." method="_on_intro_timer_timeout"]
