@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://cxyywo6vbpxbj"]
+[gd_scene load_steps=36 format=3 uid="uid://cxyywo6vbpxbj"]
 
 [ext_resource type="Script" path="res://resources/enemies/Tummunch.gd" id="1_6q306"]
 [ext_resource type="Texture2D" uid="uid://vk0ibvtqfiw5" path="res://assets/sprites/enemies/Tummunch/Enemy_009_C.png" id="2_qol7d"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_qdwdf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wuti5"]
 atlas = ExtResource("2_qol7d")
@@ -244,10 +245,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3hgyg"]
 size = Vector2(11, 18)
 
-[node name="Tummunch" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="Tummunch" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
 script = ExtResource("1_6q306")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_cooldown_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_bj3ww")
@@ -257,3 +259,10 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7)
 shape = SubResource("RectangleShape2D_3hgyg")
+
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_qdwdf")]
+blackboard = NodePath("@Node@99657")
+actor = NodePath("..")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

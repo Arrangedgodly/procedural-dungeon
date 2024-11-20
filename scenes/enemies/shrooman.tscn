@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://daorkqd8jfjhm"]
+[gd_scene load_steps=36 format=3 uid="uid://daorkqd8jfjhm"]
 
 [ext_resource type="Script" path="res://resources/enemies/Shrooman.gd" id="1_cgqrx"]
 [ext_resource type="Texture2D" uid="uid://whpfnangaoxk" path="res://assets/sprites/enemies/Shrooman/Enemy_016_B.png" id="2_jrrf0"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_kg84k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4rnqn"]
 atlas = ExtResource("2_jrrf0")
@@ -244,10 +245,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4x0v8"]
 size = Vector2(22, 20)
 
-[node name="Shrooman" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="Shrooman" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
 script = ExtResource("1_cgqrx")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_cooldown_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jcvei")
@@ -257,3 +259,10 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 14)
 shape = SubResource("RectangleShape2D_4x0v8")
+
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_kg84k")]
+blackboard = NodePath("@Node@95081")
+actor = NodePath("..")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

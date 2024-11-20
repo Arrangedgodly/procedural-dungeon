@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://cf8rbiomfvr0o"]
 
-[ext_resource type="Script" path="res://resources/FriendlyProjectile.gd" id="1_ffwak"]
+[ext_resource type="Script" path="res://resources/projectiles/FriendlyProjectile.gd" id="1_ffwak"]
 [ext_resource type="Texture2D" uid="uid://dyxoemkxr58mo" path="res://assets/vfx/projectiles/pj2_magic_missile_small_red/spritesheet.png" id="2_17qcf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvh0w"]

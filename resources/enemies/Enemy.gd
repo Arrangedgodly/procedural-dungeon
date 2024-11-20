@@ -101,6 +101,7 @@ func reset_hit_state() -> void:
 	sprite.animation_finished.disconnect(reset_hit_state)
 
 func remove_corpse():
+	collision_shape.disabled = true
 	health_bar.hide()
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate:a", 0, 10)

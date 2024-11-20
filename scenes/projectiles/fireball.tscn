@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://b8blg050rds7p"]
 
-[ext_resource type="Script" path="res://resources/EnemyProjectile.gd" id="1_elf34"]
+[ext_resource type="Script" path="res://resources/projectiles/EnemyProjectile.gd" id="1_elf34"]
 [ext_resource type="Texture2D" uid="uid://bfl56hgsxv1n5" path="res://assets/vfx/projectiles/pj2_fireball_large_red/spritesheet.png" id="1_f4xgb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_koox0"]

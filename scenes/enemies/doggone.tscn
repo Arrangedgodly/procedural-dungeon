@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://c323c7nciejyc"]
+[gd_scene load_steps=36 format=3 uid="uid://c323c7nciejyc"]
 
 [ext_resource type="Script" path="res://resources/enemies/Doggone.gd" id="1_yi2y8"]
 [ext_resource type="Texture2D" uid="uid://cenppckedr0s2" path="res://assets/sprites/enemies/Doggone/Enemy_010_A.png" id="2_qmvui"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_vxlmq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k53m6"]
 atlas = ExtResource("2_qmvui")
@@ -244,10 +245,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_12e8x"]
 size = Vector2(16, 14)
 
-[node name="Doggone" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="Doggone" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
 script = ExtResource("1_yi2y8")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_cooldown_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_w56iq")
@@ -257,3 +259,10 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_12e8x")
+
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_vxlmq")]
+blackboard = NodePath("@Node@51091")
+actor = NodePath("..")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

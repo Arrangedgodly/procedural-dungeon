@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://85tltfa7vrg8"]
+[gd_scene load_steps=36 format=3 uid="uid://85tltfa7vrg8"]
 
 [ext_resource type="Script" path="res://resources/enemies/LaGoon.gd" id="1_thgss"]
 [ext_resource type="Texture2D" uid="uid://cskfd38orehdl" path="res://assets/sprites/enemies/LaGoon/Enemy_014_B.png" id="2_ug8bf"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_kpn7p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_35cag"]
 atlas = ExtResource("2_ug8bf")
@@ -244,10 +245,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dy408"]
 size = Vector2(14, 16)
 
-[node name="LaGoon" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="LaGoon" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
 script = ExtResource("1_thgss")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_cooldown_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mtml7")
@@ -257,3 +259,10 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_dy408")
+
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_kpn7p")]
+blackboard = NodePath("@Node@61164")
+actor = NodePath("..")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

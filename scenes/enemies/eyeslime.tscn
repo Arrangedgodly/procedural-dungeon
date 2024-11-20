@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://dtnein4q1mcj"]
+[gd_scene load_steps=36 format=3 uid="uid://dtnein4q1mcj"]
 
 [ext_resource type="Script" path="res://resources/enemies/Eyeslime.gd" id="1_vyvgg"]
 [ext_resource type="Texture2D" uid="uid://bl33opv4gwikf" path="res://assets/sprites/enemies/Eyeslime/Enemy_004_C.png" id="2_nu2ik"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_pxg7x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qcajo"]
 atlas = ExtResource("2_nu2ik")
@@ -244,10 +245,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i16wk"]
 size = Vector2(12, 15)
 
-[node name="Eyeslime" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="Eyeslime" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
 script = ExtResource("1_vyvgg")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_cooldown_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x5irg")
@@ -257,3 +259,10 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_i16wk")
+
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_pxg7x")]
+blackboard = NodePath("@Node@53441")
+actor = NodePath("..")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

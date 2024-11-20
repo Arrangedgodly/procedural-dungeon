@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://b60bfftmq4vkf"]
+[gd_scene load_steps=36 format=3 uid="uid://b60bfftmq4vkf"]
 
 [ext_resource type="Script" path="res://resources/enemies/Cactri.gd" id="1_dqyni"]
 [ext_resource type="Texture2D" uid="uid://bk7ght60fvpx6" path="res://assets/sprites/enemies/Cactri/Enemy_007_A.png" id="2_4yt72"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_1vp0t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8iw68"]
 atlas = ExtResource("2_4yt72")
@@ -244,10 +245,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_676pp"]
 size = Vector2(11, 15)
 
-[node name="Cactri" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="Cactri" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
 script = ExtResource("1_dqyni")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_cooldown_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_pm3if")
@@ -259,3 +261,12 @@ frame_progress = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 8.5)
 shape = SubResource("RectangleShape2D_676pp")
+
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_1vp0t")]
+actor_node_path = NodePath("..")
+blackboard = NodePath("@Node@34352")
+actor = NodePath("..")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true

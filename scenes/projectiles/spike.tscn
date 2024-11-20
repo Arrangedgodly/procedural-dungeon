@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dos8b8dlleptc"]
+
+[sub_resource type="GDScript" id="GDScript_681kj"]
+script/source = "extends EnemyProjectile
+class_name Spike
+
+func _ready() -> void:
+	super._ready()
+	speed = 320
+
+func start_lifetime_timer() -> void:
+	var timer = get_tree().create_timer(0.1)
+	timer.timeout.connect(signal_despawn)
+	timer.timeout.connect(queue_free)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c35ea"]
+size = Vector2(3, 3)
+
+[node name="Spike" type="Area2D"]
+script = SubResource("GDScript_681kj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_c35ea")

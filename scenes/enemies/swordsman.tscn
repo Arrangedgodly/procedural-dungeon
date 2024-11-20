@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://bvs2kbpesvqy1"]
+[gd_scene load_steps=36 format=3 uid="uid://bvs2kbpesvqy1"]
 
-[ext_resource type="Script" path="res://resources/enemies/Enemy.gd" id="1_fkreo"]
+[ext_resource type="Script" path="res://resources/enemies/Swordsman.gd" id="1_8dsqy"]
 [ext_resource type="Texture2D" uid="uid://cfq8bckvjcmoa" path="res://assets/sprites/enemies/Swordsman/Enemy_002_A.png" id="2_tvdme"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_kwc77"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4h64b"]
 atlas = ExtResource("2_tvdme")
@@ -244,16 +245,26 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kf0od"]
 size = Vector2(17, 13)
 
-[node name="Swordsman" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
-script = ExtResource("1_fkreo")
+[node name="Swordsman" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
+script = ExtResource("1_8dsqy")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_cooldown_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_uikbu")
-animation = &"death"
+animation = &"attack"
 autoplay = "idle"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 9.5)
 shape = SubResource("RectangleShape2D_kf0od")
+
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_kwc77")]
+blackboard = NodePath("@Node@97314")
+actor = NodePath("..")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
