@@ -7,22 +7,18 @@ func tick(actor: Node, _blackboard: Node) -> int:
 	
 	var to_player = actor.target.global_position - actor.global_position
 	var distance = to_player.length()
-	
-	# Determine current position relative to player
-	var is_above = actor.global_position.y < actor.target.global_position.y
-	var is_far = distance < actor.approach_range
+	var is_above = actor.global_position.y >= actor.target.global_position.y
 	
 	actor.velocity = Vector2.ZERO
 	
-	if is_far:
-		# Move directly towards player if too far
-		actor.velocity = to_player.normalized() * actor.speed
-	elif is_above:
-		# Move to the side if above player
+	if is_above:
 		var circle_direction = Vector2(-to_player.y, to_player.x).normalized()
 		if actor.global_position.x < actor.target.global_position.x:
 			circle_direction = -circle_direction
 		actor.velocity = circle_direction * actor.speed
+	else:
+		var direction = Vector2(to_player.x, to_player.y).normalized()
+		actor.velocity = direction * actor.speed
 	
 	if actor.velocity != Vector2.ZERO:
 		actor.move_and_slide()

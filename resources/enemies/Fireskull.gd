@@ -19,13 +19,14 @@ func attack_player() -> void:
 	
 	can_attack = false
 	sprite.play("attack")
-	await sprite.animation_finished
-	_idle_sprite()
+	if not sprite.animation_finished.is_connected(_idle_sprite):
+		sprite.animation_finished.connect(_idle_sprite)
 	
 	var fireball = FIREBALL.instantiate()
 	fireball.set_damage(damage)
 	get_tree().get_first_node_in_group("projectiles").add_child(fireball)
 	fireball.global_position = global_position
+	fireball.set_target(target)
 	fireball.launch(target.global_position)
 	attack_cooldown_timer.start()
 	attack_cooldown_timer.timeout.connect(set_can_attack)
