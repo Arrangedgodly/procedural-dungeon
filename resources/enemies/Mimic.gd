@@ -1,3 +1,4 @@
+@icon("res://assets/icons/icon_chest.png")
 extends Enemy
 class_name Mimic
 

@@ -1,3 +1,4 @@
+@icon("res://assets/icons/icon_character.png")
 extends CharacterBody2D
 class_name Player
 signal target_position_changed(pos: Vector2)

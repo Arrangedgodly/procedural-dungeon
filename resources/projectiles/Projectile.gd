@@ -1,3 +1,4 @@
+@icon("res://assets/icons/icon_projectile.png")
 extends Area2D
 class_name Projectile
 

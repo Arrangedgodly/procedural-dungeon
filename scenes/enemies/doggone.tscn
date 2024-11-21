@@ -260,8 +260,7 @@ autoplay = "idle"
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_12e8x")
 
-[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_vxlmq")]
-blackboard = NodePath("@Node@51091")
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("3_vxlmq")]
 actor = NodePath("..")
 
 [node name="Timer" type="Timer" parent="."]
