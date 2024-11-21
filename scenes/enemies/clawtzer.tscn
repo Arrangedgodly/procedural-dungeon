@@ -245,11 +245,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fgoxq"]
 size = Vector2(28, 30)
 
-[node name="Clawtzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
+[node name="Clawtzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
 script = ExtResource("1_pw6ik")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
-attack_cooldown_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rks3a")

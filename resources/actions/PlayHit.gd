@@ -1,13 +1,21 @@
 extends ActionLeaf
 class_name PlayHit
 
-func tick(actor: Node, _blackboard: Node) -> int:
-	if actor.sprite and !actor.is_playing_hit:
-		actor.is_playing_hit = true
+func tick(actor: Node, blackboard: Node) -> int:
+	if blackboard.get_value("playing_hit"):
+		return RUNNING
+		
+	if actor.is_hit:
+		blackboard.set_value("playing_hit", true)
 		actor.sprite.play("hurt")
 		
-		actor.sprite.animation_finished.connect(actor.reset_hit_state)
+		actor.sprite.animation_finished.connect(reset_hit_state.bind(actor, blackboard))
 		
 		return SUCCESS
 	
 	return FAILURE
+
+func reset_hit_state(actor: Node, blackboard: Node) -> void:
+	actor.is_hit = false
+	blackboard.set_value("playing_hit", false)
+	actor.sprite.animation_finished.disconnect(reset_hit_state)

@@ -5,12 +5,12 @@ signal animation_ended
 
 @export var sprite: AnimatedSprite2D
 @export var collision_shape: CollisionShape2D
-@export var attack_cooldown_timer: Timer
 @onready var outline_shader = preload("res://shaders/outline_shader.tres")
 @onready var progress_bar = preload("res://scenes/progress_bar.tscn")
 var health: int
 var speed: int
 var damage: int
+var attack_cooldown: float
 var attack_range: int = 25
 var approach_range: int = 150
 var signal_connected: bool = false
@@ -18,7 +18,6 @@ var target
 var current_health: int = 1
 var is_dead: bool = false
 var is_hit: bool = false
-var is_attacking: bool = false
 var is_targeted: bool = false
 var is_hovered: bool = false
 var outline_width: float = .002
@@ -90,18 +89,12 @@ func take_damage(dmg: int):
 	else:
 		is_hit = true
 
-func reset_hit_state() -> void:
-	is_hit = false
-	sprite.animation_finished.disconnect(reset_hit_state)
-
-func reset_attack_state() -> void:
-	is_attacking = false
-	sprite.animation_finished.disconnect(reset_attack_state)
-
 func remove_corpse():
+	sprite.play("death")
 	set_is_targeted(false)
 	collision_shape.disabled = true
 	health_bar.hide()
+	await sprite.animation_finished
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate:a", 0, 10)
 	await tween.finished

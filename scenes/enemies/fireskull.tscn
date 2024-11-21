@@ -248,11 +248,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_851h7"]
 size = Vector2(11, 16.5)
 
-[node name="Fireskull" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
+[node name="Fireskull" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
 script = ExtResource("1_y5dvv")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
-attack_cooldown_timer = NodePath("CooldownTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sblnt")
@@ -272,7 +271,3 @@ movement_action = ExtResource("5_qcr8r")
 actor_node_path = NodePath("..")
 blackboard = NodePath("../Blackboard")
 actor = NodePath("..")
-
-[node name="CooldownTimer" type="Timer" parent="."]
-wait_time = 1.5
-one_shot = true

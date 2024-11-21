@@ -245,11 +245,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_12e8x"]
 size = Vector2(16, 14)
 
-[node name="Doggone" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_cooldown_timer")]
+[node name="Doggone" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
 script = ExtResource("1_yi2y8")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
-attack_cooldown_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_w56iq")

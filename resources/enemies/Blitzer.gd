@@ -1,7 +1,6 @@
 extends Enemy
 class_name Blitzer
 
-var is_attacking: bool = false
 var direction: Vector2
 
 func _ready() -> void:
@@ -15,17 +14,12 @@ func _ready() -> void:
 func attack_player() -> void:
 	if is_dead:
 		return
-		
-	if is_attacking or !attack_cooldown_timer.is_stopped():
-		return
-	
-	is_attacking = true
 	
 func _process(delta: float) -> void:
 	if is_dead:
 		return
 		
-	if is_attacking and target != null:
+	if target != null:
 		sprite.play("attack")
 		direction = (target.global_position - global_position).normalized()
 		position += direction * speed * delta
@@ -36,5 +30,3 @@ func _process(delta: float) -> void:
 			if collision.get_collider() == target:
 				target.take_damage(damage)
 				sprite.play("idle")
-				is_attacking = false
-				attack_cooldown_timer.start()
