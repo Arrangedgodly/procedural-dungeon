@@ -8,7 +8,6 @@ signal animation_ended
 @export var attack_cooldown_timer: Timer
 @onready var outline_shader = preload("res://shaders/outline_shader.tres")
 @onready var progress_bar = preload("res://scenes/progress_bar.tscn")
-var is_initialized: bool = false
 var health: int
 var speed: int
 var damage: int
@@ -19,18 +18,15 @@ var target
 var current_health: int = 1
 var is_dead: bool = false
 var is_hit: bool = false
-var is_playing_hit: bool = false
-var can_attack: bool = true
+var is_attacking: bool = false
 var is_targeted: bool = false
 var is_hovered: bool = false
 var outline_width: float = .002
 var health_bar
 @export var modification_color: Color
 
-func init() -> void:
-	target = get_tree().get_first_node_in_group("player")
-	if target:
-		target.died.connect(remove_target)
+func _ready() -> void:
+	set_target()
 		
 	current_health = health
 	
@@ -54,7 +50,6 @@ func init() -> void:
 	
 	add_to_group("enemies")
 	
-	is_initialized = true
 	print(self.name + " initialized")
 
 func _process(_delta: float) -> void:
@@ -90,15 +85,17 @@ func take_damage(dmg: int):
 	health_bar.show()
 	current_health -= dmg
 	health_bar.set_progress_value(current_health)
-	is_hit = true
+	if current_health == 0:
+		is_dead = true
+	else:
+		is_hit = true
 
 func reset_hit_state() -> void:
 	is_hit = false
-	is_playing_hit = false
 	sprite.animation_finished.disconnect(reset_hit_state)
 
 func reset_attack_state() -> void:
-	can_attack = true
+	is_attacking = false
 	sprite.animation_finished.disconnect(reset_attack_state)
 
 func remove_corpse():
@@ -109,6 +106,11 @@ func remove_corpse():
 	tween.tween_property(sprite, "modulate:a", 0, 10)
 	await tween.finished
 	self.queue_free()
+
+func set_target():
+	target = get_tree().get_first_node_in_group("player")
+	if target:
+		target.died.connect(remove_target)
 
 func remove_target():
 	target = null

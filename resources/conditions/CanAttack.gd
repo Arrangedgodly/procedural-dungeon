@@ -2,6 +2,12 @@ extends ConditionLeaf
 class_name CanAttack
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
+	if actor.is_attacking:
+		return RUNNING
+	
+	if !blackboard.get_value("can_attack"):
+		return FAILURE
+		
 	var distance = actor.get_distance_to_player()
 	
 	if distance == -1:
