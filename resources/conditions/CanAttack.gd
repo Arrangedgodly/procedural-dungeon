@@ -1,13 +1,15 @@
 extends ConditionLeaf
 class_name CanAttack
 
-func tick(actor: Node, _blackboard: Blackboard) -> int:
-	var distance_from_player = actor.get_distance_to_player()
+func tick(actor: Node, blackboard: Blackboard) -> int:
+	var distance = actor.get_distance_to_player()
 	
-	if distance_from_player == -1:
+	if distance == -1:
 		return FAILURE
 	
-	if distance_from_player <= actor.attack_range:
+	if distance <= actor.attack_range:
+		blackboard.set_value("can_attack", true)
 		return SUCCESS
-	else:
-		return FAILURE
+	
+	blackboard.set_value("can_attack", false)
+	return FAILURE
