@@ -41,12 +41,8 @@ func init() -> void:
 	
 	health_bar = progress_bar.instantiate()
 	add_child(health_bar)
-	health_bar.set_background_color(Color(1, .5, .25, 1))
-	health_bar.set_under_color(Color(1, 1, 1, 1))
-	health_bar.set_progress_color(Color(1, 0, 0, 1))
-	health_bar.set_colors()
-	health_bar.scale = Vector2(.075, .075)
-	health_bar.position.x -= sprite_frame.get_width() / 4
+	health_bar.scale = Vector2(.125, .125)
+	health_bar.position.x -= sprite_frame.get_width() / 2
 	health_bar.position.y += sprite_frame.get_height() - 10
 	health_bar.init(health)
 	health_bar.hide()
@@ -100,7 +96,12 @@ func reset_hit_state() -> void:
 	is_playing_hit = false
 	sprite.animation_finished.disconnect(reset_hit_state)
 
+func reset_attack_state() -> void:
+	can_attack = true
+	sprite.animation_finished.disconnect(reset_attack_state)
+
 func remove_corpse():
+	set_is_targeted(false)
 	collision_shape.disabled = true
 	health_bar.hide()
 	var tween = create_tween()
@@ -112,15 +113,12 @@ func remove_target():
 	target = null
 
 func set_is_targeted(value: bool) -> void:
-	if target:
+	if value and target:
 		target.target_enemy(self)
 		
 	is_targeted = value
 	if sprite.material:
 		sprite.material.set_shader_parameter("width", outline_width if value else 0.0)
-	
-	if !value and is_dead:
-		remove_corpse()
 
 func _on_mouse_entered() -> void:
 	is_hovered = true

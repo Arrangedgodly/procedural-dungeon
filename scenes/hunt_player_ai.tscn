@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://d4mefvyhnuqn0"]
+[gd_scene load_steps=18 format=3 uid="uid://d4mefvyhnuqn0"]
 
-[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_fr2ck"]
+[ext_resource type="Script" path="res://scripts/hunt_player_ai.gd" id="1_v5ekl"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_jqre1"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_i21y1"]
 [ext_resource type="Script" path="res://resources/conditions/IsPlayerInApproachRange.gd" id="3_txfs6"]
-[ext_resource type="Script" path="res://resources/actions/MoveTowardsPlayer.gd" id="4_62dh5"]
 [ext_resource type="Script" path="res://resources/conditions/IsEnemyNotInitialized.gd" id="4_catqw"]
 [ext_resource type="Script" path="res://resources/conditions/CanSetTarget.gd" id="4_p1ryn"]
 [ext_resource type="Script" path="res://resources/conditions/IsDying.gd" id="4_wrun0"]
@@ -18,12 +17,9 @@
 [ext_resource type="Script" path="res://resources/actions/PlayHit.gd" id="9_e2hyf"]
 [ext_resource type="Script" path="res://resources/actions/MoveRandomly.gd" id="9_rne68"]
 [ext_resource type="Script" path="res://resources/conditions/CanAttack.gd" id="10_qfvie"]
-[ext_resource type="Script" path="res://resources/actions/AttackPlayer.gd" id="11_7d55h"]
 
-[node name="HuntPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
-script = ExtResource("1_fr2ck")
-blackboard = NodePath("@Node@17272")
-actor = NodePath("")
+[node name="HuntPlayerAI" type="Node"]
+script = ExtResource("1_v5ekl")
 
 [node name="SelectorComposite" type="Node" parent="."]
 script = ExtResource("2_jqre1")
@@ -79,17 +75,11 @@ script = ExtResource("3_i21y1")
 [node name="CanAttack" type="Node" parent="SelectorComposite/AttackSequence"]
 script = ExtResource("10_qfvie")
 
-[node name="AttackPlayer" type="Node" parent="SelectorComposite/AttackSequence"]
-script = ExtResource("11_7d55h")
-
 [node name="ApproachPlayerSequence" type="Node" parent="SelectorComposite"]
 script = ExtResource("3_i21y1")
 
 [node name="IsPlayerInApproachRange" type="Node" parent="SelectorComposite/ApproachPlayerSequence"]
 script = ExtResource("3_txfs6")
-
-[node name="MoveTowardsPlayer" type="Node" parent="SelectorComposite/ApproachPlayerSequence"]
-script = ExtResource("4_62dh5")
 
 [node name="WanderSequence" type="Node" parent="SelectorComposite"]
 script = ExtResource("3_i21y1")

@@ -99,10 +99,9 @@ func kill_player() -> void:
 func drain_stamina() -> void:
 	is_boosted = true
 	while current_stamina > 0 and is_boosted:
-		stamina_changed.emit(current_stamina)
 		await get_tree().create_timer(0.02).timeout
 		current_stamina -= 1
-		print(current_stamina)
+		stamina_changed.emit(current_stamina)
 	
 	if current_stamina == 0:
 		is_boosted = false
@@ -114,9 +113,9 @@ func replenish_stamina() -> void:
 	is_refreshing = true
 		
 	if current_stamina < stamina and !is_boosted:
-		stamina_changed.emit(current_stamina)
 		get_tree().get_frame()
 		current_stamina += 1
+		stamina_changed.emit(current_stamina)
 	
 	stamina_regen.start()
 

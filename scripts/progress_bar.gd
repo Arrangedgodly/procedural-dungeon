@@ -19,6 +19,7 @@ func init(max: int) -> void:
 
 func set_progress_value(new_value: float) -> void:
 	progress.value = new_value
+	self.value = new_value
 	
 func get_progress() -> float:
 	return progress.value
@@ -28,10 +29,10 @@ func _on_progress_value_changed(new_value: float) -> void:
 	var current_value = self.value
 	
 	if current_value <= target_value:
-		current_value = target_value
+		self.value = target_value
 	elif current_value > target_value:
 		var tween = create_tween()
-		tween.tween_property(self, "value", target_value, 2.5)
+		tween.tween_property(self, "value", target_value, 1.5)
 		await tween.finished
 
 func set_colors() -> void:

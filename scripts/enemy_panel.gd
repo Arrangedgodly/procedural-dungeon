@@ -1,6 +1,6 @@
 extends PanelContainer
 
-var panel_height: int = 100  # Base height
+var panel_height: int = 100
 var panel_width: int = 150
 @onready var sub_viewport: SubViewport = $SubViewport
 @onready var vbox: VBoxContainer = $Vbox
@@ -19,7 +19,7 @@ func _ready():
 	sub_viewport.size = Vector2i(panel_width, panel_height)
 	preview.custom_minimum_size = Vector2(panel_width, panel_height)
 	
-	label.add_theme_font_size_override("font_size", 16)
+	label.add_theme_font_size_override("font_size", 24)
 	label.custom_minimum_size = Vector2(0, 30)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

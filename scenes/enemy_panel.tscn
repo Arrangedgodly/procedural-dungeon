@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/enemy_panel.gd" id="1_n1vwp"]
 [ext_resource type="Material" uid="uid://cae20dhp24a1f" path="res://shaders/upscale.tres" id="2_g4kjh"]
-[ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="2_vfrt1"]
+[ext_resource type="FontFile" uid="uid://cp1e1dgbsgtv3" path="res://assets/fonts/ThaleahFat.ttf" id="3_mutr5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1yyst"]
 corner_radius_top_left = 16
@@ -30,7 +30,9 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="Vbox"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_vfrt1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_mutr5")
 theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 

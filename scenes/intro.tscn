@@ -5,7 +5,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lkl5q"]
 shader = ExtResource("2_deynv")
-shader_parameter/amount = 300
+shader_parameter/amount = 256
 
 [sub_resource type="VideoStreamTheora" id="VideoStreamTheora_5t6ck"]
 file = "res://assets/intro_animation.ogg"

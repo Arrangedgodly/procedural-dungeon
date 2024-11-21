@@ -1,8 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://blxueh25cy07p"]
+[gd_scene load_steps=38 format=3 uid="uid://blxueh25cy07p"]
 
 [ext_resource type="Script" path="res://resources/enemies/Fireskull.gd" id="1_y5dvv"]
 [ext_resource type="Texture2D" uid="uid://cwpaflxrqpgnu" path="res://assets/sprites/enemies/Fireskull/Enemy_008_B.png" id="2_cnciq"]
 [ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="4_3gx7d"]
+[ext_resource type="Script" path="res://resources/actions/AttackPlayer.gd" id="4_gwhtv"]
+[ext_resource type="Script" path="res://resources/actions/MoveTowardsPlayer.gd" id="5_qcr8r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k83ja"]
 atlas = ExtResource("2_cnciq")
@@ -260,9 +262,10 @@ autoplay = "idle"
 position = Vector2(0, 2.25)
 shape = SubResource("RectangleShape2D_851h7")
 
-[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_3gx7d")]
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("4_3gx7d")]
+attack_action = ExtResource("4_gwhtv")
+movement_action = ExtResource("5_qcr8r")
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@27366")
 actor = NodePath("..")
 
 [node name="CooldownTimer" type="Timer" parent="."]

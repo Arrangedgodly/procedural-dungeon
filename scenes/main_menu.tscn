@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://that475cqd7c"]
+[gd_scene load_steps=8 format=3 uid="uid://that475cqd7c"]
 
-[ext_resource type="FontFile" uid="uid://bywnabqxhy04y" path="res://assets/fonts/PixelHigh.ttf" id="1_1cvm4"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_h0765"]
 [ext_resource type="Script" path="res://scripts/background.gd" id="2_jlxlm"]
 [ext_resource type="Shader" path="res://shaders/pixelate.gdshader" id="2_n6hoo"]
 [ext_resource type="Theme" uid="uid://dstl7l8pdwg7x" path="res://themes/menu_button.tres" id="2_tus83"]
+[ext_resource type="FontFile" uid="uid://cp1e1dgbsgtv3" path="res://assets/fonts/ThaleahFat.ttf" id="4_xrab0"]
+[ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="6_0y6aj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qme1y"]
 shader = ExtResource("2_n6hoo")
@@ -42,36 +43,51 @@ grow_vertical = 2
 theme_override_constants/separation = 50
 alignment = 1
 
+[node name="Label" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 15
+theme_override_constants/outline_size = 25
+theme_override_constants/shadow_outline_size = 25
+theme_override_fonts/font = ExtResource("4_xrab0")
+theme_override_font_sizes/font_size = 128
+text = "Untitled Dungeon Crawler"
+horizontal_alignment = 1
+autowrap_mode = 2
+
 [node name="DungeonGenerator" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(560, 130)
+custom_minimum_size = Vector2(560, 90)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("2_tus83")
 theme_override_constants/outline_size = 20
-theme_override_fonts/font = ExtResource("1_1cvm4")
+theme_override_fonts/font = ExtResource("6_0y6aj")
 theme_override_font_sizes/font_size = 64
 text = "Dungeon Generator"
 
 [node name="EnemySelector" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(480, 130)
+custom_minimum_size = Vector2(480, 90)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("2_tus83")
 theme_override_constants/outline_size = 20
-theme_override_fonts/font = ExtResource("1_1cvm4")
+theme_override_fonts/font = ExtResource("6_0y6aj")
 theme_override_font_sizes/font_size = 64
 text = "Enemy Selector"
 
 [node name="Credits" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(240, 130)
+custom_minimum_size = Vector2(240, 90)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("2_tus83")
 theme_override_constants/outline_size = 20
-theme_override_fonts/font = ExtResource("1_1cvm4")
+theme_override_fonts/font = ExtResource("6_0y6aj")
 theme_override_font_sizes/font_size = 64
 text = "Credits"
 

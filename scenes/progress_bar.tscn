@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0007jhwq53f2"]
+[gd_scene load_steps=5 format=3 uid="uid://b0007jhwq53f2"]
 
-[ext_resource type="Texture2D" uid="uid://dls4sbd4vnkm7" path="res://assets/ui/bar_background_gray.png" id="1_c32sn"]
 [ext_resource type="Script" path="res://scripts/progress_bar.gd" id="1_ew2ue"]
-[ext_resource type="Texture2D" uid="uid://bmvtwh058vb6u" path="res://assets/ui/bar_gray.png" id="2_gckde"]
+[ext_resource type="Texture2D" uid="uid://ct5vjs4wcpajx" path="res://assets/ui/HealthBars/Style 1/5/2.png" id="1_fsas2"]
+[ext_resource type="Texture2D" uid="uid://41nojxkbdwmy" path="res://assets/ui/HealthBars/Style 1/5/2sBlue.png" id="2_moa8o"]
+[ext_resource type="Texture2D" uid="uid://cqlc3ovnarvsh" path="res://assets/ui/HealthBars/Style 1/5/2sRed.png" id="4_tc7cb"]
 
 [node name="TextureProgressBar" type="TextureProgressBar"]
 custom_minimum_size = Vector2(240, 50)
@@ -13,9 +14,8 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 value = 100.0
 nine_patch_stretch = true
-texture_under = ExtResource("1_c32sn")
-texture_progress = ExtResource("2_gckde")
-tint_progress = Color(1, 0, 1, 1)
+texture_under = ExtResource("1_fsas2")
+texture_progress = ExtResource("2_moa8o")
 script = ExtResource("1_ew2ue")
 
 [node name="Progress" type="TextureProgressBar" parent="."]
@@ -23,7 +23,6 @@ custom_minimum_size = Vector2(240, 50)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-value = 100.0
+value = 50.0
 nine_patch_stretch = true
-texture_progress = ExtResource("2_gckde")
-tint_progress = Color(0, 1, 1, 1)
+texture_progress = ExtResource("4_tc7cb")
