@@ -8,18 +8,22 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 	if !blackboard.get_value("can_attack"):
 		return FAILURE
 	
-	blackboard.set_value("is_attacking", true)
+	set_is_attacking(actor, blackboard, true)
 	actor.attack_player()
 	actor.sprite.play("attack")
-	actor.sprite.animation_finished.connect(change_actor_animation.bind(actor, blackboard))
-	var attacking_timer = get_tree().create_timer(actor.attack_cooldown)
-	attacking_timer.timeout.connect(reset_attack_state.bind(blackboard))
+	if !actor.sprite.animation_finished.is_connected(change_actor_animation):
+		actor.sprite.animation_finished.connect(change_actor_animation.bind(actor, blackboard))
+	actor.attack_timer.start()
+	actor.attack_timer.timeout.connect(set_is_attacking.bind(actor, blackboard, false))
 		
 	return SUCCESS
 
-func reset_attack_state(blackboard: Node):
-	blackboard.set_value("is_attacking", true)
-
-func change_actor_animation(actor: Node, blackboard: Node):
+func change_actor_animation(actor: Node, blackboard: Node) -> void:
+	set_is_attacking(actor, blackboard, false)
 	actor.sprite.play("idle")
 	actor.sprite.animation_finished.disconnect(change_actor_animation)
+
+func set_is_attacking(actor: Node, blackboard: Node, value: bool) -> void:
+	blackboard.set_value("is_attacking", value)
+	if actor.attack_timer.timeout.is_connected(set_is_attacking):
+		actor.attack_timer.timeout.disconnect(set_is_attacking)

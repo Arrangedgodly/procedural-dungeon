@@ -5,12 +5,12 @@ signal animation_ended
 
 @export var sprite: AnimatedSprite2D
 @export var collision_shape: CollisionShape2D
+@export var attack_timer: Timer
 @onready var outline_shader = preload("res://shaders/outline_shader.tres")
 @onready var progress_bar = preload("res://scenes/progress_bar.tscn")
 var health: int
 var speed: int
 var damage: int
-var attack_cooldown: float
 var attack_range: int = 25
 var approach_range: int = 150
 var signal_connected: bool = false
@@ -24,9 +24,7 @@ var outline_width: float = .002
 var health_bar
 @export var modification_color: Color
 
-func _ready() -> void:
-	set_target()
-		
+func _ready() -> void:	
 	current_health = health
 	
 	if modification_color:
@@ -48,7 +46,6 @@ func _ready() -> void:
 	self.mouse_exited.connect(_on_mouse_exited)
 	
 	add_to_group("enemies")
-	
 	print(self.name + " initialized")
 
 func _process(_delta: float) -> void:

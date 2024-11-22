@@ -2,6 +2,10 @@ extends ConditionLeaf
 class_name CanAttack
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
+	if actor.attack_timer:
+		if !actor.attack_timer.is_stopped():
+			return FAILURE
+		
 	if blackboard.get_value("is_attacking"):
 		return RUNNING
 			

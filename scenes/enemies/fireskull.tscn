@@ -1,11 +1,9 @@
-[gd_scene load_steps=39 format=3 uid="uid://blxueh25cy07p"]
+[gd_scene load_steps=37 format=3 uid="uid://blxueh25cy07p"]
 
 [ext_resource type="Script" path="res://resources/enemies/Fireskull.gd" id="1_y5dvv"]
 [ext_resource type="Texture2D" uid="uid://cwpaflxrqpgnu" path="res://assets/sprites/enemies/Fireskull/Enemy_008_B.png" id="2_cnciq"]
-[ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="3_vdyne"]
 [ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="4_3gx7d"]
-[ext_resource type="Script" path="res://resources/actions/AttackPlayer.gd" id="4_gwhtv"]
-[ext_resource type="Script" path="res://resources/actions/MoveTowardsPlayer.gd" id="5_qcr8r"]
+[ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="6_lc50y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k83ja"]
 atlas = ExtResource("2_cnciq")
@@ -196,7 +194,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hurt",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -248,26 +246,34 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_851h7"]
 size = Vector2(11, 16.5)
 
-[node name="Fireskull" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="Fireskull" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_timer")]
 script = ExtResource("1_y5dvv")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_timer = NodePath("AttackTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sblnt")
-animation = &"walk"
+animation = &"hurt"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.25)
 shape = SubResource("RectangleShape2D_851h7")
 
-[node name="Blackboard" type="Node" parent="."]
-script = ExtResource("3_vdyne")
-
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_3gx7d")]
-attack_action = ExtResource("4_gwhtv")
-movement_action = ExtResource("5_qcr8r")
 actor_node_path = NodePath("..")
 blackboard = NodePath("../Blackboard")
 actor = NodePath("..")
+
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource("6_lc50y")
+blackboard = {
+"can_attack": false,
+"is_attacking": false,
+"playing_hit": false
+}
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true

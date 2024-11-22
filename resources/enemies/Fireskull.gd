@@ -8,8 +8,8 @@ func _ready() -> void:
 	speed = 50
 	damage = 30
 	approach_range = 500
-	attack_range = 100
-	attack_cooldown = 2.5
+	attack_range = 150
+	super._ready()
 
 func attack_player() -> void:
 	if is_dead:

@@ -194,7 +194,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hurt",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -246,24 +246,28 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5fb76"]
 size = Vector2(22, 20)
 
-[node name="Blitzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="Blitzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_timer")]
 script = ExtResource("1_cjg3m")
 sprite = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
+attack_timer = NodePath("AttackTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0n71t")
-animation = &"attack"
+animation = &"hurt"
 autoplay = "idle"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 14)
 shape = SubResource("RectangleShape2D_5fb76")
 
-[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("4_qoddi")]
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_qoddi")]
 actor_node_path = NodePath("..")
+blackboard = NodePath("@Node@17290")
 actor = NodePath("..")
 
-[node name="AttackCooldown" type="Timer" parent="."]
+[node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
