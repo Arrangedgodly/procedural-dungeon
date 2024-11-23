@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://resources/Player.gd" id="1_m6076"]
 [ext_resource type="Texture2D" uid="uid://c0pg2fw8onr5m" path="res://assets/sprites/character/Hero_01.png" id="2_6pkq6"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_l2db2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5lv1v"]
 atlas = ExtResource("2_6pkq6")
@@ -441,15 +442,12 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_agc3i"]
-size = Vector2(14, 18)
-
 [node name="RedPlayer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape") groups=["player"]]
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_m6076")
 sprite = NodePath("AnimatedSprite2D")
-collision_shape = NodePath("CollisionShape2D")
+collision_shape = NodePath("")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qmxi8")
@@ -457,10 +455,7 @@ animation = &"shoot"
 autoplay = "idle"
 frame = 5
 frame_progress = 1.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
-position = Vector2(-1, 7)
-shape = SubResource("RectangleShape2D_agc3i")
+script = ExtResource("3_l2db2")
 
 [node name="StaminaRegen" type="Timer" parent="."]
 wait_time = 0.1

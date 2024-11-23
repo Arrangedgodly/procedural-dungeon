@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://resources/enemies/Cactri.gd" id="1_dqyni"]
 [ext_resource type="Texture2D" uid="uid://bk7ght60fvpx6" path="res://assets/sprites/enemies/Cactri/Enemy_007_A.png" id="2_4yt72"]
 [ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_1vp0t"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_jyrpi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8iw68"]
 atlas = ExtResource("2_4yt72")
@@ -242,13 +243,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_676pp"]
-size = Vector2(11, 15)
-
-[node name="Cactri" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_timer")]
+[node name="Cactri" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "attack_timer")]
 script = ExtResource("1_dqyni")
 sprite = NodePath("AnimatedSprite2D")
-collision_shape = NodePath("CollisionShape2D")
 attack_timer = NodePath("AttackTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -257,14 +254,11 @@ animation = &"hurt"
 autoplay = "idle"
 frame = 5
 frame_progress = 1.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 8.5)
-shape = SubResource("RectangleShape2D_676pp")
+script = ExtResource("3_jyrpi")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_1vp0t")]
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@17293")
+blackboard = NodePath("@Node@43635")
 actor = NodePath("..")
 
 [node name="AttackTimer" type="Timer" parent="."]

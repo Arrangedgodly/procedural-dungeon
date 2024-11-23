@@ -1,7 +1,9 @@
-[gd_scene load_steps=35 format=3 uid="uid://h48u3tkfjwwl"]
+[gd_scene load_steps=36 format=3 uid="uid://h48u3tkfjwwl"]
 
 [ext_resource type="Script" path="res://resources/enemies/MiniCyclops.gd" id="1_ojp7j"]
 [ext_resource type="Texture2D" uid="uid://bsnfi1tuxqedc" path="res://assets/sprites/enemies/MiniCyclops/Enemy_003_C.png" id="2_8pxqo"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_xtrgt"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="4_otje6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hie5d"]
 atlas = ExtResource("2_8pxqo")
@@ -241,19 +243,21 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v1ij0"]
-size = Vector2(13, 12)
-
-[node name="MiniCyclops" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="MiniCyclops" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "attack_timer")]
 script = ExtResource("1_ojp7j")
 sprite = NodePath("AnimatedSprite2D")
-collision_shape = NodePath("CollisionShape2D")
+attack_timer = NodePath("AttackTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rkcqw")
 animation = &"walk"
 autoplay = "idle"
+script = ExtResource("3_xtrgt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 10)
-shape = SubResource("RectangleShape2D_v1ij0")
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_otje6")]
+actor_node_path = NodePath("..")
+blackboard = NodePath("@Node@37655")
+actor = NodePath("..")
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true

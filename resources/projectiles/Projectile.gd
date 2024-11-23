@@ -3,7 +3,6 @@ extends Area2D
 class_name Projectile
 
 @onready var sprite = $AnimatedSprite2D
-@onready var collision: CollisionShape2D = $CollisionShape2D
 var speed: float = 400
 var damage: int
 var direction: Vector2 = Vector2.RIGHT

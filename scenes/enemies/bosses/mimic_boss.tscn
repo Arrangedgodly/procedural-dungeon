@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dpsxjel7exo60" path="res://assets/sprites/enemies/Bosses/Boss Mimic/HURT.png" id="5_b0hpk"]
 [ext_resource type="Texture2D" uid="uid://m21hg67lfp4d" path="res://assets/sprites/enemies/Bosses/Boss Mimic/IDLE.png" id="6_rjmyi"]
 [ext_resource type="Texture2D" uid="uid://vvqtoxl6m32x" path="res://assets/sprites/enemies/Bosses/Boss Mimic/WALK.png" id="7_0q6ch"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="8_33jdm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_55mh0"]
 atlas = ExtResource("3_v41tc")
@@ -356,18 +357,11 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gp8tm"]
-size = Vector2(44, 49)
-
-[node name="BossMimic" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="BossMimic" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_ji5ix")
 sprite = NodePath("AnimatedSprite2D")
-collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_34uxr")
 animation = &"mimic"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 9.5)
-shape = SubResource("RectangleShape2D_gp8tm")
+script = ExtResource("8_33jdm")

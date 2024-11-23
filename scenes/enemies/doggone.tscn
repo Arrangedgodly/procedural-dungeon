@@ -243,9 +243,10 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Doggone" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+[node name="Doggone" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "attack_timer")]
 script = ExtResource("1_yi2y8")
 sprite = NodePath("AnimatedSprite2D")
+attack_timer = NodePath("AttackTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_w56iq")
@@ -254,8 +255,8 @@ autoplay = "idle"
 script = ExtResource("3_geebx")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_vxlmq")]
-blackboard = NodePath("@Node@47846")
+blackboard = NodePath("@Node@42867")
 actor = NodePath("..")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="AttackTimer" type="Timer" parent="."]
 one_shot = true

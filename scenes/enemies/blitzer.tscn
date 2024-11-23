@@ -259,7 +259,7 @@ script = ExtResource("4_gsb7a")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_qoddi")]
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@47390")
+blackboard = NodePath("@Node@17290")
 actor = NodePath("..")
 
 [node name="AttackTimer" type="Timer" parent="."]

@@ -243,9 +243,10 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Clawtzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+[node name="Clawtzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "attack_timer")]
 script = ExtResource("1_pw6ik")
 sprite = NodePath("AnimatedSprite2D")
+attack_timer = NodePath("Timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rks3a")
@@ -255,7 +256,7 @@ script = ExtResource("3_0cjhb")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_kkgy6")]
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@48714")
+blackboard = NodePath("@Node@58419")
 actor = NodePath("..")
 
 [node name="Timer" type="Timer" parent="."]

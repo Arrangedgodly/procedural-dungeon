@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://resources/projectiles/EnemyHomingProjectile.gd" id="1_3n0c8"]
 [ext_resource type="Texture2D" uid="uid://bfl56hgsxv1n5" path="res://assets/vfx/projectiles/pj2_fireball_large_red/spritesheet.png" id="1_f4xgb"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_6dtmd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_koox0"]
 atlas = ExtResource("1_f4xgb")
@@ -81,9 +82,6 @@ animations = [{
 "speed": 20.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_l246q"]
-size = Vector2(13.5, 6)
-
 [node name="Fireball" type="Area2D"]
 top_level = true
 z_index = 10
@@ -99,7 +97,5 @@ scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_kxm0u")
 autoplay = "default"
 frame_progress = 0.237041
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.25, 0)
-shape = SubResource("RectangleShape2D_l246q")
+script = ExtResource("3_6dtmd")
+collision_scale = Vector2(0.25, 0.25)

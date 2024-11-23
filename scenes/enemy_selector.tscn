@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvwrhusvho0yj"]
+[gd_scene load_steps=40 format=3 uid="uid://cvwrhusvho0yj"]
 
 [ext_resource type="Script" path="res://scripts/enemy_selector.gd" id="1_vowwf"]
 [ext_resource type="FontFile" uid="uid://bm5j2nihcrg82" path="res://assets/fonts/FantasyRPGtitle (size 11).ttf" id="2_7pdmm"]
@@ -6,10 +6,185 @@
 [ext_resource type="Shader" path="res://shaders/pixelate.gdshader" id="2_oop4f"]
 [ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="3_uartq"]
 [ext_resource type="FontFile" uid="uid://cjh41aoe31b8h" path="res://assets/fonts/PixelSmall.ttf" id="3_yl851"]
+[ext_resource type="Texture2D" uid="uid://cge8w44ybll5p" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page10.png" id="4_w20jv"]
+[ext_resource type="Texture2D" uid="uid://buoq3jt76pvv1" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page9.png" id="5_n75y3"]
+[ext_resource type="Texture2D" uid="uid://gbog6aqnqpf2" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page8.png" id="6_bksjn"]
+[ext_resource type="Texture2D" uid="uid://ilmh5aju37n1" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page7.png" id="7_kl3oc"]
+[ext_resource type="Texture2D" uid="uid://bn0l76blxat5i" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page6.png" id="8_hoocm"]
+[ext_resource type="Texture2D" uid="uid://k48d38xuxedi" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page5.png" id="9_exj8r"]
+[ext_resource type="Texture2D" uid="uid://dsurj2f8ppco4" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page4.png" id="10_6nuuw"]
+[ext_resource type="Texture2D" uid="uid://bcacb4kkxsuao" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page3.png" id="11_2hxfm"]
+[ext_resource type="Texture2D" uid="uid://bn60tmip1tbyq" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page2.png" id="12_vlclc"]
+[ext_resource type="Texture2D" uid="uid://dlyqk4a5qwwbr" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page1.png" id="13_0a5nw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_77woo"]
 shader = ExtResource("2_oop4f")
 shader_parameter/amount = 200
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nev6y"]
+atlas = ExtResource("4_w20jv")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2etew"]
+atlas = ExtResource("5_n75y3")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h43m5"]
+atlas = ExtResource("6_bksjn")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1jfr"]
+atlas = ExtResource("7_kl3oc")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aowi6"]
+atlas = ExtResource("8_hoocm")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3a74p"]
+atlas = ExtResource("9_exj8r")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pd03y"]
+atlas = ExtResource("10_6nuuw")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ok4w8"]
+atlas = ExtResource("11_2hxfm")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_avf7w"]
+atlas = ExtResource("12_vlclc")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5w8m6"]
+atlas = ExtResource("13_0a5nw")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3ty1"]
+atlas = ExtResource("13_0a5nw")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34myd"]
+atlas = ExtResource("12_vlclc")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iq62"]
+atlas = ExtResource("11_2hxfm")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71i56"]
+atlas = ExtResource("10_6nuuw")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ak3sp"]
+atlas = ExtResource("9_exj8r")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebrqn"]
+atlas = ExtResource("8_hoocm")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnrwj"]
+atlas = ExtResource("7_kl3oc")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7m1p"]
+atlas = ExtResource("6_bksjn")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxnbc"]
+atlas = ExtResource("5_n75y3")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7c2kq"]
+atlas = ExtResource("4_w20jv")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mfnp"]
+atlas = ExtResource("13_0a5nw")
+region = Rect2(0, 0, 349, 208)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r0472"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nev6y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2etew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h43m5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1jfr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aowi6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3a74p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pd03y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ok4w8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_avf7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5w8m6")
+}],
+"loop": false,
+"name": &"flip_backward",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3ty1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34myd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iq62")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71i56")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ak3sp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebrqn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vnrwj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7m1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxnbc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7c2kq")
+}],
+"loop": false,
+"name": &"flip_forward",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6mfnp")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [node name="EnemySelector" type="Control"]
 layout_mode = 3
@@ -29,6 +204,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_ktsw4")
+
+[node name="Book" type="AnimatedSprite2D" parent="."]
+position = Vector2(580, 350)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_r0472")
+animation = &"flip_forward"
+autoplay = "idle"
+frame = 9
+frame_progress = 1.0
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -81,17 +265,6 @@ size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("2_7pdmm")
 theme_override_font_sizes/font_size = 32
 text = "Switch to Boss Selection"
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(602, 402)

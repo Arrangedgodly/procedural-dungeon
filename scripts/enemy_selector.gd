@@ -13,13 +13,11 @@ var enemy_buttons = []
 @onready var prev_button: Button = $MainContainer/PaginationContainer/PrevButton
 @onready var next_button: Button = $MainContainer/PaginationContainer/NextButton
 @onready var page_label: Label = $MainContainer/PaginationContainer/PageLabel
-@onready var canvas_layer: CanvasLayer = $CanvasLayer
 @onready var camera_2d: Camera2D = $Camera2D
 
 const EnemyPanel = preload("res://scenes/enemy_panel.tscn")
 
 func _ready() -> void:
-	canvas_layer.hide()
 	grid_container.columns = 5
 	grid_container.add_theme_constant_override("h_separation", 10)
 	grid_container.add_theme_constant_override("v_separation", 10)

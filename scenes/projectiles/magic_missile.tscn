@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://resources/projectiles/FriendlyProjectile.gd" id="1_ffwak"]
 [ext_resource type="Texture2D" uid="uid://dyxoemkxr58mo" path="res://assets/vfx/projectiles/pj2_magic_missile_small_red/spritesheet.png" id="2_17qcf"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_6m7v2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvh0w"]
 atlas = ExtResource("2_17qcf")
@@ -67,16 +68,12 @@ animations = [{
 "speed": 20.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_04383"]
-size = Vector2(17, 16)
-
 [node name="MagicMissile" type="Area2D"]
 script = ExtResource("1_ffwak")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_ntyvw")
 frame_progress = 0.168821
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3.5, 0)
-shape = SubResource("RectangleShape2D_04383")
+script = ExtResource("3_6m7v2")
+collision_scale = Vector2(0.4, 0.4)

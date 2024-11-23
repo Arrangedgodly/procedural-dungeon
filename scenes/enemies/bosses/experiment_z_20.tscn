@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://djwg838xlieov" path="res://assets/sprites/enemies/Bosses/ExperimentZ #20/idle.png" id="4_b4y3a"]
 [ext_resource type="Texture2D" uid="uid://bepdqx0an8leq" path="res://assets/vfx/fantasy/fanfx2_earth_spikes_large_red/spritesheet.png" id="4_dnwx4"]
 [ext_resource type="Texture2D" uid="uid://bumhnienfexew" path="res://assets/sprites/enemies/Bosses/ExperimentZ #20/move.png" id="5_nu078"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="9_g3c0u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2q6xh"]
 atlas = ExtResource("2_oi0dv")
@@ -701,16 +702,13 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_it280"]
-size = Vector2(59, 70)
-
-[node name="ExperimentZ 20" type="CharacterBody2D" node_paths=PackedStringArray("attack_animation", "sprite", "collision_shape")]
+[node name="ExperimentZ 20" type="CharacterBody2D" node_paths=PackedStringArray("attack_animation", "sprite")]
 script = ExtResource("1_41ywd")
 attack_animation = NodePath("AttackAnimations")
 sprite = NodePath("AnimatedSprite2D")
-collision_shape = NodePath("CollisionShape2D")
 
 [node name="AttackAnimations" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(-1, 49)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_4qvl4")
@@ -720,7 +718,4 @@ animation = &"impact"
 sprite_frames = SubResource("SpriteFrames_w1pmf")
 animation = &"death"
 autoplay = "idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(6.5, 21)
-shape = SubResource("RectangleShape2D_it280")
+script = ExtResource("9_g3c0u")
