@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://resources/enemies/Fireskull.gd" id="1_y5dvv"]
 [ext_resource type="Texture2D" uid="uid://cwpaflxrqpgnu" path="res://assets/sprites/enemies/Fireskull/Enemy_008_B.png" id="2_cnciq"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_k07n7"]
 [ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="4_3gx7d"]
 [ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="6_lc50y"]
 
@@ -243,23 +244,16 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_851h7"]
-size = Vector2(11, 16.5)
-
-[node name="Fireskull" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_timer")]
+[node name="Fireskull" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "attack_timer")]
 script = ExtResource("1_y5dvv")
 sprite = NodePath("AnimatedSprite2D")
-collision_shape = NodePath("CollisionShape2D")
 attack_timer = NodePath("AttackTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sblnt")
 animation = &"hurt"
 autoplay = "idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2.25)
-shape = SubResource("RectangleShape2D_851h7")
+script = ExtResource("3_k07n7")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_3gx7d")]
 actor_node_path = NodePath("..")

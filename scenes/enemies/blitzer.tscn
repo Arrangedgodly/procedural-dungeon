@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://resources/enemies/Blitzer.gd" id="1_cjg3m"]
 [ext_resource type="Texture2D" uid="uid://b2j12jjhpge5a" path="res://assets/sprites/enemies/Blitzer/Enemy_015_C.png" id="2_m0kb1"]
 [ext_resource type="Texture2D" uid="uid://bwryvrxmyjtxl" path="res://assets/sprites/enemies/Blitzer/Enemy_015_B.png" id="3_53q5f"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="4_gsb7a"]
 [ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="4_qoddi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lrwit"]
@@ -243,13 +244,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5fb76"]
-size = Vector2(22, 20)
-
-[node name="Blitzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape", "attack_timer")]
+[node name="Blitzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "attack_timer")]
 script = ExtResource("1_cjg3m")
 sprite = NodePath("AnimatedSprite2D")
-collision_shape = NodePath("CollisionShape2D")
 attack_timer = NodePath("AttackTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -258,14 +255,11 @@ animation = &"hurt"
 autoplay = "idle"
 frame = 5
 frame_progress = 1.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 14)
-shape = SubResource("RectangleShape2D_5fb76")
+script = ExtResource("4_gsb7a")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_qoddi")]
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@17290")
+blackboard = NodePath("@Node@47390")
 actor = NodePath("..")
 
 [node name="AttackTimer" type="Timer" parent="."]

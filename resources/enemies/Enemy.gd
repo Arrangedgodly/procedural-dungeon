@@ -4,7 +4,6 @@ class_name Enemy
 signal animation_ended
 
 @export var sprite: AnimatedSprite2D
-@export var collision_shape: CollisionShape2D
 @export var attack_timer: Timer
 @onready var outline_shader = preload("res://shaders/outline_shader.tres")
 @onready var progress_bar = preload("res://scenes/progress_bar.tscn")
@@ -89,7 +88,6 @@ func take_damage(dmg: int):
 func remove_corpse():
 	sprite.play("death")
 	set_is_targeted(false)
-	collision_shape.disabled = true
 	health_bar.hide()
 	await sprite.animation_finished
 	var tween = create_tween()

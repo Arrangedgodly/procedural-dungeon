@@ -19,4 +19,4 @@ func attack_player() -> void:
 func _process(delta: float) -> void:
 	if target:
 		if target.global_position.y > self.global_position.y:
-			position = Vector2(sin(speed) * radius, cos(speed) * radius)
+			position += Vector2(sin(speed) * radius, cos(speed) * radius)

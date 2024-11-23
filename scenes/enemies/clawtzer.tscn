@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://resources/enemies/Clawtzer.gd" id="1_pw6ik"]
 [ext_resource type="Texture2D" uid="uid://t7qcwoxk6gcb" path="res://assets/sprites/enemies/Clawtzer/Enemy_013_A.png" id="2_15y4u"]
+[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_0cjhb"]
 [ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="3_kkgy6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vf68v"]
@@ -242,25 +243,19 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgoxq"]
-size = Vector2(28, 30)
-
-[node name="Clawtzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "collision_shape")]
+[node name="Clawtzer" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_pw6ik")
 sprite = NodePath("AnimatedSprite2D")
-collision_shape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rks3a")
 animation = &"attack"
 autoplay = "idle"
+script = ExtResource("3_0cjhb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 9)
-shape = SubResource("RectangleShape2D_fgoxq")
-
-[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("3_kkgy6")]
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_kkgy6")]
 actor_node_path = NodePath("..")
+blackboard = NodePath("@Node@48714")
 actor = NodePath("..")
 
 [node name="Timer" type="Timer" parent="."]
