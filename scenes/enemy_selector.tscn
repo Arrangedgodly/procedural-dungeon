@@ -1,10 +1,9 @@
-[gd_scene load_steps=40 format=3 uid="uid://cvwrhusvho0yj"]
+[gd_scene load_steps=52 format=3 uid="uid://cvwrhusvho0yj"]
 
 [ext_resource type="Script" path="res://scripts/enemy_selector.gd" id="1_vowwf"]
 [ext_resource type="FontFile" uid="uid://bm5j2nihcrg82" path="res://assets/fonts/FantasyRPGtitle (size 11).ttf" id="2_7pdmm"]
 [ext_resource type="Script" path="res://scripts/background.gd" id="2_ktsw4"]
 [ext_resource type="Shader" path="res://shaders/pixelate.gdshader" id="2_oop4f"]
-[ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="3_uartq"]
 [ext_resource type="FontFile" uid="uid://cjh41aoe31b8h" path="res://assets/fonts/PixelSmall.ttf" id="3_yl851"]
 [ext_resource type="Texture2D" uid="uid://cge8w44ybll5p" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page10.png" id="4_w20jv"]
 [ext_resource type="Texture2D" uid="uid://buoq3jt76pvv1" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page9.png" id="5_n75y3"]
@@ -16,10 +15,19 @@
 [ext_resource type="Texture2D" uid="uid://bcacb4kkxsuao" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page3.png" id="11_2hxfm"]
 [ext_resource type="Texture2D" uid="uid://bn60tmip1tbyq" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page2.png" id="12_vlclc"]
 [ext_resource type="Texture2D" uid="uid://dlyqk4a5qwwbr" path="res://assets/ui/Book UI V1/Sprites/BookSprite_Animation/Page1.png" id="13_0a5nw"]
+[ext_resource type="Script" path="res://resources/PixelateGlitch.gd" id="14_xkmgw"]
+[ext_resource type="Texture2D" uid="uid://wx6uwu6t4ktj" path="res://assets/ui/Book UI V1/Sprites/Content/BackbookPagesAndBookMarks/BookMarks/1.png" id="15_325p7"]
+[ext_resource type="Texture2D" uid="uid://bcxm42iluomlt" path="res://assets/ui/Book UI V1/Sprites/Content/BackbookPagesAndBookMarks/BookMarks/2.png" id="16_snsq0"]
+[ext_resource type="Texture2D" uid="uid://t5x746ehmhnf" path="res://assets/ui/Book UI V1/Sprites/Content/Titles and Underlying/18.png" id="18_n2a4d"]
+[ext_resource type="Texture2D" uid="uid://wwxl7kkns60p" path="res://assets/ui/Book UI V1/Sprites/Content/Titles and Underlying/19.png" id="19_244v7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_77woo"]
 shader = ExtResource("2_oop4f")
 shader_parameter/amount = 200
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hscma"]
+shader = ExtResource("2_oop4f")
+shader_parameter/amount = 40
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nev6y"]
 atlas = ExtResource("4_w20jv")
@@ -186,6 +194,30 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0bqps"]
+texture = ExtResource("15_325p7")
+modulate_color = Color(1, 1, 1, 0.54902)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cxo6o"]
+texture = ExtResource("15_325p7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x873l"]
+texture = ExtResource("16_snsq0")
+modulate_color = Color(1, 1, 1, 0.54902)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eej2q"]
+texture = ExtResource("16_snsq0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ij8f5"]
+texture = ExtResource("19_244v7")
+modulate_color = Color(1, 1, 1, 0.54902)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q3kun"]
+texture = ExtResource("18_n2a4d")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kgb5r"]
+texture = ExtResource("19_244v7")
+
 [node name="EnemySelector" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -206,67 +238,92 @@ grow_vertical = 2
 script = ExtResource("2_ktsw4")
 
 [node name="Book" type="AnimatedSprite2D" parent="."]
+z_index = 5
+material = SubResource("ShaderMaterial_hscma")
 position = Vector2(580, 350)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_r0472")
-animation = &"flip_forward"
+animation = &"flip_backward"
 autoplay = "idle"
-frame = 9
-frame_progress = 1.0
-
-[node name="MainContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
-alignment = 1
-
-[node name="Label" type="Label" parent="MainContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_7pdmm")
-theme_override_font_sizes/font_size = 64
-text = "Choose your enemy!"
-horizontal_alignment = 1
-
-[node name="GridContainer" type="GridContainer" parent="MainContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-
-[node name="PaginationContainer" type="HBoxContainer" parent="MainContainer"]
-layout_mode = 2
-theme_override_constants/separation = 50
-alignment = 1
-
-[node name="PrevButton" type="Button" parent="MainContainer/PaginationContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_yl851")
-theme_override_font_sizes/font_size = 32
-text = "PREVIOUS"
-
-[node name="PageLabel" type="Label" parent="MainContainer/PaginationContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_uartq")
-theme_override_font_sizes/font_size = 32
-
-[node name="NextButton" type="Button" parent="MainContainer/PaginationContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_yl851")
-theme_override_font_sizes/font_size = 32
-text = "NEXT"
-
-[node name="SwapPages" type="Button" parent="MainContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("2_7pdmm")
-theme_override_font_sizes/font_size = 32
-text = "Switch to Boss Selection"
+script = ExtResource("14_xkmgw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(602, 402)
 
-[connection signal="pressed" from="MainContainer/SwapPages" to="Background" method="_on_swap_pages_pressed"]
+[node name="BossTab" type="Button" parent="."]
+offset_left = 800.0
+offset_top = 36.0
+offset_right = 940.0
+offset_bottom = 76.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_7pdmm")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/disabled = SubResource("StyleBoxTexture_0bqps")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_cxo6o")
+theme_override_styles/hover = SubResource("StyleBoxTexture_cxo6o")
+theme_override_styles/normal = SubResource("StyleBoxTexture_cxo6o")
+text = "BOSSES"
+
+[node name="EnemyTab" type="Button" parent="."]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 43.0
+offset_right = 500.0
+offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("2_7pdmm")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/disabled = SubResource("StyleBoxTexture_x873l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_eej2q")
+theme_override_styles/hover = SubResource("StyleBoxTexture_eej2q")
+theme_override_styles/normal = SubResource("StyleBoxTexture_eej2q")
+text = "REGULAR ENEMIES"
+
+[node name="PrevButton" type="Button" parent="."]
+z_index = 10
+offset_left = 265.0
+offset_top = 600.0
+offset_right = 390.0
+offset_bottom = 635.0
+theme_override_fonts/font = ExtResource("3_yl851")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/disabled = SubResource("StyleBoxTexture_ij8f5")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_q3kun")
+theme_override_styles/hover = SubResource("StyleBoxTexture_q3kun")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_q3kun")
+theme_override_styles/normal = SubResource("StyleBoxTexture_q3kun")
+text = "PREVIOUS"
+
+[node name="NextButton" type="Button" parent="."]
+z_index = 10
+custom_minimum_size = Vector2(75, 0)
+offset_left = 825.0
+offset_top = 600.0
+offset_right = 900.0
+offset_bottom = 635.0
+theme_override_fonts/font = ExtResource("3_yl851")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/disabled = SubResource("StyleBoxTexture_ij8f5")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_kgb5r")
+theme_override_styles/hover = SubResource("StyleBoxTexture_kgb5r")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kgb5r")
+theme_override_styles/normal = SubResource("StyleBoxTexture_kgb5r")
+text = "NEXT"
+
+[node name="LeftPage" type="GridContainer" parent="."]
+z_index = 10
+custom_minimum_size = Vector2(425, 475)
+offset_left = 135.0
+offset_top = 115.0
+offset_right = 560.0
+offset_bottom = 590.0
+
+[node name="RightPage" type="GridContainer" parent="."]
+z_index = 10
+custom_minimum_size = Vector2(425, 475)
+offset_left = 630.0
+offset_top = 115.0
+offset_right = 1055.0
+offset_bottom = 590.0
+
+[connection signal="pressed" from="BossTab" to="Background" method="_on_swap_pages_pressed"]

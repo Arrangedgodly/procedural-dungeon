@@ -1,22 +1,31 @@
 extends PanelContainer
 
-var panel_height: int = 100
-var panel_width: int = 150
+signal enemy_selected(enemy_path: String)
+
 @onready var sub_viewport: SubViewport = $SubViewport
 @onready var vbox: VBoxContainer = $Vbox
 @onready var preview: TextureRect = $Vbox/Preview
 @onready var label: Label = $Vbox/Label
+@onready var background: TextureRect = $Background
 
-signal enemy_selected(enemy_path: String)
+var panel_height: int = 200
+var panel_width: int = 200
 var enemy_instance: Node
 var enemy_path: String
+var is_ready: bool = false
 
-var normal_color = Color("BLACK", .80)
-var hover_color = Color.LIGHT_CORAL
+@onready var normal_texture = preload("res://assets/ui/Book UI V1/Sprites/Content/Titles and Underlying/19.png")
+@onready var hover_texture = preload("res://assets/ui/Book UI V1/Sprites/Content/Titles and Underlying/21_1.png")
+@onready var normal_label_texture = preload("res://assets/ui/Book UI V1/Sprites/Content/Titles and Underlying/18.png")
+@onready var hover_label_texture = preload("res://assets/ui/Book UI V1/Sprites/Content/Titles and Underlying/21_4.png")
 
 func _ready():
 	custom_minimum_size = Vector2(panel_width, panel_height + 30)
 	sub_viewport.size = Vector2i(panel_width, panel_height)
+	
+	background.texture = normal_texture
+	background.custom_minimum_size = Vector2(panel_width, panel_height)
+	
 	preview.custom_minimum_size = Vector2(panel_width, panel_height)
 	
 	label.add_theme_font_size_override("font_size", 24)
@@ -24,26 +33,21 @@ func _ready():
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	label.add_theme_stylebox_override("normal", get_label_style(normal_label_texture))
 	
-	add_theme_stylebox_override("panel", get_panel_style(normal_color))
-
-func get_panel_style(color: Color) -> StyleBoxFlat:
-	var style = StyleBoxFlat.new()
-	style.bg_color = color
-	style.corner_radius_top_left = 16
-	style.corner_radius_top_right = 16
-	style.corner_radius_bottom_left = 16
-	style.corner_radius_bottom_right = 16
-	
-	# Add shadow properties
-	style.shadow_color = Color(0, 0, 0, 0.6)
-	style.shadow_size = 25
-	
-	return style
+	is_ready = true
 
 func load_enemy(path: String):
 	enemy_path = path
-	var enemy_scene = load(path)
+	if is_ready:
+		_load_enemy_instance()
+	else:
+		# Wait for ready if not ready yet
+		await ready
+		_load_enemy_instance()
+
+func _load_enemy_instance() -> void:
+	var enemy_scene = load(enemy_path)
 	enemy_instance = enemy_scene.instantiate()
 	
 	# Center the enemy in the viewport
@@ -65,7 +69,7 @@ func load_enemy(path: String):
 	preview.texture = sub_viewport.get_texture()
 	
 	# Set label text and ensure it fits
-	var enemy_name = path.get_file().get_basename()
+	var enemy_name = enemy_path.get_file().get_basename()
 	enemy_name = enemy_name.replace("_", " ").capitalize()
 	label.text = enemy_name
 	
@@ -82,12 +86,19 @@ func _on_panel_input(event: InputEvent):
 		enemy_selected.emit(enemy_path)
 
 func _on_panel_mouse_entered():
-	add_theme_stylebox_override("panel", get_panel_style(hover_color))
+	background.texture = hover_texture
+	label.add_theme_stylebox_override("normal", get_label_style(hover_label_texture))
 	if enemy_instance:
 		enemy_instance.animate_enemy()
 
 func _on_panel_mouse_exited():
-	add_theme_stylebox_override("panel", get_panel_style(normal_color))
+	background.texture = normal_texture
+	label.add_theme_stylebox_override("normal", get_label_style(normal_label_texture))
 	if enemy_instance and enemy_instance.has_node("AnimatedSprite2D"):
 		var sprite = enemy_instance.get_node("AnimatedSprite2D")
 		sprite.play("idle")
+
+func get_label_style(texture: Texture2D) -> StyleBoxTexture:
+	var style = StyleBoxTexture.new()
+	style.texture = texture
+	return style

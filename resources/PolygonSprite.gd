@@ -12,7 +12,7 @@ func create_polygons(anim: String, idx: int) -> void:
 	
 	var bitmap = BitMap.new()
 	bitmap.create_from_image_alpha(image)
-	var polys = bitmap.opaque_to_polygons(Rect2(Vector2.ZERO, texture_size), 0.5)
+	var polys = bitmap.opaque_to_polygons(Rect2(Vector2.ZERO, texture_size), 1)
 	
 	for poly in polys:
 		var collision_polygon = CollisionPolygon2D.new()

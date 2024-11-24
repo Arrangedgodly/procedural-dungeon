@@ -1,16 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://bu5nvvfy376tk"]
+[gd_scene load_steps=8 format=3 uid="uid://bu5nvvfy376tk"]
 
 [ext_resource type="Script" path="res://scripts/enemy_panel.gd" id="1_n1vwp"]
 [ext_resource type="Material" uid="uid://cae20dhp24a1f" path="res://shaders/upscale.tres" id="2_g4kjh"]
 [ext_resource type="FontFile" uid="uid://cp1e1dgbsgtv3" path="res://assets/fonts/ThaleahFat.ttf" id="3_mutr5"]
+[ext_resource type="Texture2D" uid="uid://wwxl7kkns60p" path="res://assets/ui/Book UI V1/Sprites/Content/Titles and Underlying/19.png" id="3_psraj"]
+[ext_resource type="Texture2D" uid="uid://t5x746ehmhnf" path="res://assets/ui/Book UI V1/Sprites/Content/Titles and Underlying/18.png" id="5_pgdgu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1yyst"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
-shadow_size = 15
-shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qyor3"]
+texture = ExtResource("5_pgdgu")
 
 [node name="EnemyPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(150, 150)
@@ -19,6 +23,11 @@ offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1yyst")
 script = ExtResource("1_n1vwp")
 
+[node name="Background" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+texture = ExtResource("3_psraj")
+
 [node name="Vbox" type="VBoxContainer" parent="."]
 layout_mode = 2
 
@@ -26,7 +35,6 @@ layout_mode = 2
 material = ExtResource("2_g4kjh")
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="Vbox"]
 layout_mode = 2
@@ -34,6 +42,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("3_mutr5")
 theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_qyor3")
 horizontal_alignment = 1
 
 [node name="SubViewport" type="SubViewport" parent="."]
