@@ -16,7 +16,7 @@ func _ready() -> void:
 	
 func pixelate_loop(up: bool) -> void:
 	var max = 512
-	var min = 256
+	var min = 128
 	var i: int
 	if up:
 		i = min

@@ -22,6 +22,7 @@ var is_hovered: bool = false
 var outline_width: float = .002
 var health_bar
 @export var modification_color: Color
+var keep_distance: bool
 
 func _ready() -> void:	
 	current_health = health

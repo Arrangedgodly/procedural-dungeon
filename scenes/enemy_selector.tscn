@@ -251,6 +251,7 @@ script = ExtResource("14_xkmgw")
 position = Vector2(602, 402)
 
 [node name="BossTab" type="Button" parent="."]
+layout_mode = 0
 offset_left = 800.0
 offset_top = 36.0
 offset_right = 940.0
@@ -281,6 +282,7 @@ text = "REGULAR ENEMIES"
 
 [node name="PrevButton" type="Button" parent="."]
 z_index = 10
+layout_mode = 0
 offset_left = 265.0
 offset_top = 600.0
 offset_right = 390.0
@@ -297,6 +299,7 @@ text = "PREVIOUS"
 [node name="NextButton" type="Button" parent="."]
 z_index = 10
 custom_minimum_size = Vector2(75, 0)
+layout_mode = 0
 offset_left = 825.0
 offset_top = 600.0
 offset_right = 900.0
@@ -313,6 +316,7 @@ text = "NEXT"
 [node name="LeftPage" type="GridContainer" parent="."]
 z_index = 10
 custom_minimum_size = Vector2(425, 475)
+layout_mode = 0
 offset_left = 135.0
 offset_top = 115.0
 offset_right = 560.0
@@ -321,6 +325,7 @@ offset_bottom = 590.0
 [node name="RightPage" type="GridContainer" parent="."]
 z_index = 10
 custom_minimum_size = Vector2(425, 475)
+layout_mode = 0
 offset_left = 630.0
 offset_top = 115.0
 offset_right = 1055.0

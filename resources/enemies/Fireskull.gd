@@ -1,4 +1,4 @@
-extends Enemy
+extends RangedEnemy
 class_name Fireskull
 
 const FIREBALL = preload("res://scenes/projectiles/fireball.tscn")

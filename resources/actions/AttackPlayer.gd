@@ -8,13 +8,21 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 	if !blackboard.get_value("can_attack"):
 		return FAILURE
 	
-	set_is_attacking(actor, blackboard, true)
-	actor.attack_player()
-	actor.sprite.play("attack")
-	if !actor.sprite.animation_finished.is_connected(change_actor_animation):
-		actor.sprite.animation_finished.connect(change_actor_animation.bind(actor, blackboard))
-	actor.attack_timer.start()
-	actor.attack_timer.timeout.connect(set_is_attacking.bind(actor, blackboard, false))
+	if actor.keep_distance and actor.target:
+		var distance = actor.get_distance_to_player()
+		if distance < actor.attack_range:
+			var direction = (actor.target.global_position - actor.global_position).normalized()
+			actor.velocity = -direction * actor.speed
+			actor.move_and_slide()
+		else:
+			actor.velocity = Vector2.ZERO
+			set_is_attacking(actor, blackboard, true)
+			actor.attack_player()
+			actor.sprite.play("attack")
+			if !actor.sprite.animation_finished.is_connected(change_actor_animation):
+				actor.sprite.animation_finished.connect(change_actor_animation.bind(actor, blackboard))
+			actor.attack_timer.start()
+			actor.attack_timer.timeout.connect(set_is_attacking.bind(actor, blackboard, false))
 		
 	return SUCCESS
 

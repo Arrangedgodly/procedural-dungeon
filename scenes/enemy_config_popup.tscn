@@ -1,0 +1,102 @@
+[gd_scene load_steps=6 format=3 uid="uid://b13pldyi7ok05"]
+
+[ext_resource type="Script" path="res://scripts/enemy_config_popup.gd" id="1_1oxba"]
+[ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="2_npkkl"]
+[ext_resource type="Texture2D" uid="uid://bis8xqcvducbb" path="res://assets/ui/Book UI V1/Sprites/Content/Titles and Underlying/2_16x16.png" id="3_yqh72"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_05m21"]
+texture = ExtResource("3_yqh72")
+
+[sub_resource type="Theme" id="Theme_cq8ey"]
+default_font = ExtResource("2_npkkl")
+default_font_size = 64
+
+[node name="EnemyConfigPopup" type="Control"]
+z_index = 50
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1oxba")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("2_npkkl")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxTexture_05m21")
+text = "Enemy Configuration"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_npkkl")
+theme_override_font_sizes/font_size = 64
+text = "Count:"
+
+[node name="CountSpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = SubResource("Theme_cq8ey")
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_npkkl")
+theme_override_font_sizes/font_size = 64
+text = "Variant:"
+
+[node name="VariantOption" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_npkkl")
+theme_override_font_sizes/font_size = 64
+item_count = 1
+
+[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_npkkl")
+theme_override_font_sizes/font_size = 64
+text = "Randomize Variants:"
+
+[node name="RandomizeCheck" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_npkkl")
+theme_override_font_sizes/font_size = 64
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_npkkl")
+theme_override_font_sizes/font_size = 64
+text = "Confirm"
+
+[node name="CancelButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_npkkl")
+theme_override_font_sizes/font_size = 64
+text = "Cancel"

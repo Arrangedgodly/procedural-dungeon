@@ -1,3 +1,4 @@
+@icon("res://assets/icons/icon_hitbox.png")
 extends AnimatedSprite2D
 class_name PolygonSprite
 

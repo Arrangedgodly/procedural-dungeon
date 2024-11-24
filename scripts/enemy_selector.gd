@@ -15,6 +15,7 @@ var enemy_buttons = []
 @onready var book: AnimatedSprite2D = $Book
 
 const EnemyPanel = preload("res://scenes/enemy_panel.tscn")
+const EnemyConfigPopup = preload("res://scenes/enemy_config_popup.tscn")
 const PAGE_MARGIN = Vector2(40, 40)
 const PAGE_SIZE = Vector2(500, 560)
 const PANELS_PER_ROW = 2
@@ -121,7 +122,16 @@ func _on_next_page_pressed():
 		handle_page_turn_end()
 
 func _on_enemy_selected(enemy_path: String):
+	var popup = EnemyConfigPopup.instantiate()
+	popup.position = get_viewport_rect().size / 2 - popup.size / 2
+	add_child(popup)
+	popup.setup(enemy_path)
+	popup.config_confirmed.connect(_on_config_confirmed)
+
+func _on_config_confirmed(enemy_path: String, count: int, variants: Array) -> void:
 	get_tree().get_root().set_meta("selected_enemy_path", enemy_path)
+	get_tree().get_root().set_meta("enemy_count", count)
+	get_tree().get_root().set_meta("enemy_variants", variants)
 	get_tree().change_scene_to_file("res://scenes/test_arena.tscn")
 
 func setup_book_layout() -> void:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cejwv06k0opm3"]
+[gd_scene load_steps=6 format=3 uid="uid://cejwv06k0opm3"]
 
 [ext_resource type="Script" path="res://scripts/intro.gd" id="1_erdwc"]
 [ext_resource type="Shader" path="res://shaders/pixelate.gdshader" id="2_deynv"]
+[ext_resource type="Script" path="res://resources/PixelateGlitch.gd" id="3_kgi8c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lkl5q"]
 shader = ExtResource("2_deynv")
@@ -31,9 +32,10 @@ grow_vertical = 2
 stream = SubResource("VideoStreamTheora_5t6ck")
 autoplay = true
 expand = true
+script = ExtResource("3_kgi8c")
 
 [node name="IntroTimer" type="Timer" parent="."]
-wait_time = 9.5
+wait_time = 7.0
 one_shot = true
 
 [connection signal="timeout" from="IntroTimer" to="." method="_on_intro_timer_timeout"]
