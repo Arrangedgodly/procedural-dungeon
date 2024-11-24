@@ -18,7 +18,7 @@
 
 [node name="HuntPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_5e0x0")
-blackboard = NodePath("@Node@17286")
+blackboard = NodePath("@Node@129138")
 actor = NodePath("")
 
 [node name="SelectorComposite" type="Node" parent="."]

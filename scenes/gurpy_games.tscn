@@ -1,0 +1,116 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdtwmuchbc6ev"]
+
+[ext_resource type="Script" path="res://scripts/gurpy_games.gd" id="1_ewm5y"]
+[ext_resource type="AudioStream" uid="uid://3cirgwn64n1l" path="res://assets/sounds/retro_vehicle_choppy_engine_01.wav" id="2_6acjx"]
+[ext_resource type="FontFile" uid="uid://cmm6q7dnqqtdb" path="res://assets/fonts/Beanstalk.ttf" id="2_a44og"]
+
+[node name="GurpyGames" type="Node2D"]
+script = ExtResource("1_ewm5y")
+intro_sound = ExtResource("2_6acjx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1200, 800)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Gurpy" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="G" type="Label" parent="VBoxContainer/Gurpy"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "G"
+
+[node name="U" type="Label" parent="VBoxContainer/Gurpy"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "U"
+
+[node name="R" type="Label" parent="VBoxContainer/Gurpy"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "R"
+
+[node name="P" type="Label" parent="VBoxContainer/Gurpy"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "P"
+
+[node name="Y" type="Label" parent="VBoxContainer/Gurpy"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "Y"
+
+[node name="Games" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="G" type="Label" parent="VBoxContainer/Games"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "G"
+
+[node name="A" type="Label" parent="VBoxContainer/Games"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "A"
+
+[node name="M" type="Label" parent="VBoxContainer/Games"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "M"
+
+[node name="E" type="Label" parent="VBoxContainer/Games"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "E"
+
+[node name="S" type="Label" parent="VBoxContainer/Games"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a44og")
+theme_override_font_sizes/font_size = 256
+text = "S"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="IntroTimer" type="Timer" parent="."]
+wait_time = 6.6
+one_shot = true
+
+[node name="FontTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1200, 800)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -600.0
+offset_top = -400.0
+offset_right = 600.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

@@ -254,9 +254,8 @@ animation = &"death"
 autoplay = "idle"
 script = ExtResource("3_dtvjk")
 
-[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_kpn7p")]
-blackboard = NodePath("@Node@40785")
-actor = NodePath("..")
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("3_kpn7p")]
+blackboard = NodePath("@Node@135282")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

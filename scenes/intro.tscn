@@ -37,7 +37,21 @@ expand = true
 script = ExtResource("3_kgi8c")
 
 [node name="IntroTimer" type="Timer" parent="."]
-wait_time = 7.0
+wait_time = 6.25
 one_shot = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(1200, 800)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -600.0
+offset_top = -400.0
+offset_right = 600.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [connection signal="timeout" from="IntroTimer" to="." method="_on_intro_timer_timeout"]

@@ -256,9 +256,8 @@ frame = 5
 frame_progress = 1.0
 script = ExtResource("3_gqnux")
 
-[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_kwc77")]
-blackboard = NodePath("@Node@32391")
-actor = NodePath("..")
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("3_kwc77")]
+blackboard = NodePath("@Node@136431")
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
