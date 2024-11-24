@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://that475cqd7c"]
+[gd_scene load_steps=9 format=3 uid="uid://that475cqd7c"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_h0765"]
+[ext_resource type="AudioStream" uid="uid://b3i2qsrj1a06j" path="res://assets/music/17. The Quiet Spy.mp3" id="2_2bg76"]
 [ext_resource type="Script" path="res://scripts/background.gd" id="2_jlxlm"]
 [ext_resource type="Shader" path="res://shaders/pixelate.gdshader" id="2_n6hoo"]
 [ext_resource type="Theme" uid="uid://dstl7l8pdwg7x" path="res://themes/menu_button.tres" id="2_tus83"]
@@ -19,6 +20,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h0765")
+menu_music = ExtResource("2_2bg76")
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_qme1y")

@@ -1,5 +1,9 @@
 extends Node2D
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().change_scene_to_file("res://scenes/enemy_selector.tscn")
+
 func _ready() -> void:
 	var enemy_path = get_tree().get_root().get_meta("selected_enemy_path")
 	var enemy_count = get_tree().get_root().get_meta("enemy_count")
@@ -23,6 +27,7 @@ func _ready() -> void:
 func instantiate_enemy(enemy_path: String) -> Node:
 	var enemy_instance = EnemyManager.instantiate_enemy_by_path(enemy_path)
 	add_child(enemy_instance)
+	enemy_instance.position += Vector2(randi_range(-32, 32), randi_range(-32, 32))
 	return enemy_instance
 
 func apply_variant_effects(enemy: Node, variant: EnemyVariant) -> void:

@@ -1,13 +1,13 @@
-extends Control
+extends CanvasLayer
 
 signal config_confirmed(enemy_path: String, count: int, variants: Array)
 
-@onready var count_spinbox: SpinBox = $HBoxContainer/CountSpinBox
-@onready var variant_option: OptionButton = $HBoxContainer/VariantOption
-@onready var randomize_check: CheckBox = $HBoxContainer/RandomizeCheck
-@onready var confirm_button: Button = $HBoxContainer/ConfirmButton
-@onready var cancel_button: Button = $HBoxContainer/CancelButton
-@onready var description_label: Label = $DescriptionLabel
+@onready var count_spinbox: SpinBox = $PanelContainer/MarginContainer/VBoxContainer/GridContainer/CountSpinBox
+@onready var variant_option: OptionButton = $PanelContainer/MarginContainer/VBoxContainer/GridContainer/VariantOption
+@onready var randomize_check: CheckBox = $PanelContainer/MarginContainer/VBoxContainer/GridContainer/RandomizeCheck
+@onready var confirm_button: Button = $PanelContainer/MarginContainer/VBoxContainer/GridContainer/ConfirmButton
+@onready var cancel_button: Button = $PanelContainer/MarginContainer/VBoxContainer/GridContainer/CancelButton
+@onready var description_label: Label = $PanelContainer/MarginContainer/VBoxContainer/DescriptionLabel
 
 var enemy_path: String
 var variants: Array[EnemyVariant] = [
@@ -19,9 +19,9 @@ var variants: Array[EnemyVariant] = [
 	# Add more variants as needed
 ]
 
-func create_variant(name: String, color: Color, description: String) -> EnemyVariant:
+func create_variant(variant_name: String, color: Color, description: String) -> EnemyVariant:
 	var variant = EnemyVariant.new()
-	variant.name = name
+	variant.name = variant_name
 	variant.color = color
 	variant.description = description
 	return variant
@@ -43,7 +43,10 @@ func setup(path: String) -> void:
 	_on_variant_selected(0)  # Show first variant's description
 	
 func _on_variant_selected(index: int) -> void:
-	description_label.text = variants[index].description
+	if index == 0:
+		description_label.text = ""
+	else:
+		description_label.text = variants[index - 1].description
 	
 func _on_confirm() -> void:
 	var selected_variants = []

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://drfjf8qfl5j7e"
+path="res://.godot/imported/02. Perilous Dungeon.mp3-5b83ad53bd7c1b4d20adf80d656835d7.mp3str"
+
+[deps]
+
+source_file="res://assets/music/02. Perilous Dungeon.mp3"
+dest_files=["res://.godot/imported/02. Perilous Dungeon.mp3-5b83ad53bd7c1b4d20adf80d656835d7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

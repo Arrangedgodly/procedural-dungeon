@@ -30,6 +30,7 @@ func _ready() -> void:
 	if modification_color:
 		sprite.self_modulate = modification_color
 	sprite.material = outline_shader
+	sprite.material.setup_local_to_scene()
 	sprite.material.set_shader_parameter("width", 0)
 	var sprite_frame = sprite.sprite_frames.get_frame_texture("idle", 0)
 	

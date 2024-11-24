@@ -11,11 +11,11 @@ func _ready() -> void:
 	
 	progress.value_changed.connect(_on_progress_value_changed)
 
-func init(max: int) -> void:
-	progress.max_value = max
-	progress.value = max
-	self.max_value = max
-	self.value = max
+func init(maximum_value: int) -> void:
+	progress.max_value = maximum_value
+	progress.value = maximum_value
+	self.max_value = maximum_value
+	self.value = maximum_value
 
 func set_progress_value(new_value: float) -> void:
 	progress.value = new_value

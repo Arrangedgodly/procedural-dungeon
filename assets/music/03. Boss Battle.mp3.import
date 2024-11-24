@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://counun21dpm6w"
+path="res://.godot/imported/03. Boss Battle.mp3-2e88e55f8d1039a64297b53d13017dd7.mp3str"
+
+[deps]
+
+source_file="res://assets/music/03. Boss Battle.mp3"
+dest_files=["res://.godot/imported/03. Boss Battle.mp3-2e88e55f8d1039a64297b53d13017dd7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

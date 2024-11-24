@@ -5,7 +5,6 @@ func tick(actor: Node, _blackboard: Node) -> int:
 	if !actor.target:
 		return FAILURE
 	
-	var distance = actor.get_distance_to_player()
 	var direction = (actor.target.global_position - actor.global_position).normalized()
 	actor.velocity = direction * actor.speed
 	actor.move_and_slide()

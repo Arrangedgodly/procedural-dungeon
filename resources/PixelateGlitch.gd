@@ -15,26 +15,26 @@ func _ready() -> void:
 	pixelate_up()
 	
 func pixelate_loop(up: bool) -> void:
-	var max = 512
-	var min = 128
+	var max_val = 512
+	var min_val = 128
 	var i: int
 	if up:
-		i = min
-		while i < max:
+		i = min_val
+		while i < max_val:
 			self.material.set_shader_parameter("amount", i)
 			await get_tree().create_timer(.1).timeout
 			i += 1
 		
-		if i == max:
+		if i == max_val:
 			pixelate_up_done.emit()
 	else:
-		i = max
-		while i > min:
+		i = max_val
+		while i > min_val:
 			self.material.set_shader_parameter("amount", i)
 			await get_tree().create_timer(.1).timeout
 			i -= 1
 		
-		if i == min:
+		if i == min_val:
 			pixelate_down_done.emit()
 
 func pixelate_up() -> void:

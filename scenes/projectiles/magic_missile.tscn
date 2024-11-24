@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://cf8rbiomfvr0o"]
+[gd_scene load_steps=15 format=3 uid="uid://cf8rbiomfvr0o"]
 
 [ext_resource type="Script" path="res://resources/projectiles/FriendlyProjectile.gd" id="1_ffwak"]
 [ext_resource type="Texture2D" uid="uid://dyxoemkxr58mo" path="res://assets/vfx/projectiles/pj2_magic_missile_small_red/spritesheet.png" id="2_17qcf"]
+[ext_resource type="AudioStream" uid="uid://b37frcxcij8dt" path="res://assets/sounds/energy_blast_small_02.wav" id="2_it11p"]
 [ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_6m7v2"]
+[ext_resource type="AudioStream" uid="uid://cyhpv2jwvpb20" path="res://assets/sounds/fireball_impact_sizzle_burn3.wav" id="3_nrhtr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvh0w"]
 atlas = ExtResource("2_17qcf")
@@ -70,6 +72,8 @@ animations = [{
 
 [node name="MagicMissile" type="Area2D"]
 script = ExtResource("1_ffwak")
+attack_sound = ExtResource("2_it11p")
+impact_sound = ExtResource("3_nrhtr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.4, 0.4)

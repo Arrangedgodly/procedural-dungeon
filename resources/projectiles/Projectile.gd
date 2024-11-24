@@ -2,6 +2,8 @@
 extends Area2D
 class_name Projectile
 
+@export var attack_sound: AudioStream
+@export var impact_sound: AudioStream
 @onready var sprite = $AnimatedSprite2D
 var speed: float = 400
 var damage: int
@@ -15,6 +17,7 @@ func _process(delta: float) -> void:
 	position += direction * speed * delta
 
 func launch(to_position: Vector2) -> void:
+	SoundManager.play_sfx(attack_sound, "Projectiles", self.global_position)
 	direction = (to_position - global_position).normalized()
 	rotation = direction.angle()
 	
@@ -25,6 +28,7 @@ func set_damage(new_damage: int) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage"):
+		SoundManager.play(impact_sound)
 		body.take_damage(damage)
 	despawning.emit()
 	queue_free()

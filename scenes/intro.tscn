@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cejwv06k0opm3"]
+[gd_scene load_steps=7 format=3 uid="uid://cejwv06k0opm3"]
 
 [ext_resource type="Script" path="res://scripts/intro.gd" id="1_erdwc"]
 [ext_resource type="Shader" path="res://shaders/pixelate.gdshader" id="2_deynv"]
+[ext_resource type="AudioStream" uid="uid://cyyes3xgfba33" path="res://assets/sounds/Menu_Intro.wav" id="2_ym3n6"]
 [ext_resource type="Script" path="res://resources/PixelateGlitch.gd" id="3_kgi8c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lkl5q"]
@@ -13,6 +14,7 @@ file = "res://assets/intro_animation.ogg"
 
 [node name="Intro" type="Node2D"]
 script = ExtResource("1_erdwc")
+boot_sound = ExtResource("2_ym3n6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

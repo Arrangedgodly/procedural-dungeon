@@ -15,8 +15,3 @@ func _ready() -> void:
 
 func attack_player() -> void:
 	sprite.play("attack")
-
-func _process(delta: float) -> void:
-	if target:
-		if target.global_position.y > self.global_position.y:
-			position += Vector2(sin(speed) * radius, cos(speed) * radius)

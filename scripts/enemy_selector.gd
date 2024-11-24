@@ -24,7 +24,10 @@ const PANELS_PER_PAGE = PANELS_PER_ROW * PANELS_PER_COLUMN
 const ACTIVE_COLOR = Color.WHITE
 const INACTIVE_COLOR = Color.DIM_GRAY
 
+@export var menu_music: AudioStream
+
 func _ready() -> void:
+	SoundManager.play_music(menu_music)
 	setup_book_layout()
 	
 	prev_button.pressed.connect(_on_prev_page_pressed)
@@ -123,12 +126,12 @@ func _on_next_page_pressed():
 
 func _on_enemy_selected(enemy_path: String):
 	var popup = EnemyConfigPopup.instantiate()
-	popup.position = get_viewport_rect().size / 2 - popup.size / 2
 	add_child(popup)
 	popup.setup(enemy_path)
 	popup.config_confirmed.connect(_on_config_confirmed)
 
 func _on_config_confirmed(enemy_path: String, count: int, variants: Array) -> void:
+	SoundManager.stop(menu_music)
 	get_tree().get_root().set_meta("selected_enemy_path", enemy_path)
 	get_tree().get_root().set_meta("enemy_count", count)
 	get_tree().get_root().set_meta("enemy_variants", variants)

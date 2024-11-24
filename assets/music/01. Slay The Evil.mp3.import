@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://delvl45iasxc"
+path="res://.godot/imported/01. Slay The Evil.mp3-3b00d58d4a78d1597e4db21a27f27c3a.mp3str"
+
+[deps]
+
+source_file="res://assets/music/01. Slay The Evil.mp3"
+dest_files=["res://.godot/imported/01. Slay The Evil.mp3-3b00d58d4a78d1597e4db21a27f27c3a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

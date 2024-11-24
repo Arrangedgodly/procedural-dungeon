@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cagtox5qpqrt6"
+path="res://.godot/imported/16. Truth.mp3-60ce0a34b87c1aee1b067e76282ae07a.mp3str"
+
+[deps]
+
+source_file="res://assets/music/16. Truth.mp3"
+dest_files=["res://.godot/imported/16. Truth.mp3-60ce0a34b87c1aee1b067e76282ae07a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
