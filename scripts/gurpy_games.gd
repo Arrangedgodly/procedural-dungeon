@@ -54,6 +54,8 @@ func _ready() -> void:
 		letters.append(letter)
 	for letter in games.get_children():
 		letters.append(letter)
+	
+	randomize_appearance()
 		
 	intro_timer.start()
 	intro_timer.timeout.connect(_on_intro_timer_timeout)
