@@ -5,8 +5,48 @@ class_name PolygonSprite
 var _previous_flip_h := flip_h
 var _previous_flip_v := flip_v
 @export var collision_scale := Vector2(1, 1)
+var detection_area: Area2D
+var detection_shape: CollisionShape2D
+var is_processing_polygons := false
+
+func _ready() -> void:
+	setup_detection_area()
+	self.frame_changed.connect(_on_frame_changed)
+	
+func setup_detection_area() -> void:
+	detection_area = Area2D.new()
+	detection_shape = CollisionShape2D.new()
+	var circle = CircleShape2D.new()
+	
+	var texture_size = sprite_frames.get_frame_texture(animation, 0).get_size()
+	var radius = max(texture_size.x, texture_size.y)
+	circle.radius = radius
+	
+	detection_shape.shape = circle
+	detection_area.add_child(detection_shape)
+	add_child(detection_area)
+	
+	detection_area.body_entered.connect(_on_object_entered)
+	detection_area.body_exited.connect(_on_object_exited)
+	detection_area.area_entered.connect(_on_object_entered)
+	detection_area.area_exited.connect(_on_object_exited)
+
+func _on_object_entered(_object: Node2D) -> void:
+	if not is_processing_polygons:
+		is_processing_polygons = true
+		create_polygons(animation, frame)
+		set_process(true)
+
+func _on_object_exited(_object: Node2D) -> void:
+	if detection_area.get_overlapping_bodies().size() == 0 and detection_area.get_overlapping_areas().size() == 0:
+		is_processing_polygons = false
+		clear_polygons()
+		set_process(false)
 
 func create_polygons(anim: String, idx: int) -> void:
+	if not is_processing_polygons:
+		return
+		
 	var frame_texture = sprite_frames.get_frame_texture(anim, idx)
 	var image = frame_texture.get_image()
 	var texture_size = frame_texture.get_size()
@@ -17,15 +57,12 @@ func create_polygons(anim: String, idx: int) -> void:
 	
 	for poly in polys:
 		var collision_polygon = CollisionPolygon2D.new()
-		
-		# Center the polygon based on texture size
 		var centered_poly = PackedVector2Array()
 		for point in poly:
 			var centered_point = point - texture_size/2
 			centered_point *= collision_scale
 			centered_poly.append(centered_point)
 		
-		# Apply sprite flipping to the polygon
 		if flip_h:
 			for i in range(centered_poly.size()):
 				centered_poly[i].x = -centered_poly[i].x
@@ -34,7 +71,6 @@ func create_polygons(anim: String, idx: int) -> void:
 				centered_poly[i].y = -centered_poly[i].y
 				
 		collision_polygon.polygon = centered_poly
-		
 		get_parent().call_deferred("add_child", collision_polygon)
 
 func clear_polygons() -> void:
@@ -43,20 +79,17 @@ func clear_polygons() -> void:
 			child.queue_free()
 
 func _on_frame_changed() -> void:
-	clear_polygons()
-	create_polygons(animation, frame)
-
-func _on_flip_changed() -> void:
-	clear_polygons()
-	create_polygons(animation, frame)
-
-func _ready() -> void:
-	self.frame_changed.connect(_on_frame_changed)
-	create_polygons(animation, frame)
+	if is_processing_polygons:
+		clear_polygons()
+		create_polygons(animation, frame)
 
 func _process(_delta: float) -> void:
-	# Check if flip state has changed
-	if _previous_flip_h != flip_h or _previous_flip_v != flip_v:
+	if is_processing_polygons and (_previous_flip_h != flip_h or _previous_flip_v != flip_v):
 		_on_flip_changed()
 		_previous_flip_h = flip_h
 		_previous_flip_v = flip_v
+
+func _on_flip_changed() -> void:
+	if is_processing_polygons:
+		clear_polygons()
+		create_polygons(animation, frame)
