@@ -8,6 +8,8 @@ var _previous_flip_v := flip_v
 var detection_area: Area2D
 var detection_shape: CollisionShape2D
 var is_processing_polygons := false
+var mouse_hovering: bool = false
+var processing_accuracy: float = 2.5
 
 func _ready() -> void:
 	setup_detection_area()
@@ -24,12 +26,15 @@ func setup_detection_area() -> void:
 	
 	detection_shape.shape = circle
 	detection_area.add_child(detection_shape)
+	detection_area.input_pickable = true
 	add_child(detection_area)
 	
 	detection_area.body_entered.connect(_on_object_entered)
 	detection_area.body_exited.connect(_on_object_exited)
 	detection_area.area_entered.connect(_on_object_entered)
 	detection_area.area_exited.connect(_on_object_exited)
+	detection_area.mouse_entered.connect(_on_mouse_entered)
+	detection_area.mouse_exited.connect(_on_mouse_exited)
 
 func _on_object_entered(_object: Node2D) -> void:
 	if not is_processing_polygons:
@@ -38,6 +43,20 @@ func _on_object_entered(_object: Node2D) -> void:
 		set_process(true)
 
 func _on_object_exited(_object: Node2D) -> void:
+	if detection_area.get_overlapping_bodies().size() == 0 and detection_area.get_overlapping_areas().size() == 0 and !mouse_hovering:
+		is_processing_polygons = false
+		clear_polygons()
+		set_process(false)
+		
+func _on_mouse_entered() -> void:
+	mouse_hovering = true
+	if not is_processing_polygons:
+		is_processing_polygons = true
+		create_polygons(animation, frame)
+		set_process(true)
+
+func _on_mouse_exited() -> void:
+	mouse_hovering = false
 	if detection_area.get_overlapping_bodies().size() == 0 and detection_area.get_overlapping_areas().size() == 0:
 		is_processing_polygons = false
 		clear_polygons()
@@ -53,7 +72,7 @@ func create_polygons(anim: String, idx: int) -> void:
 	
 	var bitmap = BitMap.new()
 	bitmap.create_from_image_alpha(image)
-	var polys = bitmap.opaque_to_polygons(Rect2(Vector2.ZERO, texture_size), 1)
+	var polys = bitmap.opaque_to_polygons(Rect2(Vector2.ZERO, texture_size), processing_accuracy)
 	
 	for poly in polys:
 		var collision_polygon = CollisionPolygon2D.new()

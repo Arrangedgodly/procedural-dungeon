@@ -1,11 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://d4mefvyhnuqn0"]
+[gd_scene load_steps=14 format=3 uid="uid://d4mefvyhnuqn0"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_5e0x0"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_jqre1"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_i21y1"]
 [ext_resource type="Script" path="res://resources/conditions/IsPlayerInApproachRange.gd" id="3_txfs6"]
-[ext_resource type="Script" path="res://resources/conditions/CanSetTarget.gd" id="4_p1ryn"]
-[ext_resource type="Script" path="res://resources/actions/SetTarget.gd" id="5_brnwa"]
 [ext_resource type="Script" path="res://resources/conditions/IsDead.gd" id="6_6bvg3"]
 [ext_resource type="Script" path="res://resources/conditions/IsPlayerNotInApproachRange.gd" id="6_j0tl8"]
 [ext_resource type="Script" path="res://resources/actions/RemoveCorpse.gd" id="7_6yxcj"]
@@ -18,7 +16,7 @@
 
 [node name="HuntPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_5e0x0")
-blackboard = NodePath("@Node@17560")
+blackboard = NodePath("@Node@43055")
 actor = NodePath("")
 
 [node name="SelectorComposite" type="Node" parent="."]
@@ -32,15 +30,6 @@ script = ExtResource("6_6bvg3")
 
 [node name="RemoveCorpse" type="Node" parent="SelectorComposite/RemovalSequence"]
 script = ExtResource("7_6yxcj")
-
-[node name="TargetSequence" type="Node" parent="SelectorComposite"]
-script = ExtResource("3_i21y1")
-
-[node name="CanSetTarget" type="Node" parent="SelectorComposite/TargetSequence"]
-script = ExtResource("4_p1ryn")
-
-[node name="SetTarget" type="Node" parent="SelectorComposite/TargetSequence"]
-script = ExtResource("5_brnwa")
 
 [node name="HitSequence" type="Node" parent="SelectorComposite"]
 script = ExtResource("3_i21y1")

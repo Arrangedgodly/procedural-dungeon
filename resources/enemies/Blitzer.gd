@@ -1,21 +1,16 @@
-extends Enemy
+extends MeleeEnemy
 class_name Blitzer
 
 var direction: Vector2
 
 func _ready() -> void:
 	health = 30
-	speed = 200
+	speed = 120
 	damage = 75
 	sprite.sprite_frames.set_animation_loop("attack", true)
-	approach_range = 1000
-	attack_range = 500
+	approach_range = 750
+	attack_range = 300
 	super._ready()
-
-func _process(delta: float) -> void:
-	position += direction * speed * delta
-	sprite.flip_h = direction.x < 0
-	move_and_slide()
 	
 func attack_player() -> void:
 	if is_dead:

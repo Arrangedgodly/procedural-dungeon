@@ -255,7 +255,7 @@ autoplay = "idle"
 script = ExtResource("3_k07n7")
 
 [node name="FireskullAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_3gx7d")]
-blackboard = NodePath("@Node@17563")
+blackboard = NodePath("@Node@17555")
 actor = NodePath("..")
 
 [node name="AttackTimer" type="Timer" parent="."]

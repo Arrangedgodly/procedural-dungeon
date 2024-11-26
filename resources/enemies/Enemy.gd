@@ -5,7 +5,7 @@ signal animation_ended
 
 @export var sprite: AnimatedSprite2D
 @export var attack_timer: Timer
-@onready var outline_shader = preload("res://shaders/outline_shader.tres")
+@onready var outline_shader = preload("res://shaders/outline_shader.tres").duplicate()
 @onready var progress_bar = preload("res://scenes/progress_bar.tscn")
 var health: int
 var speed: int
@@ -47,6 +47,8 @@ func _ready() -> void:
 	self.mouse_exited.connect(_on_mouse_exited)
 	
 	add_to_group("enemies")
+	
+	set_target()
 	print(self.name + " initialized")
 
 func _process(_delta: float) -> void:

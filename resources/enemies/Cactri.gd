@@ -1,4 +1,4 @@
-extends Enemy
+extends MeleeEnemy
 class_name Cactri
 
 var spike_distance: float = 8.0

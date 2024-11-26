@@ -1,4 +1,4 @@
-extends Enemy
+extends MeleeEnemy
 class_name MediumCyclops
 
 func _ready() -> void:

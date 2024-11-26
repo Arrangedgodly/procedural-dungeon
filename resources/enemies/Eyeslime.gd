@@ -1,4 +1,4 @@
-extends Enemy
+extends MeleeEnemy
 class_name Eyeslime
 
 func _ready() -> void:

@@ -127,6 +127,9 @@ func target_enemy(enemy: Enemy) -> void:
 	if enemy.is_dead:
 		return
 	
+	if current_target and current_target != enemy:
+		current_target.set_is_targeted(false)
+	
 	current_target = enemy
 	
 	if not enemy.tree_exiting.is_connected(_on_target_died):

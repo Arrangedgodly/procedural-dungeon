@@ -1,4 +1,4 @@
-extends Enemy
+extends MeleeEnemy
 class_name Swordsman
 
 func _ready() -> void:

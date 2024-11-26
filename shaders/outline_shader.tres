@@ -3,6 +3,7 @@
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="1_gc3wp"]
 
 [resource]
+resource_local_to_scene = true
 shader = ExtResource("1_gc3wp")
 shader_parameter/outline_color = Color(0.870387, 1.44392e-06, 1.2514e-06, 1)
 shader_parameter/progress = 1.0

@@ -22,7 +22,7 @@ func play_music(stream: AudioStream):
 	add_child(instance)
 	instance.play()
 
-func remove_node(instance: AudioStreamPlayer):
+func remove_node(instance: Node):
 	instance.queue_free()
 
 func stop(stream: AudioStream):

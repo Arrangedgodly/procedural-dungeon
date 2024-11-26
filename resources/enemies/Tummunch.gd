@@ -1,4 +1,4 @@
-extends Enemy
+extends MeleeEnemy
 class_name Tummunch
 
 func _ready() -> void:

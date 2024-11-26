@@ -1,4 +1,4 @@
-extends Enemy
+extends RangedEnemy
 class_name MiniDevil
 
 func _ready() -> void:

@@ -1,4 +1,4 @@
-extends Enemy
+extends MeleeEnemy
 class_name LaGoon
 
 func _ready() -> void:

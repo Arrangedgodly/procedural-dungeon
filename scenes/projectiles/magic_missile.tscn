@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://resources/projectiles/FriendlyProjectile.gd" id="1_ffwak"]
 [ext_resource type="Texture2D" uid="uid://dyxoemkxr58mo" path="res://assets/vfx/projectiles/pj2_magic_missile_small_red/spritesheet.png" id="2_17qcf"]
 [ext_resource type="AudioStream" uid="uid://b37frcxcij8dt" path="res://assets/sounds/energy_blast_small_02.wav" id="2_it11p"]
-[ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_6m7v2"]
 [ext_resource type="AudioStream" uid="uid://cyhpv2jwvpb20" path="res://assets/sounds/fireball_impact_sizzle_burn3.wav" id="3_nrhtr"]
+[ext_resource type="Script" path="res://resources/projectiles/ProjectilePolygonSprite.gd" id="5_qn0vt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvh0w"]
 atlas = ExtResource("2_17qcf")
@@ -79,5 +79,5 @@ impact_sound = ExtResource("3_nrhtr")
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_ntyvw")
 frame_progress = 0.168821
-script = ExtResource("3_6m7v2")
+script = ExtResource("5_qn0vt")
 collision_scale = Vector2(0.4, 0.4)
