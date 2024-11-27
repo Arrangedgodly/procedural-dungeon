@@ -16,7 +16,11 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 	
 	if distance <= actor.attack_range:
 		blackboard.set_value("can_attack", true)
+		if actor.debug:
+			actor.debug.update_state("CAN ATTACK")
 		return SUCCESS
 	
 	blackboard.set_value("can_attack", false)
+	if actor.debug:
+			actor.debug.update_state("CAN'T ATTACK")
 	return FAILURE

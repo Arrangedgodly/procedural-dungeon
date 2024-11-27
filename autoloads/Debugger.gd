@@ -1,6 +1,6 @@
 extends Node
 
-var debug_shown: bool = false
+var debug_shown: bool = true
 
 func show() -> void:
 	debug_shown = true

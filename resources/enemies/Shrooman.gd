@@ -70,20 +70,11 @@ func create_explosion() -> void:
 func finish_attack() -> void:
 	is_attacking = false
 	attack_timer.start()
-	current_state = State.PURSUING
-
-# Override handle_attack_state for Shrooman since its attack is more complex
-func handle_attack_state() -> void:
-	if target == null:
-		current_state = State.IDLE
-		return
 		
 	if !is_attacking:
 		attack_player()
-	# Stay in attack state while explosions are happening
-	# The finish_attack() method will change the state when done
 
 func take_damage(dmg: int) -> void:
 	super.take_damage(dmg)
 	if is_attacking:
-		is_attacking = false  # Interrupt attack sequence if hit
+		is_attacking = false

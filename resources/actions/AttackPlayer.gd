@@ -13,6 +13,8 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 			# Ranged enemy logic
 			var distance = actor.get_distance_to_player()
 			if distance < actor.attack_range:
+				if actor.debug:
+					actor.debug.update_state("RETREATING")
 				var direction = (actor.target.global_position - actor.global_position).normalized()
 				actor.velocity = -direction * actor.speed
 				actor.move_and_slide()
@@ -36,10 +38,14 @@ func initiate_attack(actor: Node, blackboard: Blackboard) -> void:
 
 func change_actor_animation(actor: Node, blackboard: Node) -> void:
 	set_is_attacking(actor, blackboard, false)
+	if actor.debug:
+			actor.debug.update_state("ATTACK COOLDOWN")
 	actor.sprite.play("idle")
 	actor.sprite.animation_finished.disconnect(change_actor_animation)
 
 func set_is_attacking(actor: Node, blackboard: Node, value: bool) -> void:
 	blackboard.set_value("is_attacking", value)
+	if actor.debug:
+			actor.debug.update_state("ATTACKING")
 	if actor.attack_timer.timeout.is_connected(set_is_attacking):
 		actor.attack_timer.timeout.disconnect(set_is_attacking)

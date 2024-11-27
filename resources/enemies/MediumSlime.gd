@@ -2,6 +2,7 @@ extends MeleeEnemy
 class_name MediumSlime
 
 const MINI_SLIME = preload("res://scenes/enemies/mini_slime.tscn")
+const GROUND_SLAM_EFFECT = preload("res://scenes/effects/ground_slam.tscn")
 var min_splits: int = 2
 var max_splits: int = 6
 
@@ -9,15 +10,26 @@ func _ready() -> void:
 	health = 50
 	speed = 50
 	damage = 15
+	attack_range = 50
+	approach_range = 250
 	super._ready()
 
 func attack_player() -> void:
 	if target and get_distance_to_player() <= attack_range:
 		sprite.play("attack")
-		if target:
+		await sprite.animation_finished 
+		var ground_slam = GROUND_SLAM_EFFECT.instantiate()
+		add_child(ground_slam)
+		if target and get_distance_to_player() <= attack_range:
 			target.take_damage(damage)
+		attack_timer.start()
 
 func remove_corpse() -> void:
+	sprite.play("death")
+	set_is_targeted(false)
+	health_bar.hide()
+	
+	# Spawn mini slimes before the death animation finishes
 	var num_slimes = randi_range(min_splits, max_splits)
 	for i in num_slimes:
 		var mini_slime = MINI_SLIME.instantiate()
@@ -33,4 +45,11 @@ func remove_corpse() -> void:
 		).normalized()
 		mini_slime.velocity = random_direction * 100
 		get_parent().add_child(mini_slime)
-	super.remove_corpse()
+	
+	# Continue with fade out
+	await sprite.animation_finished
+	set_process(false)
+	var tween = create_tween()
+	tween.tween_property(sprite, "modulate:a", 0, 10)
+	await tween.finished
+	queue_free()

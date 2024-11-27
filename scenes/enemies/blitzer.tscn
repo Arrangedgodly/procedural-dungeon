@@ -1,9 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://bpnv0ykvwqosg"]
+[gd_scene load_steps=37 format=3 uid="uid://bpnv0ykvwqosg"]
 
 [ext_resource type="Script" path="res://resources/enemies/Blitzer.gd" id="1_cjg3m"]
 [ext_resource type="Texture2D" uid="uid://b2j12jjhpge5a" path="res://assets/sprites/enemies/Blitzer/Enemy_015_C.png" id="2_m0kb1"]
 [ext_resource type="Texture2D" uid="uid://bwryvrxmyjtxl" path="res://assets/sprites/enemies/Blitzer/Enemy_015_B.png" id="3_53q5f"]
 [ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="4_gsb7a"]
+[ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="5_mkmsn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lrwit"]
 atlas = ExtResource("2_m0kb1")
@@ -259,3 +260,7 @@ script = ExtResource("4_gsb7a")
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("5_mkmsn")]
+blackboard = NodePath("@Node@37313")
+actor = NodePath("..")
