@@ -1,6 +1,8 @@
 extends MeleeEnemy
 class_name Cactri
 
+var can_damage: bool = true
+
 func _ready() -> void:
 	health = 30
 	speed = 30
@@ -10,9 +12,16 @@ func _ready() -> void:
 	super._ready()
 
 func attack_player() -> void:
+	if !can_damage or !target:
+		return
+		
 	sprite.play("attack")
-	move_and_slide()
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		if collision.get_collider() == target:
-			target.take_damage(damage)
+	can_damage = false
+	
+	if get_distance_to_player() <= attack_range:
+		target.take_damage(damage)
+	
+	# Add attack cooldown
+	await get_tree().create_timer(1.0).timeout
+	can_damage = true
+	attack_timer.start()

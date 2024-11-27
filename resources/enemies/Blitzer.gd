@@ -4,6 +4,7 @@ class_name Blitzer
 var direction: Vector2
 var is_charging: bool = false
 var charge_telegraph: Line2D
+var can_damage: bool = true  # Cooldown flag
 
 func _ready() -> void:
 	health = 30
@@ -21,52 +22,58 @@ func _ready() -> void:
 	super._ready()
 
 func attack_player() -> void:
-	if is_dead or is_charging:
+	if is_dead or is_charging or !can_damage:
 		return
 		
-	if target:
-		# Start charge sequence
-		direction = (target.global_position - global_position).normalized()
-		sprite.play("attack")
-		sprite.flip_h = direction.x < 0
-		charge_telegraph.show()
-		update_charge_telegraph()
+	if !target:
+		return
 		
-		await get_tree().create_timer(0.5).timeout
-		charge_telegraph.hide()
+	# Start charge sequence
+	direction = (target.global_position - global_position).normalized()
+	sprite.play("attack")
+	sprite.flip_h = direction.x < 0
+	charge_telegraph.show()
+	update_charge_telegraph()
+	
+	await get_tree().create_timer(0.5).timeout
+	charge_telegraph.hide()
+	
+	if is_dead or !target:
+		return
 		
-		if is_dead or !target:
+	is_charging = true
+	can_damage = true
+	velocity = direction * speed * 2
+	
+	# Set up charge timeout
+	get_tree().create_timer(2.0).timeout.connect(end_charge)
+
+func _physics_process(delta: float) -> void:
+	if is_charging:
+		move_and_slide()
+		check_collision()
+
+func check_collision() -> void:
+	if !is_charging or !can_damage:
+		return
+		
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider() == target and can_damage:
+			target.take_damage(damage)
+			can_damage = false  # Prevent multiple hits
+			end_charge()
 			return
-			
-		is_charging = true
-		velocity = direction * speed * 2
-		
-		# Continue charge until collision or timeout
-		var charge_duration = 2.0
-		var time_charging = 0.0
-		
-		while is_charging and time_charging < charge_duration:
-			move_and_slide()
-			time_charging += get_physics_process_delta_time()
-			
-			for i in get_slide_collision_count():
-				var collision = get_slide_collision(i)
-				if collision.get_collider() == target:
-					target.take_damage(damage)
-					end_charge()
-					return
-				elif collision.get_collider().is_in_group("walls"):
-					end_charge()
-					return
-			
-			await get_tree().physics_frame
-		
-		end_charge()
+		elif collision.get_collider().is_in_group("walls"):
+			end_charge()
+			return
 
 func end_charge() -> void:
 	is_charging = false
 	sprite.play("idle")
 	velocity = Vector2.ZERO
+	await get_tree().create_timer(1.0).timeout
+	can_damage = true
 	attack_timer.start()
 
 func update_charge_telegraph() -> void:

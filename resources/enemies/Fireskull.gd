@@ -25,6 +25,3 @@ func attack_player() -> void:
 	fireball.launch(target.global_position)
 	
 	attack_timer.start()
-	current_state = State.ATTACKING
-	if debug:
-		debug.update_state("ATTACKING")

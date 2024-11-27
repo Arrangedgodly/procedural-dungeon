@@ -79,6 +79,8 @@ func _ready() -> void:
 		debug = debug_label.instantiate()
 		add_child(debug)
 		debug.init("IDLE", current_health, get_distance_to_player(), speed, damage, attack_range, approach_range)
+		if !Debugger.debug_shown:
+			debug.hide()
 	
 	add_to_group("enemies")
 	set_target()
@@ -162,6 +164,8 @@ func pursue_target() -> void:
 	# Keep distance for ranged enemies
 	if keep_distance and get_distance_to_player() < attack_range:
 		direction = -direction
+		if debug:
+			debug.update_state("RETREATING")
 		
 	velocity = direction * speed
 	move_and_slide()

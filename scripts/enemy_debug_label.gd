@@ -7,6 +7,10 @@ extends Control
 @onready var attack: Label = $"VBoxContainer/Attack Range/Attack"
 @onready var approach: Label = $"VBoxContainer/Approach Range/Approach"
 
+func _ready() -> void:
+	add_to_group("debug")
+	hide()
+
 func init(new_state: String, new_health: int, new_distance: float, new_speed: int, new_damage: int, new_attack: int, new_approach: int) -> void:
 	state.text = new_state
 	health.text = str(new_health)
