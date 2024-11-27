@@ -1,52 +1,48 @@
-shader_type spatial;
-render_mode unshaded,blend_mix,depth_prepass_alpha,cull_disabled,specular_disabled;
-uniform sampler2D sprite_texture : source_color, filter_linear;
+shader_type canvas_item;
+render_mode blend_add;
+uniform float s_scale_y = 1.0;
+uniform float l_s_scale_y = 1.0;
+uniform float lness = 1.0;
+uniform float lness2 = .0;
+uniform sampler2D noise : repeat_enable, filter_nearest_mipmap_anisotropic;
+uniform sampler2D noise2 : repeat_enable, filter_nearest_mipmap_anisotropic;
+uniform sampler2D colo_curve;
 
-uniform vec4 line_color : source_color = vec4(1.0,1.0,1.0,1.0); // Glow or outline color
-uniform float glowSize: hint_range(0.0, 300) = 15.0; // Size of glow
-uniform int glowDensity: hint_range(0, 30) = 3; // How many stamps to repeat in one direction
-uniform int glowRadialCoverage: hint_range(0, 32) = 4; // How many directions to spread out
-uniform float glowAngle: hint_range(0.0, 6.28) = 1.57; // The starting angle. More important if you want to use this as a trail.
-uniform float glowSharpness: hint_range(0.0, 5.0) = 1.0; // Effect how quickly stamps become transparent as they move out
-uniform float alphaThreshold: hint_range(0.0, 1.0) =  0.2; // Alpha level a pixel should be considered a glow
+vec4 f1(vec2 uv, float time){
+	vec4 nv2 = texture(noise, uv + vec2(time, 0.0));
+	vec4 n2v2 = texture(noise2, uv + vec2(time*.8, 0.0));
+	nv2.a = max(0., nv2.a + uv.x - 1.0);
+	n2v2.a = max(0., n2v2.a + uv.x - 1.0);
+	return nv2 * n2v2;
+}
 
-//Goes through every single pixle and does thing
-void fragment() {
-	vec4 col = texture(sprite_texture, UV); // Gets color at uv position of pixel
+void fragment()
+{
+	vec2 mUV = UV * 4. - 1.5;
+	vec2 uv = mUV * vec2(1., s_scale_y);
+	float time = TIME;
+    vec2 cuv = mUV - vec2(.5);
+	float d2c = length(cuv);
+	vec4 color = COLOR;
+	//
+	color *= (f1(uv, time) + f1(uv + vec2(.1,0.), time+11.514) + f1(uv+vec2(.05,0.), time+14.14));
 
-	// Sets source image as default pixel
-	ALBEDO = col.rgb;
-	ALPHA = col.a;
+	color.a -= 1.0;
+	color.a = - pow(color.a, 2.0) + 1.0;
+	//
+	color.rgb = texture(colo_curve, vec2(color.a,0.)).rgb;
+	float randmoo = texture(noise2, mUV + vec2(time, -time)).a;
+	randmoo = mix(randmoo, 0., mUV.x);
+    color.a *= smoothstep(.5, .48 - (.2 - min(mUV.x, 1.0)*.2), d2c + randmoo * 0.4);
+    COLOR = color;
+	COLOR.rgb = mix(COLOR.rgb, vec3(.0), smoothstep(0.00001, 0.0, color.a));
+	// light
+	float d2c_l = length(UV * vec2(1., l_s_scale_y) - vec2(.58, .5*l_s_scale_y));
+	float l = - log(d2c_l + lness2) * lness;
+	float randmoo2 = texture(noise2, vec2(time, -time)).a;
 
-	vec2 pixel_size = 1.0 / vec2(textureSize(sprite_texture, 0)); // Set pixel size
-	float alph = 0.0; // Start with a 0 alpha to add to with each check
-	for (int i = 0; i < glowRadialCoverage; i++) { // Goes around in a circle
-		for (int j = 0; j < glowDensity; j++) { // Extends out
-			float radians360 = 6.28;
-			// The angle from which to grab pixel information
-			float angle = (radians360 / float(glowRadialCoverage))*float(i+1) + glowAngle;
-			// The distance to reach to grab pixel information
-			float dist = glowSize * float(j + 1) / float(glowDensity);
-			// Pixel coordinate to grab
-			vec2 pixel_coor = vec2( sin(angle) , cos(angle) );
-			// Gets the pixel based on the previous information
-    		vec4 tex = texture(sprite_texture, UV + pixel_coor * pixel_size * dist);
-
-			// Sharpness. If you don't care about this, enable the next line and delete the next 3
-			//alph += tex.a * line_color.a;
-			float distFrom = float(glowDensity-j) / float(glowDensity); // Distance iteration number (how far out)
-			float sharpness = mix(0.0, 1.0, pow(distFrom, glowSharpness) ); // Figure out sharpness level, interplote with distance and Glow Sharpness modifier
-			alph += (tex.a * line_color.a) * sharpness; // Apply sharpness
-		}
-	}
-
-	// Adds outline if this part of the image is transparent
-	if (ALPHA < alphaThreshold){
-		ALBEDO = line_color.rgb;
-		ALPHA = alph;
-	}
-
-	// Enabling this line will cut out the image and leave the outline
-	//ALPHA -= col.a * 10.0;
-	// if you set blend to add, and set this as a second pass, you'll get a better glow effect
+	COLOR += texture(colo_curve, vec2(1.0-d2c_l - .1*randmoo2, 0.0)) * l;
+	//COLOR += vec4(.8, .8, .6, 1.0) * l;
+	//
+	COLOR.a *= smoothstep(0.5, 0.1, length(UV - vec2(.5)));
 }

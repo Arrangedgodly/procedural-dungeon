@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=4 uid="uid://c857ael7l3imx"]
+[gd_scene load_steps=11 format=4 uid="uid://c857ael7l3imx"]
 
 [ext_resource type="Script" path="res://scripts/test_arena.gd" id="1_m3l3c"]
 [ext_resource type="Texture2D" uid="uid://bqbv10dhju6w" path="res://assets/tiles/RA_Ruins.png" id="2_yi7r0"]
 [ext_resource type="PackedScene" uid="uid://bi3ubqat64q2c" path="res://scenes/characters/red_player.tscn" id="3_rmb8m"]
 [ext_resource type="PackedScene" uid="uid://cw0lch4b1a46p" path="res://scenes/circle_marker.tscn" id="4_ntf8l"]
+[ext_resource type="Script" path="res://scripts/PlayerCamera.gd" id="4_qn88d"]
 [ext_resource type="PackedScene" uid="uid://dgyt1nxew8gbh" path="res://scenes/player_ui.tscn" id="5_5tvs0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jn1ux"]
@@ -3994,8 +3995,10 @@ position = Vector2(0, 126)
 [node name="Camera2D" type="Camera2D" parent="RedPlayer"]
 position = Vector2(1, 8)
 zoom = Vector2(2.5, 2.5)
+limit_smoothed = true
 position_smoothing_enabled = true
-position_smoothing_speed = 30.0
+position_smoothing_speed = 15.0
+script = ExtResource("4_qn88d")
 
 [node name="PlayerUI" parent="RedPlayer/Camera2D" node_paths=PackedStringArray("player") instance=ExtResource("5_5tvs0")]
 player = NodePath("../..")

@@ -1,0 +1,120 @@
+[gd_scene load_steps=3 format=3 uid="uid://ijrewjnje7d5"]
+
+[ext_resource type="Script" path="res://scripts/enemy_debug_label.gd" id="1_sc8my"]
+[ext_resource type="FontFile" uid="uid://cmm6q7dnqqtdb" path="res://assets/fonts/Beanstalk.ttf" id="2_pf1bt"]
+
+[node name="EnemyDebugLabel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_sc8my")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="State" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/State"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+text = "Current State:"
+
+[node name="State" type="Label" parent="VBoxContainer/State"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+
+[node name="Health" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Health"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+text = "Current Health:"
+
+[node name="Health" type="Label" parent="VBoxContainer/Health"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+
+[node name="Distance" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Distance"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+text = "Distance to Player:"
+
+[node name="Distance" type="Label" parent="VBoxContainer/Distance"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+
+[node name="Speed" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Speed"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+text = "Speed:"
+
+[node name="Speed" type="Label" parent="VBoxContainer/Speed"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+
+[node name="Damage" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Damage"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+text = "Damage:"
+
+[node name="Damage" type="Label" parent="VBoxContainer/Damage"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+
+[node name="Attack Range" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Attack Range"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+text = "Attack Range:"
+
+[node name="Attack" type="Label" parent="VBoxContainer/Attack Range"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+
+[node name="Approach Range" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Approach Range"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16
+text = "Approach Range:"
+
+[node name="Approach" type="Label" parent="VBoxContainer/Approach Range"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pf1bt")
+theme_override_font_sizes/font_size = 16

@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdtwmuchbc6ev"]
+[gd_scene load_steps=6 format=3 uid="uid://cdtwmuchbc6ev"]
 
 [ext_resource type="Script" path="res://scripts/gurpy_games.gd" id="1_ewm5y"]
 [ext_resource type="AudioStream" uid="uid://3cirgwn64n1l" path="res://assets/sounds/retro_vehicle_choppy_engine_01.wav" id="2_6acjx"]
 [ext_resource type="FontFile" uid="uid://cmm6q7dnqqtdb" path="res://assets/fonts/Beanstalk.ttf" id="2_a44og"]
+[ext_resource type="Texture2D" uid="uid://djwx4deetxuds" path="res://assets/gg_logo.png" id="3_lp2ld"]
+[ext_resource type="Script" path="res://resources/PixelateGlitch.gd" id="4_w8b8i"]
 
 [node name="GurpyGames" type="Node2D"]
 script = ExtResource("1_ewm5y")
@@ -17,6 +19,22 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(800, 800)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -160.0
+offset_right = 160.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_lp2ld")
+script = ExtResource("4_w8b8i")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(1200, 800)
 anchors_preset = 15
@@ -24,39 +42,59 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 200
 alignment = 1
 
 [node name="Gurpy" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
-alignment = 1
 
 [node name="G" type="Label" parent="VBoxContainer/Gurpy"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "G"
 
 [node name="U" type="Label" parent="VBoxContainer/Gurpy"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "U"
 
 [node name="R" type="Label" parent="VBoxContainer/Gurpy"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "R"
 
 [node name="P" type="Label" parent="VBoxContainer/Gurpy"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "P"
 
 [node name="Y" type="Label" parent="VBoxContainer/Gurpy"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "Y"
@@ -64,34 +102,54 @@ text = "Y"
 [node name="Games" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
-alignment = 1
+alignment = 2
 
 [node name="G" type="Label" parent="VBoxContainer/Games"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "G"
 
 [node name="A" type="Label" parent="VBoxContainer/Games"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "A"
 
 [node name="M" type="Label" parent="VBoxContainer/Games"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "M"
 
 [node name="E" type="Label" parent="VBoxContainer/Games"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "E"
 
 [node name="S" type="Label" parent="VBoxContainer/Games"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 15
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 35
 theme_override_fonts/font = ExtResource("2_a44og")
 theme_override_font_sizes/font_size = 256
 text = "S"

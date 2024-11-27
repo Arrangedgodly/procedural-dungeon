@@ -15,9 +15,16 @@ func attack_player() -> void:
 	if is_dead:
 		return
 	
+	sprite.play("attack")
+	
 	var fireball = FIREBALL.instantiate()
 	fireball.set_damage(damage)
 	get_tree().get_first_node_in_group("projectiles").add_child(fireball)
 	fireball.global_position = global_position
 	fireball.set_target(target)
 	fireball.launch(target.global_position)
+	
+	attack_timer.start()
+	current_state = State.ATTACKING
+	if debug:
+		debug.update_state("ATTACKING")

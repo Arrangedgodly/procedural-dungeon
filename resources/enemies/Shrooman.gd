@@ -6,6 +6,8 @@ const EXPLOSION_EFFECT = preload("res://scenes/effects/explosion.tscn")
 
 var explosion_radius: float = 40.0
 var num_explosions: int = 3
+var current_explosion: int = 0
+var is_attacking: bool = false
 
 func _ready() -> void:
 	health = 25
@@ -16,12 +18,25 @@ func _ready() -> void:
 	super._ready()
 
 func attack_player() -> void:
-	if is_dead:
+	if is_dead or is_attacking:
 		return
 	
-	for i in num_explosions:
+	is_attacking = true
+	sprite.play("attack")
+	current_explosion = 0
+	
+	create_explosion_sequence()
+
+func create_explosion_sequence() -> void:
+	if current_explosion < num_explosions and !is_dead and target:
 		create_explosion()
-		await get_tree().create_timer(.5).timeout
+		current_explosion += 1
+		
+		if current_explosion < num_explosions:
+			await get_tree().create_timer(0.5).timeout
+			create_explosion_sequence()
+		else:
+			finish_attack()
 
 func create_explosion() -> void:
 	var random_offset = Vector2(
@@ -34,7 +49,14 @@ func create_explosion() -> void:
 	var warning = WARNING_EFFECT.instantiate()
 	get_parent().add_child(warning)
 	warning.global_position = explosion_pos
+	
+	# Wait and create explosion
 	await get_tree().create_timer(1.5).timeout
+	if is_dead or !target:
+		warning.queue_free()
+		finish_attack()
+		return
+		
 	warning.queue_free()
 	var explosion = EXPLOSION_EFFECT.instantiate()
 	var explosion_frame = explosion.sprite_frames.get_frame_texture("default", 0)
@@ -42,6 +64,26 @@ func create_explosion() -> void:
 	get_parent().add_child(explosion)
 	explosion.global_position = explosion_pos
 	
-	if target:
-		if explosion_pos.distance_to(target.global_position) < explosion_radius:
-			target.take_damage(damage)
+	if target and explosion_pos.distance_to(target.global_position) < explosion_radius:
+		target.take_damage(damage)
+
+func finish_attack() -> void:
+	is_attacking = false
+	attack_timer.start()
+	current_state = State.PURSUING
+
+# Override handle_attack_state for Shrooman since its attack is more complex
+func handle_attack_state() -> void:
+	if target == null:
+		current_state = State.IDLE
+		return
+		
+	if !is_attacking:
+		attack_player()
+	# Stay in attack state while explosions are happening
+	# The finish_attack() method will change the state when done
+
+func take_damage(dmg: int) -> void:
+	super.take_damage(dmg)
+	if is_attacking:
+		is_attacking = false  # Interrupt attack sequence if hit

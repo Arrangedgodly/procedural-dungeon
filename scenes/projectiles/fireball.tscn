@@ -97,6 +97,7 @@ impact_sound = ExtResource("3_dvhd5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 25
 texture_filter = 1
+use_parent_material = true
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_kxm0u")
 autoplay = "default"
