@@ -1,7 +1,7 @@
 extends MeleeEnemy
 class_name MediumSlime
 
-const MINI_SLIME = preload("res://scenes/enemies/mini_slime.tscn")
+const MINI_SLIME_PATH: String = "res://scenes/enemies/mini_slime.tscn"
 const GROUND_SLAM_EFFECT = preload("res://scenes/effects/ground_slam.tscn")
 var min_splits: int = 2
 var max_splits: int = 6
@@ -9,7 +9,7 @@ var max_splits: int = 6
 func _ready() -> void:
 	health = 50
 	speed = 50
-	damage = 15
+	damage = 65
 	attack_range = 50
 	approach_range = 250
 	super._ready()
@@ -32,11 +32,12 @@ func remove_corpse() -> void:
 	# Spawn mini slimes before the death animation finishes
 	var num_slimes = randi_range(min_splits, max_splits)
 	for i in num_slimes:
-		var mini_slime = MINI_SLIME.instantiate()
+		var mini_slime = EnemyManager.instantiate_enemy_by_path(MINI_SLIME_PATH)
+		get_parent().add_child(mini_slime)
 		mini_slime.global_position = global_position
 		var random_offset = Vector2(
-			randf_range(-20, 20),
-			randf_range(-20, 20)
+			randf_range(-50, 50),
+			randf_range(-50, 50)
 		)
 		mini_slime.global_position += random_offset
 		var random_direction = Vector2(
@@ -44,7 +45,6 @@ func remove_corpse() -> void:
 			randf_range(-1, 1)
 		).normalized()
 		mini_slime.velocity = random_direction * 100
-		get_parent().add_child(mini_slime)
 	
 	# Continue with fade out
 	await sprite.animation_finished

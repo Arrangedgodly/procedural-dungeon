@@ -1,0 +1,75 @@
+[gd_scene load_steps=12 format=3 uid="uid://63dln8dmggco"]
+
+[ext_resource type="Texture2D" uid="uid://dwjg0r3vuukjr" path="res://assets/vfx/general/fx3_toon_impact_small_blue/spritesheet.png" id="1_168ff"]
+[ext_resource type="Script" path="res://resources/Effect.gd" id="2_kol3k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8kscs"]
+atlas = ExtResource("1_168ff")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xr3q7"]
+atlas = ExtResource("1_168ff")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6ron"]
+atlas = ExtResource("1_168ff")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0xgo"]
+atlas = ExtResource("1_168ff")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5o8kp"]
+atlas = ExtResource("1_168ff")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uecfb"]
+atlas = ExtResource("1_168ff")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4w81m"]
+atlas = ExtResource("1_168ff")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvaq1"]
+atlas = ExtResource("1_168ff")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x5ntt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8kscs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xr3q7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6ron")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0xgo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5o8kp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uecfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4w81m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvaq1")
+}],
+"loop": false,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="TinyGroundSlam" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_x5ntt")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+script = ExtResource("2_kol3k")
