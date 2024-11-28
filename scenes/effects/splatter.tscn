@@ -1,0 +1,89 @@
+[gd_scene load_steps=14 format=3 uid="uid://bhoxaihobe7s8"]
+
+[ext_resource type="Texture2D" uid="uid://dey7tgneu42na" path="res://assets/vfx/general/fx3_splatter_large_blue/spritesheet.png" id="1_f1lql"]
+[ext_resource type="Script" path="res://resources/Effect.gd" id="2_2lhxo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwegr"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4khn7"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cp45j"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngptg"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kipnf"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13atn"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltw2j"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_noyfk"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kx7s5"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5uv1"]
+atlas = ExtResource("1_f1lql")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uveip"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwegr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4khn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cp45j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngptg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kipnf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13atn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltw2j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_noyfk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kx7s5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5uv1")
+}],
+"loop": false,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="Splatter" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_uveip")
+autoplay = "default"
+frame = 9
+frame_progress = 1.0
+script = ExtResource("2_2lhxo")

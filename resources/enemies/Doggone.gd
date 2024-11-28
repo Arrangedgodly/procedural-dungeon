@@ -23,7 +23,6 @@ func attack_player() -> void:
 		get_tree().get_first_node_in_group("effects").add_child(bite)
 		var bite_offset = get_sprite_content_center() + (attack_dir * attack_range)
 		bite.global_position = bite_offset
-		bite.rotation = attack_dir.angle()
 		
 		if target and get_distance_to_player() <= attack_range:
 			target.take_damage(damage)
