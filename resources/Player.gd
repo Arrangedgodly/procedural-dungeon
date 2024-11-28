@@ -34,6 +34,8 @@ func _ready() -> void:
 	current_stamina = stamina
 	current_mana = mana
 	stamina_regen.timeout.connect(_on_stamina_regen_timeout)
+	
+	self.z_index = 20
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("space"):
@@ -158,6 +160,6 @@ func basic_attack() -> void:
 	magic_missile.set_damage(basic_damage)
 	get_tree().get_first_node_in_group("projectiles").add_child(magic_missile)
 	magic_missile.global_position = global_position
-	magic_missile.launch(current_target.global_position)
+	magic_missile.launch(current_target.get_sprite_content_center())
 	
 	basic_attack_timer.start()

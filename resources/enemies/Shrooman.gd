@@ -47,7 +47,7 @@ func create_explosion() -> void:
 	
 	# Create warning marker
 	var warning = WARNING_EFFECT.instantiate()
-	get_parent().add_child(warning)
+	get_tree().get_first_node_in_group("effects").add_child(warning)
 	warning.global_position = explosion_pos
 	
 	# Wait and create explosion
@@ -61,7 +61,7 @@ func create_explosion() -> void:
 	var explosion = EXPLOSION_EFFECT.instantiate()
 	var explosion_frame = explosion.sprite_frames.get_frame_texture("default", 0)
 	explosion_radius = explosion_frame.get_width()
-	get_parent().add_child(explosion)
+	get_tree().get_first_node_in_group("effects").add_child(explosion)
 	explosion.global_position = explosion_pos
 	
 	if target and explosion_pos.distance_to(target.global_position) < explosion_radius:

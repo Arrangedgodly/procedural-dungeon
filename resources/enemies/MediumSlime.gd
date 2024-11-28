@@ -19,17 +19,15 @@ func attack_player() -> void:
 		sprite.play("attack")
 		await sprite.animation_finished 
 		var ground_slam = GROUND_SLAM_EFFECT.instantiate()
-		add_child(ground_slam)
+		get_tree().get_first_node_in_group("effects").add_child(ground_slam)
+		ground_slam.global_position = get_sprite_content_center()
 		if target and get_distance_to_player() <= attack_range:
 			target.take_damage(damage)
 		attack_timer.start()
 
 func remove_corpse() -> void:
-	sprite.play("death")
-	set_is_targeted(false)
-	health_bar.hide()
+	super.remove_corpse()
 	
-	# Spawn mini slimes before the death animation finishes
 	var num_slimes = randi_range(min_splits, max_splits)
 	for i in num_slimes:
 		var mini_slime = EnemyManager.instantiate_enemy_by_path(MINI_SLIME_PATH)
@@ -45,11 +43,3 @@ func remove_corpse() -> void:
 			randf_range(-1, 1)
 		).normalized()
 		mini_slime.velocity = random_direction * 100
-	
-	# Continue with fade out
-	await sprite.animation_finished
-	set_process(false)
-	var tween = create_tween()
-	tween.tween_property(sprite, "modulate:a", 0, 10)
-	await tween.finished
-	queue_free()

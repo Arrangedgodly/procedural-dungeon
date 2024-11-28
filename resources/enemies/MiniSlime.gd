@@ -16,7 +16,8 @@ func attack_player() -> void:
 		sprite.play("attack")
 		await sprite.animation_finished 
 		var ground_slam = TINY_GROUND_SLAM_EFFECT.instantiate()
-		add_child(ground_slam)
+		get_tree().get_first_node_in_group("effects").add_child(ground_slam)
+		ground_slam.global_position = get_sprite_content_center()
 		if target and get_distance_to_player() <= attack_range:
 			target.take_damage(damage)
 		attack_timer.start()

@@ -5,6 +5,8 @@ class_name Effect
 @export var modification_color: Color
 
 func _ready() -> void:
+	self.z_index = 5
+	
 	self.animation_finished.connect(queue_free)
 	
 	if modification_color:

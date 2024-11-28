@@ -70,6 +70,7 @@ func _ready() -> void:
 		else:
 			debug.show()
 	
+	self.z_index = 10
 	add_to_group("enemies")
 	set_target()
 	print(self.name + " initialized")
@@ -92,11 +93,12 @@ func attack_player() -> void:
 func remove_corpse() -> void:
 	sprite.play("death")
 	set_is_targeted(false)
+	sprite.material = null
 	health_bar.hide()
 	await sprite.animation_finished
 	set_process(false)
 	var tween = create_tween()
-	tween.tween_property(sprite, "modulate:a", 0, 10)
+	tween.tween_property(sprite, "self_modulate", Color(1, 1, 1, 0), 10)
 	await tween.finished
 	queue_free()
 
@@ -130,3 +132,32 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	is_hovered = false
+
+func get_sprite_content_center() -> Vector2:
+	var texture = sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
+	var image = texture.get_image()
+	
+	# Find bounds of non-transparent pixels
+	var min_x := image.get_width()
+	var min_y := image.get_height()
+	var max_x := 0
+	var max_y := 0
+	
+	for y in range(image.get_height()):
+		for x in range(image.get_width()):
+			if image.get_pixel(x, y).a > 0:  # If pixel is not transparent
+				min_x = min(min_x, x)
+				min_y = min(min_y, y)
+				max_x = max(max_x, x)
+				max_y = max(max_y, y)
+	
+	# Calculate center of actual content
+	var center = Vector2(
+		(min_x + max_x) / 2.0,
+		(min_y + max_y) / 2.0
+	)
+	
+	# Offset from sprite's top-left to this center point
+	var offset = center - (Vector2(image.get_width(), image.get_height()) / 2.0)
+	
+	return sprite.global_position + offset
