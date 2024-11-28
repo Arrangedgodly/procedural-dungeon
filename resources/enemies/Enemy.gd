@@ -129,9 +129,14 @@ func set_is_targeted(value: bool) -> void:
 
 func _on_mouse_entered() -> void:
 	is_hovered = true
+	if is_dead:
+		CursorManager.set_cursor("disabled")
+	else:
+		CursorManager.set_cursor("crosshair")
 
 func _on_mouse_exited() -> void:
 	is_hovered = false
+	CursorManager.reset_cursor()
 
 func get_sprite_content_center() -> Vector2:
 	var texture = sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)

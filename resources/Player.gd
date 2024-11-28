@@ -9,7 +9,7 @@ signal stamina_changed(new_stamina: int)
 signal died
 
 @export var sprite: AnimatedSprite2D
-@export var collision_shape: CollisionShape2D
+@export var walkable_tiles: TileMapLayer
 @onready var stamina_regen: Timer = $StaminaRegen
 @onready var basic_attack_timer: Timer = $BasicAttackTimer
 
@@ -42,21 +42,31 @@ func _input(event: InputEvent) -> void:
 		drain_stamina()
 	if event.is_action_released("space"):
 		is_boosted = false
+		
+	if event.is_action_pressed("right-click"):
+		var mouse_pos = get_global_mouse_position()
+		var local_pos = walkable_tiles.to_local(mouse_pos)
+		if is_valid_move_target(local_pos):
+			target_position = mouse_pos
+			target_position_changed.emit(target_position)
+			is_moving = true
+			
+			if has_node("AnimatedSprite2D"):
+				sprite.play("walk")
 
 func _physics_process(_delta: float) -> void:
+	var mouse_pos = get_global_mouse_position()
+	var local_pos = walkable_tiles.to_local(mouse_pos)
+	if is_valid_move_target(local_pos):
+		CursorManager.set_cursor("walk")
+	else:
+		CursorManager.set_cursor("disabled")
+		
 	if !is_boosted and !is_refreshing:
 		replenish_stamina()
 	
 	if current_target:
 		basic_attack()
-		
-	if Input.is_action_just_pressed("right-click"):
-		target_position = get_global_mouse_position()
-		target_position_changed.emit(target_position)
-		is_moving = true
-		
-		if has_node("AnimatedSprite2D"):
-			sprite.play("walk")
 	
 	if is_moving:
 		var direction = (target_position - global_position).normalized()
@@ -163,3 +173,20 @@ func basic_attack() -> void:
 	magic_missile.launch(current_target.get_sprite_content_center())
 	
 	basic_attack_timer.start()
+
+func is_valid_move_target(pos: Vector2) -> bool:
+	var tile_pos = walkable_tiles.local_to_map(pos)
+	var tile_id = walkable_tiles.get_cell_source_id(tile_pos)
+	if tile_id == -1:
+		return false
+	
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsPointQueryParameters2D.new()
+	query.position = walkable_tiles.to_global(pos)
+	query.collision_mask = collision_mask
+	var result = space_state.intersect_point(query)
+	
+	return result.is_empty()
+
+func _exit_tree() -> void:
+	CursorManager.reset_cursor()

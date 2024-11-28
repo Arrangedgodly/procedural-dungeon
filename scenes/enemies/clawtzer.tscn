@@ -255,8 +255,9 @@ autoplay = "idle"
 script = ExtResource("3_0cjhb")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_kkgy6")]
-blackboard = NodePath("@Node@17552")
+blackboard = NodePath("@Node@20895")
 actor = NodePath("..")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
 one_shot = true
