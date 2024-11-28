@@ -2,7 +2,7 @@
 
 [sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_acfd3"]
 resource_name = "Limiter"
-threshold_db = -12.0
+ceiling_db = -12.0
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_kpm1a"]
 resource_name = "Reverb"
@@ -11,7 +11,7 @@ wet = 0.1
 
 [sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_k2jll"]
 resource_name = "Limiter"
-threshold_db = -10.0
+ceiling_db = -10.0
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_phnah"]
 resource_name = "Reverb"
@@ -20,7 +20,7 @@ wet = 0.1
 
 [sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_tpeix"]
 resource_name = "Limiter"
-threshold_db = -10.0
+ceiling_db = -10.0
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_cjl1j"]
 resource_name = "Reverb"
@@ -29,7 +29,7 @@ wet = 0.1
 
 [sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_jytda"]
 resource_name = "Limiter"
-threshold_db = -10.0
+ceiling_db = -10.0
 
 [resource]
 bus/1/name = &"Music"

@@ -3,9 +3,10 @@ extends AnimatedSprite2D
 class_name Effect
 
 @export var modification_color: Color
+@export var z_level: int = 5
 
 func _ready() -> void:
-	self.z_index = 5
+	self.z_index = z_level
 	
 	self.animation_finished.connect(queue_free)
 	
