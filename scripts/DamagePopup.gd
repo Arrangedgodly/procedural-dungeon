@@ -18,6 +18,7 @@ func _ready() -> void:
 	modulate = Color(1, 1, 1, 1)
 	setup_arc_motion()
 	animate()
+	process_mode = PROCESS_MODE_ALWAYS
 
 func setup(value: int, type: String = "normal", critical: bool = false) -> void:
 	# Set text value

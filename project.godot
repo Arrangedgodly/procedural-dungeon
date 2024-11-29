@@ -54,6 +54,7 @@ player=""
 enemies=""
 projectiles=""
 effects=""
+pickups=""
 
 [input]
 

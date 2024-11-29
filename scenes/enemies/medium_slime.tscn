@@ -255,7 +255,7 @@ autoplay = "idle"
 script = ExtResource("3_rhb3t")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_dmupj")]
-blackboard = NodePath("@Node@17557")
+blackboard = NodePath("@Node@17541")
 actor = NodePath("..")
 
 [node name="Timer" type="Timer" parent="."]

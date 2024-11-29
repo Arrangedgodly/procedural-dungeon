@@ -103,6 +103,7 @@ func attack_player() -> void:
 	pass
 
 func remove_corpse() -> void:
+	handle_death_drops()
 	sprite.play("death")
 	set_is_targeted(false)
 	sprite.material = null
@@ -190,9 +191,8 @@ func _exit_tree() -> void:
 func handle_death_drops() -> void:
 	var pickups_parent = get_tree().get_first_node_in_group("pickups")
 	if !pickups_parent:
-		var pickups = Node2D.new()
-		pickups.add_to_group("pickups")
-		get_tree().add_child(pickups)
+		print("No pickup group found")
+		return
 		
 	if randf() <= HEALTH_PACK_DROP_CHANCE:
 		spawn_health_pack(pickups_parent)

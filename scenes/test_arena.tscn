@@ -3991,6 +3991,8 @@ tile_set = SubResource("TileSet_wuv12")
 
 [node name="Effects" type="Node2D" parent="." groups=["effects"]]
 
+[node name="Pickups" type="Node2D" parent="." groups=["pickups"]]
+
 [node name="RedPlayer" parent="." node_paths=PackedStringArray("walkable_tiles") instance=ExtResource("3_rmb8m")]
 position = Vector2(0, 126)
 walkable_tiles = NodePath("../TileMapLayer")
