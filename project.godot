@@ -26,6 +26,7 @@ BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
 SoundManager="*res://autoloads/SoundManager.gd"
 Debugger="*res://autoloads/Debugger.gd"
 CursorManager="*res://autoloads/CursorManager.gd"
+PickupManager="*res://autoloads/PickupManager.gd"
 
 [debug]
 

@@ -3,11 +3,14 @@ extends CanvasLayer
 @onready var health_bar: TextureProgressBar = $HealthBar
 @onready var stamina_bar: TextureProgressBar = $StaminaBar
 @onready var mana_bar: TextureProgressBar = $ManaBar
+@onready var experience_bar: ExperienceBar = $ExperienceBar
 @export var player: Player
 
 func _ready() -> void:
 	player.health_changed.connect(set_health_value)
 	player.stamina_changed.connect(set_stamina_value)
+	player.experience_gained.connect(experience_bar.add_experience)
+	player.level_up.connect(experience_bar.level_up)
 	health_bar.init(player.health)
 	mana_bar.init(player.mana)
 	stamina_bar.init(player.stamina)

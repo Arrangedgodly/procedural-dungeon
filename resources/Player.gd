@@ -6,6 +6,8 @@ signal target_position_reached
 signal health_changed(new_health: int)
 signal mana_changed(new_mana: int)
 signal stamina_changed(new_stamina: int)
+signal experience_gained(amount: int)
+signal level_up(new_level: int)
 signal died
 
 @export var sprite: AnimatedSprite2D
@@ -29,6 +31,8 @@ var current_target
 var is_stopped: bool = false
 var stored_target_position: Vector2 = Vector2.ZERO
 var has_stored_position: bool = false
+var current_experience: int = 0
+var current_level: int = 1
 
 const MAGIC_MISSILE = preload("res://scenes/projectiles/magic_missile.tscn")
 const DAMAGE_POPUP = preload("res://scenes/damage_popup.tscn")
@@ -254,3 +258,13 @@ func spawn_damage_popup(damage: int, type: String = "normal", is_crit: bool = fa
 	# Add to a designated effects layer or canvas layer for consistent rendering
 	add_child(popup)
 	popup.setup(damage, type, is_crit)
+
+func get_missing_health() -> int:
+	return health - current_health
+
+func collect_room_pickups() -> void:
+	PickupManager.get_instance().collect_all_pickups(self)
+
+func gain_experience(amount: int) -> void:
+	current_experience += amount
+	experience_gained.emit(amount)

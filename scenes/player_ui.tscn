@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dgyt1nxew8gbh"]
+[gd_scene load_steps=11 format=3 uid="uid://dgyt1nxew8gbh"]
 
 [ext_resource type="Script" path="res://scripts/player_ui.gd" id="1_0qd3d"]
 [ext_resource type="Texture2D" uid="uid://kotcm70yq7yy" path="res://assets/ui/HealthBars/Style 1/6/6back.png" id="2_u125a"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b45pbhaw84mtp" path="res://assets/ui/HealthBars/Style 1/1/1.PNG" id="6_cdap2"]
 [ext_resource type="Texture2D" uid="uid://ro3tpixsa4b0" path="res://assets/ui/HealthBars/Style 1/Icons/HeartRed.png" id="7_1vvd8"]
 [ext_resource type="Texture2D" uid="uid://dmvamcir7q18g" path="res://assets/ui/HealthBars/Style 1/Icons/HeartWhite.png" id="8_mnrvx"]
+[ext_resource type="PackedScene" uid="uid://1vlmyj4hjij0" path="res://scenes/experience_bar.tscn" id="10_8qyg2"]
 
 [node name="PlayerUI" type="CanvasLayer"]
 script = ExtResource("1_0qd3d")
@@ -74,3 +75,9 @@ value = 50.0
 fill_mode = 3
 texture_progress = ExtResource("7_1vvd8")
 texture_progress_offset = Vector2(15, 22)
+
+[node name="ExperienceBar" parent="." instance=ExtResource("10_8qyg2")]
+offset_left = 504.0
+offset_top = 750.0
+offset_right = 504.0
+offset_bottom = 750.0
