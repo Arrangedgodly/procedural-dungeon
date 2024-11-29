@@ -25,6 +25,14 @@ var health_bar
 var keep_distance: bool
 var debug
 
+const DAMAGE_POPUP = preload("res://scenes/damage_popup.tscn")
+const HEALTH_PACK = preload("res://scenes/items/pickups/health_pack.tscn")
+const EXPERIENCE_GEM = preload("res://scenes/items/pickups/experience_gem.tscn")
+const HEALTH_PACK_DROP_CHANCE = 0.05  # 5% chance
+const MIN_EXPERIENCE_GEMS = 3
+const MAX_EXPERIENCE_GEMS = 7
+const GEM_SCATTER_FORCE = 100.0
+
 func animate_enemy() -> void:
 	if !self.animation_ended.is_connected(animate_enemy):
 		self.animation_ended.connect(animate_enemy)
@@ -36,7 +44,7 @@ func animate_enemy() -> void:
 	
 func _input(event: InputEvent) -> void:
 	if is_hovered:
-		if event.is_action_pressed("click"):
+		if event.is_action_pressed("right-click"):
 			set_is_targeted(true)
 
 func _ready() -> void:	
@@ -76,6 +84,10 @@ func _ready() -> void:
 	print(self.name + " initialized")
 
 func take_damage(dmg: int) -> void:
+	var is_crit = randf() <= 0.2
+	if is_crit:
+		dmg *= 1.25
+	spawn_damage_popup(dmg, "normal", is_crit)
 	health_bar.show()
 	current_health -= dmg
 	if debug:
@@ -130,13 +142,13 @@ func set_is_targeted(value: bool) -> void:
 func _on_mouse_entered() -> void:
 	is_hovered = true
 	if is_dead:
-		CursorManager.set_cursor("disabled")
+		CursorManager.set_cursor_with_priority("disabled", self)
 	else:
-		CursorManager.set_cursor("crosshair")
+		CursorManager.set_cursor_with_priority("crosshair", self)
 
 func _on_mouse_exited() -> void:
 	is_hovered = false
-	CursorManager.reset_cursor()
+	CursorManager.remove_cursor_source(self)
 
 func get_sprite_content_center() -> Vector2:
 	var texture = sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
@@ -166,3 +178,46 @@ func get_sprite_content_center() -> Vector2:
 	var offset = center - (Vector2(image.get_width(), image.get_height()) / 2.0)
 	
 	return sprite.global_position + offset
+
+func spawn_damage_popup(damage: int, type: String = "normal", is_crit: bool = false) -> void:
+	var popup = DAMAGE_POPUP.instantiate()
+	add_child(popup)
+	popup.setup(damage, type, is_crit)
+
+func _exit_tree() -> void:
+	CursorManager.remove_cursor_source(self)
+
+func handle_death_drops() -> void:
+	var pickups_parent = get_tree().get_first_node_in_group("pickups")
+	if !pickups_parent:
+		var pickups = Node2D.new()
+		pickups.add_to_group("pickups")
+		get_tree().add_child(pickups)
+		
+	if randf() <= HEALTH_PACK_DROP_CHANCE:
+		spawn_health_pack(pickups_parent)
+	
+	spawn_experience_gems(pickups_parent)
+
+func spawn_health_pack(parent: Node) -> void:
+	var pickups = get_tree().get_first_node_in_group("pickups")
+	var health_pack = HEALTH_PACK.instantiate()
+	pickups.add_child(health_pack)
+	health_pack.global_position = global_position
+
+func spawn_experience_gems(parent: Node) -> void:
+	var pickups = get_tree().get_first_node_in_group("pickups")
+	var num_gems = randi_range(MIN_EXPERIENCE_GEMS, MAX_EXPERIENCE_GEMS)
+	
+	for i in range(num_gems):
+		var gem = EXPERIENCE_GEM.instantiate()
+		pickups.add_child(gem)
+		gem.global_position = global_position
+		
+		var scatter_direction = Vector2.RIGHT.rotated(randf() * TAU)
+		var scatter_distance = randf_range(20, 50)
+		
+		var tween = create_tween()
+		tween.set_parallel(true)
+		tween.tween_property(gem, "position", 
+			gem.position + (scatter_direction * scatter_distance), 0.3)

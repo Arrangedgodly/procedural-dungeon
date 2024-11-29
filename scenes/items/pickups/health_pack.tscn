@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://d1is5nyv5ycj7"]
+
+[ext_resource type="Script" path="res://resources/pickups/HealthPack.gd" id="1_qjku5"]
+[ext_resource type="Texture2D" uid="uid://dc0t3b3qb1lax" path="res://assets/items/pickups/heart.png" id="2_fpvyu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11fwx"]
+atlas = ExtResource("2_fpvyu")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0fwx"]
+atlas = ExtResource("2_fpvyu")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suai6"]
+atlas = ExtResource("2_fpvyu")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_darti"]
+atlas = ExtResource("2_fpvyu")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk2sp"]
+atlas = ExtResource("2_fpvyu")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_psuv3"]
+atlas = ExtResource("2_fpvyu")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4pxe"]
+atlas = ExtResource("2_fpvyu")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3655"]
+atlas = ExtResource("2_fpvyu")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4nypb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11fwx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0fwx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_suai6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_darti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk2sp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_psuv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4pxe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3655")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="HealthPack" type="Area2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_qjku5")
+sprite = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4nypb")
+autoplay = "default"
+frame_progress = 0.976314

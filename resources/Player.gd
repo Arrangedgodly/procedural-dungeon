@@ -26,8 +26,12 @@ var current_mana: int
 var is_boosted: bool = false
 var is_refreshing: bool = false
 var current_target
+var is_stopped: bool = false
+var stored_target_position: Vector2 = Vector2.ZERO
+var has_stored_position: bool = false
 
 const MAGIC_MISSILE = preload("res://scenes/projectiles/magic_missile.tscn")
+const DAMAGE_POPUP = preload("res://scenes/damage_popup.tscn")
 
 func _ready() -> void:
 	current_health = health
@@ -38,6 +42,23 @@ func _ready() -> void:
 	self.z_index = 20
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("stop"):
+		is_stopped = true
+		if is_moving:
+			stored_target_position = target_position
+			has_stored_position = true
+			is_moving = false
+			velocity = Vector2.ZERO
+			sprite.play("idle")
+	if event.is_action_released("stop"):
+		is_stopped = false
+		if has_stored_position:
+			target_position = stored_target_position
+			target_position_changed.emit(target_position)
+			is_moving = true
+			has_stored_position = false
+			sprite.play("walk")
+		
 	if event.is_action_pressed("space"):
 		drain_stamina()
 	if event.is_action_released("space"):
@@ -49,21 +70,27 @@ func _input(event: InputEvent) -> void:
 		if is_valid_move_target(local_pos):
 			target_position = mouse_pos
 			target_position_changed.emit(target_position)
-			is_moving = true
 			
-			if has_node("AnimatedSprite2D"):
+			if is_stopped:
+				stored_target_position = target_position
+				has_stored_position = true
+			else:
+				is_moving = true
 				sprite.play("walk")
 
 func _physics_process(_delta: float) -> void:
 	var mouse_pos = get_global_mouse_position()
 	var local_pos = walkable_tiles.to_local(mouse_pos)
 	if is_valid_move_target(local_pos):
-		CursorManager.set_cursor("walk")
+		CursorManager.set_cursor_with_priority("walk", self)
 	else:
-		CursorManager.set_cursor("disabled")
+		CursorManager.set_cursor_with_priority("disabled", self)
 		
 	if !is_boosted and !is_refreshing:
 		replenish_stamina()
+	
+	if is_stopped:
+		return
 	
 	if current_target:
 		basic_attack()
@@ -96,6 +123,8 @@ func take_damage(damage_taken: int) -> void:
 	sprite.play("hurt")
 	current_health -= damage_taken
 	health_changed.emit(current_health)
+	
+	spawn_damage_popup(damage_taken, "normal")
 	
 	if current_health <= 0:
 		kill_player()
@@ -189,4 +218,39 @@ func is_valid_move_target(pos: Vector2) -> bool:
 	return result.is_empty()
 
 func _exit_tree() -> void:
-	CursorManager.reset_cursor()
+	CursorManager.remove_cursor_source(self)
+	
+func get_sprite_content_center() -> Vector2:
+	var texture = sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
+	var image = texture.get_image()
+	
+	# Find bounds of non-transparent pixels
+	var min_x := image.get_width()
+	var min_y := image.get_height()
+	var max_x := 0
+	var max_y := 0
+	
+	for y in range(image.get_height()):
+		for x in range(image.get_width()):
+			if image.get_pixel(x, y).a > 0:  # If pixel is not transparent
+				min_x = min(min_x, x)
+				min_y = min(min_y, y)
+				max_x = max(max_x, x)
+				max_y = max(max_y, y)
+	
+	# Calculate center of actual content
+	var center = Vector2(
+		(min_x + max_x) / 2.0,
+		(min_y + max_y) / 2.0
+	)
+	
+	# Offset from sprite's top-left to this center point
+	var offset = center - (Vector2(image.get_width(), image.get_height()) / 2.0)
+	
+	return sprite.global_position + offset
+
+func spawn_damage_popup(damage: int, type: String = "normal", is_crit: bool = false) -> void:
+	var popup = DAMAGE_POPUP.instantiate()
+	# Add to a designated effects layer or canvas layer for consistent rendering
+	add_child(popup)
+	popup.setup(damage, type, is_crit)
