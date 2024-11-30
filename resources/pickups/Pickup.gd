@@ -6,13 +6,14 @@ signal collected(by: Node2D)
 
 @export var sprite: Sprite2D
 @export var collect_sound: AudioStream
+@export var collision: CollisionShape2D
 
 var is_being_collected: bool = false
 var collection_speed: float = 400.0
 var target: Node2D
 
 func _ready() -> void:
-	body_entered.connect(_on_body_entered)
+	self.body_entered.connect(_on_body_entered)
 	add_to_group("pickups")
 
 func _physics_process(delta: float) -> void:

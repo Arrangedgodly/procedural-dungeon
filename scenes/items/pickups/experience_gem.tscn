@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://08op5d4jgkbv"]
+[gd_scene load_steps=37 format=3 uid="uid://08op5d4jgkbv"]
 
 [ext_resource type="Script" path="res://resources/pickups/ExperienceGem.gd" id="1_l0tvu"]
 [ext_resource type="Texture2D" uid="uid://v4cy2k7smhjo" path="res://assets/items/pickups/experience.png" id="2_5mphn"]
@@ -235,6 +235,9 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lvcvq"]
+radius = 3.0
+
 [node name="ExperienceGem" type="Area2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_l0tvu")
 sprite = NodePath("AnimatedSprite2D")
@@ -244,3 +247,6 @@ scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_mddmp")
 autoplay = "default"
 frame_progress = 0.454416
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lvcvq")

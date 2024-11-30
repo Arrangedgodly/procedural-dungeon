@@ -40,7 +40,7 @@ func add_cursor(name: String, image: Resource) -> void:
 	
 	custom_cursors[name] = {
 		"image": image,
-		"hotspot": base_hotspot * CURSOR_SCALE
+		"hotspot": base_hotspot
 	}
 
 func scale_cursor_texture(texture: Texture2D) -> Texture2D:

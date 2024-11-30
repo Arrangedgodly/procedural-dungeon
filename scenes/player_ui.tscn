@@ -77,7 +77,7 @@ texture_progress = ExtResource("7_1vvd8")
 texture_progress_offset = Vector2(15, 22)
 
 [node name="ExperienceBar" parent="." instance=ExtResource("10_8qyg2")]
-offset_left = 504.0
-offset_top = 750.0
-offset_right = 504.0
-offset_bottom = 750.0
+offset_left = 312.0
+offset_top = 690.0
+offset_right = 312.0
+offset_bottom = 690.0

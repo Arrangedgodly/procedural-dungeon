@@ -22,6 +22,7 @@ color_ramp = SubResource("GradientTexture1D_foxpq")
 [node name="ExperienceBar" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+scale = Vector2(3, 3)
 script = ExtResource("1_uq6c5")
 
 [node name="ProgressBar" type="TextureProgressBar" parent="."]
