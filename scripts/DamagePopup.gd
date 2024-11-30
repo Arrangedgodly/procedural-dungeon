@@ -1,4 +1,5 @@
 extends Control
+class_name DamagePopup
 
 const CRIT_SCALE = 1.5
 const ARC_HEIGHT = 50.0  # Maximum height of the arc

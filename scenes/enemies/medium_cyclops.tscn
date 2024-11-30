@@ -257,7 +257,7 @@ frame_progress = 1.0
 script = ExtResource("3_kllkd")
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("3_2wk47")]
-blackboard = NodePath("@Node@38063")
+blackboard = NodePath("@Node@17558")
 actor = NodePath("..")
 
 [node name="Timer" type="Timer" parent="."]

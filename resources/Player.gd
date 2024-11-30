@@ -36,6 +36,8 @@ var current_level: int = 1
 
 const MAGIC_MISSILE = preload("res://scenes/projectiles/magic_missile.tscn")
 const DAMAGE_POPUP = preload("res://scenes/damage_popup.tscn")
+const HEALING_EFFECT = preload("res://scenes/effects/healing.tscn")
+const HEALING_POPUP = preload("res://scenes/healing_popup.tscn")
 
 func _ready() -> void:
 	current_health = health
@@ -134,8 +136,36 @@ func take_damage(damage_taken: int) -> void:
 		kill_player()
 
 func heal_damage(heal_amount: int) -> void:
-	current_health += heal_amount
-	health_changed.emit(current_health)
+	var heal_fx = HEALING_EFFECT.instantiate()
+	get_tree().get_first_node_in_group("effects").add_child(heal_fx)
+	heal_fx.global_position = get_sprite_content_center()
+	var duration := 6.0  # Duration in seconds
+	var ticks := 60  # Number of healing ticks
+	var heal_per_tick := float(heal_amount) / ticks
+	var heal_interval := duration / ticks
+	
+	var popup = HEALING_POPUP.instantiate()
+	add_child(popup)
+	popup.setup(heal_amount)
+	
+	for i in ticks:
+		await get_tree().create_timer(heal_interval).timeout
+		var current_tick_heal = heal_per_tick
+		
+		if current_health + current_tick_heal > health:
+			current_tick_heal = health - current_health
+			
+		if current_tick_heal <= 0:
+			break
+			
+		current_health += current_tick_heal
+		health_changed.emit(current_health)
+		
+		if i % 5 == 0:
+			var tick_popup = HEALING_POPUP.instantiate()
+			add_child(tick_popup)
+			tick_popup.setup(round(current_tick_heal))
+
 
 func kill_player() -> void:
 	sprite.play("death")
