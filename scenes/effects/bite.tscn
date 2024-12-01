@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://v6nitqw4utql"]
+[gd_scene load_steps=22 format=3 uid="uid://v6nitqw4utql"]
 
 [ext_resource type="Texture2D" uid="uid://b6y56cmpevhv0" path="res://assets/vfx/general/fx3_bite_large_red/spritesheet.png" id="1_cye3q"]
 [ext_resource type="Script" path="res://resources/Effect.gd" id="2_2aguo"]
+[ext_resource type="AudioStream" uid="uid://bsak43lfo5teb" path="res://assets/sounds/08_Bite_04.wav" id="3_348xv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c5sgw"]
 atlas = ExtResource("1_cye3q")
@@ -138,3 +139,4 @@ frame = 16
 frame_progress = 1.0
 script = ExtResource("2_2aguo")
 z_level = 30
+sound_effect = ExtResource("3_348xv")
