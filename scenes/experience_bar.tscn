@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dhwr46oiovymx" path="res://assets/ui/HealthBars/Style2/2/purple_bar_noborder.png" id="3_38uye"]
 [ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="4_7c6y1"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hsc7e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8jqnb"]
 
 [node name="ExperienceBar" type="Control"]
 layout_mode = 3
@@ -21,7 +21,7 @@ value = 50.0
 texture_under = ExtResource("2_hp8hx")
 
 [node name="Progress" type="TextureProgressBar" parent="."]
-material = SubResource("CanvasItemMaterial_hsc7e")
+material = SubResource("ShaderMaterial_8jqnb")
 layout_mode = 0
 offset_left = 76.0
 offset_top = 11.0
