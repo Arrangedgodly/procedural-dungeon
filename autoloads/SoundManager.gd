@@ -4,11 +4,12 @@ var active_sounds: Dictionary = {}  # stream path -> array of active instances
 var sound_cooldowns: Dictionary = {}  # stream path -> last played timestamp
 
 const MAX_INSTANCES_PER_SOUND = 5  # Maximum concurrent instances of the same sound
-const MIN_TIME_BETWEEN_SOUNDS = 0.05  # Minimum time (in seconds) between instances of the same sound
+const DEFAULT_MIN_TIME = 0.05  # Default minimum time if we can't determine stream length
 const CLEANUP_INTERVAL = 2.0  # How often to clean up finished sounds
 const RAPID_EVENT_THRESHOLD = 5  # Number of requests within MIN_TIME_BETWEEN_SOUNDS to trigger scaling
 const VOLUME_SCALE_FACTOR = 1.2  # Volume increase for rapid events
 const MAX_VOLUME_SCALE = 2.0  # Maximum volume scaling
+const LENGTH_MULTIPLIER = 0.1  # What fraction of the stream length to use as minimum time
 
 func _ready() -> void:
 	var timer = Timer.new()
@@ -16,6 +17,11 @@ func _ready() -> void:
 	timer.timeout.connect(cleanup_finished_sounds)
 	add_child(timer)
 	timer.start()
+
+func get_min_time_for_stream(stream: AudioStream) -> float:
+	if stream and stream.get_length() > 0:
+		return stream.get_length() * LENGTH_MULTIPLIER
+	return DEFAULT_MIN_TIME
 
 func play_sfx(stream: AudioStream, bus: String, pos: Vector2) -> void:
 	if not stream:
@@ -41,13 +47,14 @@ func play_sfx(stream: AudioStream, bus: String, pos: Vector2) -> void:
 			active_sounds[stream_path].erase(oldest_instance)
 	
 	var time_since_last = current_time - sound_cooldowns[stream_path]
+	var min_time = get_min_time_for_stream(stream)
 	
 	var volume_scale = 1.0
 	if recent_requests >= RAPID_EVENT_THRESHOLD:
 		volume_scale = min(VOLUME_SCALE_FACTOR * (recent_requests / RAPID_EVENT_THRESHOLD), 
 						 MAX_VOLUME_SCALE)
 	
-	if time_since_last >= MIN_TIME_BETWEEN_SOUNDS or recent_requests == 0:
+	if time_since_last >= min_time or recent_requests == 0:
 		var instance = AudioStreamPlayer2D.new()
 		instance.stream = stream
 		instance.position = pos
