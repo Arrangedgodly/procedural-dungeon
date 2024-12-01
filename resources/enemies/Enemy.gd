@@ -4,6 +4,11 @@ signal animation_ended
 
 @export var sprite: AnimatedSprite2D
 @export var attack_timer: Timer
+@export var modification_color: Color
+@export var attack_sound: AudioStream
+@export var hit_sound: AudioStream
+@export var death_sound: AudioStream
+
 @onready var outline_shader = preload("res://shaders/outline_shader.tres").duplicate()
 @onready var progress_bar = preload("res://scenes/progress_bar.tscn")
 @onready var debug_label = preload("res://scenes/enemy_debug_label.tscn")
@@ -21,7 +26,6 @@ var is_targeted: bool = false
 var is_hovered: bool = false
 var outline_width: float = .002
 var health_bar
-@export var modification_color: Color
 var keep_distance: bool
 var debug
 
@@ -94,13 +98,14 @@ func take_damage(dmg: int) -> void:
 		debug.update_health(current_health)
 	health_bar.set_progress_value(current_health)
 	if current_health <= 0:
+		SoundManager.play_sfx(death_sound, "Enemies", self.global_position)
 		is_dead = true
 	else:
+		SoundManager.play_sfx(hit_sound, "Enemies", self.global_position)
 		is_hit = true
 
 func attack_player() -> void:
-	# Override in child classes
-	pass
+	SoundManager.play_sfx(attack_sound, "Enemies", self.global_position)
 
 func remove_corpse() -> void:
 	handle_death_drops()

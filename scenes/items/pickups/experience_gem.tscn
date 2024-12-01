@@ -1,7 +1,8 @@
-[gd_scene load_steps=37 format=3 uid="uid://08op5d4jgkbv"]
+[gd_scene load_steps=38 format=3 uid="uid://08op5d4jgkbv"]
 
 [ext_resource type="Script" path="res://resources/pickups/ExperienceGem.gd" id="1_l0tvu"]
 [ext_resource type="Texture2D" uid="uid://v4cy2k7smhjo" path="res://assets/items/pickups/experience.png" id="2_5mphn"]
+[ext_resource type="AudioStream" uid="uid://cuvikkf1ohw4y" path="res://assets/sounds/retro_beeps_collect_item_04.wav" id="2_lyojx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a4p6b"]
 atlas = ExtResource("2_5mphn")
@@ -240,6 +241,7 @@ radius = 3.0
 
 [node name="ExperienceGem" type="Area2D"]
 script = ExtResource("1_l0tvu")
+collect_sound = ExtResource("2_lyojx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)

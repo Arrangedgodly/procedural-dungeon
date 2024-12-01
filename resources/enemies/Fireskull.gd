@@ -15,6 +15,7 @@ func attack_player() -> void:
 	if is_dead:
 		return
 	
+	super.attack_player()
 	sprite.play("attack")
 	
 	var fireball = FIREBALL.instantiate()

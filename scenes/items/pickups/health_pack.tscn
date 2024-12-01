@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://d1is5nyv5ycj7"]
+[gd_scene load_steps=14 format=3 uid="uid://d1is5nyv5ycj7"]
 
 [ext_resource type="Script" path="res://resources/pickups/HealthPack.gd" id="1_qjku5"]
 [ext_resource type="Texture2D" uid="uid://dc0t3b3qb1lax" path="res://assets/items/pickups/heart.png" id="2_fpvyu"]
+[ext_resource type="AudioStream" uid="uid://scwoeg6capbe" path="res://assets/sounds/Spell_Healing_2.wav" id="2_kqvcg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_11fwx"]
 atlas = ExtResource("2_fpvyu")
@@ -72,6 +73,7 @@ radius = 9.0
 
 [node name="HealthPack" type="Area2D"]
 script = ExtResource("1_qjku5")
+collect_sound = ExtResource("2_kqvcg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4nypb")

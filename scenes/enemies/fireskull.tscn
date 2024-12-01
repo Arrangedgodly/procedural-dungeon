@@ -1,9 +1,12 @@
-[gd_scene load_steps=36 format=3 uid="uid://blxueh25cy07p"]
+[gd_scene load_steps=39 format=3 uid="uid://blxueh25cy07p"]
 
 [ext_resource type="Script" path="res://resources/enemies/Fireskull.gd" id="1_y5dvv"]
 [ext_resource type="Texture2D" uid="uid://cwpaflxrqpgnu" path="res://assets/sprites/enemies/Fireskull/Enemy_008_B.png" id="2_cnciq"]
+[ext_resource type="AudioStream" uid="uid://c3vcy8obna41d" path="res://assets/sounds/GS1_Spell_Fire.wav" id="2_uegnm"]
 [ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_k07n7"]
+[ext_resource type="AudioStream" uid="uid://bthlrlbsachdk" path="res://assets/sounds/GS1_Hit_4.wav" id="3_t7wl8"]
 [ext_resource type="PackedScene" uid="uid://d4mefvyhnuqn0" path="res://scenes/hunt_player_ai.tscn" id="4_lsd0h"]
+[ext_resource type="AudioStream" uid="uid://d0x6ylqus85qu" path="res://assets/sounds/24_orc_death_spin.wav" id="4_p57sa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k83ja"]
 atlas = ExtResource("2_cnciq")
@@ -247,6 +250,9 @@ animations = [{
 script = ExtResource("1_y5dvv")
 sprite = NodePath("AnimatedSprite2D")
 attack_timer = NodePath("AttackTimer")
+attack_sound = ExtResource("2_uegnm")
+hit_sound = ExtResource("3_t7wl8")
+death_sound = ExtResource("4_p57sa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sblnt")
@@ -259,5 +265,5 @@ wait_time = 2.5
 one_shot = true
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("4_lsd0h")]
-blackboard = NodePath("@Node@38517")
+blackboard = NodePath("@Node@17555")
 actor = NodePath("..")

@@ -6,6 +6,7 @@ signal collected(pickup: Pickup)
 @export var base_speed: float = 400.0
 @export var max_speed: float = 1200.0
 @export var acceleration: float = 1000.0
+@export var collect_sound: AudioStream
 
 var velocity: Vector2 = Vector2.ZERO
 var current_speed: float = 0.0
@@ -52,3 +53,6 @@ func _on_area_entered(area: Area2D) -> void:
 		var player = area.get_parent()
 		if can_be_collected(player):
 			start_collection(player)
+
+func play_sfx(player: Player) -> void:
+	SoundManager.play_sfx(collect_sound, "Player", player.global_position)

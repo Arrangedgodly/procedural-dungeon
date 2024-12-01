@@ -11,4 +11,5 @@ func can_be_collected(_player: Player) -> bool:
 
 func collect(player: Player) -> bool:
 	player.gain_experience(experience_value)
+	play_sfx(player)
 	return true

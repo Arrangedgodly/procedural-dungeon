@@ -96,7 +96,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if healing_active:
-		active_effect.global_position = get_sprite_content_center() + Vector2(0, -25)
+		active_effect.update_position(get_sprite_content_center() + Vector2(0, -25))
 		
 	var mouse_pos = get_global_mouse_position()
 	var local_pos = walkable_tiles.to_local(mouse_pos)
@@ -151,7 +151,7 @@ func take_damage(damage_taken: int) -> void:
 func heal_damage(heal_amount: int) -> void:
 	var heal_fx = HEALING_EFFECT.instantiate()
 	get_tree().get_first_node_in_group("effects").add_child(heal_fx)
-	heal_fx.global_position = get_sprite_content_center() + Vector2(0, -25)
+	heal_fx.update_position(get_sprite_content_center() + Vector2(0, -25))
 	var duration := 6.0  # Duration in seconds
 	var ticks := 100  # Number of healing ticks
 	var heal_per_tick := float(heal_amount) / ticks

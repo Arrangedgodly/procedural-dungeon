@@ -1,7 +1,8 @@
-[gd_scene load_steps=125 format=3 uid="uid://1uqd1ad7s1wx"]
+[gd_scene load_steps=126 format=3 uid="uid://1uqd1ad7s1wx"]
 
 [ext_resource type="Texture2D" uid="uid://ddgctdas6pql7" path="res://assets/vfx/healing.png" id="1_gr4ve"]
 [ext_resource type="Script" path="res://resources/Effect.gd" id="2_ebo51"]
+[ext_resource type="AudioStream" uid="uid://bg6ssofg2vuck" path="res://assets/sounds/02_Heal_02.wav" id="3_750ij"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wb4y1"]
 atlas = ExtResource("1_gr4ve")
@@ -867,3 +868,4 @@ frame_progress = 1.0
 script = ExtResource("2_ebo51")
 modification_color = Color(1, 1, 1, 0.470588)
 z_level = 30
+sound_effect = ExtResource("3_750ij")

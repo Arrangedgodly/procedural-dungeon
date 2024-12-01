@@ -9,5 +9,6 @@ func can_be_collected(player: Player) -> bool:
 func collect(player: Player) -> bool:
 	if can_be_collected(player):
 		player.heal_damage(min(heal_amount, player.get_missing_health()))
+		play_sfx(player)
 		return true
 	return false

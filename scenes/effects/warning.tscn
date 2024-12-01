@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://buaqhqgvvu6md"]
+[gd_scene load_steps=22 format=3 uid="uid://buaqhqgvvu6md"]
 
 [ext_resource type="Texture2D" uid="uid://d2kojlu00je8h" path="res://assets/icons/WarningSign_PixyFantasy/WarningSign01.png" id="1_svutu"]
 [ext_resource type="Texture2D" uid="uid://ba82mobueki03" path="res://assets/icons/WarningSign_PixyFantasy/WarningSign02.png" id="2_47e0y"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bvqofqc1dnjuw" path="res://assets/icons/WarningSign_PixyFantasy/WarningSign07.png" id="7_rvlh7"]
 [ext_resource type="Texture2D" uid="uid://dr8by8yag6hsy" path="res://assets/icons/WarningSign_PixyFantasy/WarningSign08.png" id="8_p1ql6"]
 [ext_resource type="Texture2D" uid="uid://1s5hw2v87r6p" path="res://assets/icons/WarningSign_PixyFantasy/WarningSign09.png" id="9_t0le8"]
+[ext_resource type="AudioStream" uid="uid://cjx771k7gnjp" path="res://assets/sounds/alarm_siren_warning_01.wav" id="11_k5dca"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_txf8j"]
 atlas = ExtResource("1_svutu")
@@ -87,3 +88,4 @@ sprite_frames = SubResource("SpriteFrames_jw0gx")
 autoplay = "default"
 frame_progress = 0.666178
 script = ExtResource("2_rql38")
+sound_effect = ExtResource("11_k5dca")

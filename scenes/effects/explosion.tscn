@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://bs6m76e5qwrht"]
+[gd_scene load_steps=13 format=3 uid="uid://bs6m76e5qwrht"]
 
 [ext_resource type="Texture2D" uid="uid://cc64615t7kcih" path="res://assets/vfx/general/fx3_toon_explosion_large_red/spritesheet.png" id="1_qasku"]
 [ext_resource type="Script" path="res://resources/Effect.gd" id="2_hk18v"]
+[ext_resource type="AudioStream" uid="uid://dcmxq2bj6n4en" path="res://assets/sounds/explosion_large_05.wav" id="3_c15bq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f6nfd"]
 atlas = ExtResource("1_qasku")
@@ -74,3 +75,4 @@ autoplay = "default"
 frame = 7
 frame_progress = 1.0
 script = ExtResource("2_hk18v")
+sound_effect = ExtResource("3_c15bq")
