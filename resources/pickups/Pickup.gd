@@ -1,42 +1,54 @@
-# res://resources/pickups/Pickup.gd
 extends Area2D
 class_name Pickup
 
-signal collected(by: Node2D)
+signal collected(pickup: Pickup)
 
-@export var sprite: Sprite2D
-@export var collect_sound: AudioStream
-@export var collision: CollisionShape2D
+@export var base_speed: float = 400.0
+@export var max_speed: float = 1200.0
+@export var acceleration: float = 1000.0
 
+var velocity: Vector2 = Vector2.ZERO
+var current_speed: float = 0.0
 var is_being_collected: bool = false
-var collection_speed: float = 400.0
 var target: Node2D
 
 func _ready() -> void:
-	self.body_entered.connect(_on_body_entered)
-	add_to_group("pickups")
+	add_to_group("pickup")
+	area_entered.connect(_on_area_entered)
 
 func _physics_process(delta: float) -> void:
 	if is_being_collected and is_instance_valid(target):
 		var direction = (target.global_position - global_position).normalized()
-		position += direction * collection_speed * delta
 		
-		if global_position.distance_to(target.global_position) < 10:
-			collect()
+		current_speed = move_toward(current_speed, max_speed, acceleration * delta)
+		velocity = direction * current_speed
+		
+		position += velocity * delta
+		
+		var distance = global_position.distance_to(target.global_position)
+		if distance < 10:
+			complete_collection()
 
-func start_collection(collector: Node2D) -> void:
-	is_being_collected = true
-	target = collector
+func start_collection(new_target: Node2D) -> void:
+	if not is_being_collected:
+		is_being_collected = true
+		target = new_target
+		current_speed = base_speed
 
-func collect() -> void:
-	if collect_sound:
-		SoundManager.play_sfx(collect_sound, "Pickups", global_position)
-	collected.emit(target)
-	queue_free()
+func complete_collection() -> void:
+	if target and target is Player:
+		if collect(target):
+			collected.emit(self)
+			queue_free()
 
-func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player") and !is_being_collected:
-		collect()
+func collect(player: Player) -> bool:
+	return false
 
-func should_auto_collect(player: Node2D) -> bool:
-	return true
+func can_be_collected(player: Player) -> bool:
+	return false
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.get_parent() is Player:
+		var player = area.get_parent()
+		if can_be_collected(player):
+			start_collection(player)

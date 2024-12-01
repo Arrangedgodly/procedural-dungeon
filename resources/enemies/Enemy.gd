@@ -106,6 +106,7 @@ func remove_corpse() -> void:
 	handle_death_drops()
 	sprite.play("death")
 	set_is_targeted(false)
+	sprite.clear_polygons()
 	sprite.material = null
 	health_bar.hide()
 	await sprite.animation_finished

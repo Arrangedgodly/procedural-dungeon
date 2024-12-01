@@ -14,6 +14,7 @@ signal died
 @export var walkable_tiles: TileMapLayer
 @onready var stamina_regen: Timer = $StaminaRegen
 @onready var basic_attack_timer: Timer = $BasicAttackTimer
+@onready var pickup_zone: PlayerPickupZone = $PickupZone
 
 var health: int = 500
 var speed: int = 200
@@ -33,11 +34,16 @@ var stored_target_position: Vector2 = Vector2.ZERO
 var has_stored_position: bool = false
 var current_experience: int = 0
 var current_level: int = 1
+var experience_queue: Array = []
+var is_processing_experience: bool = false
+var healing_active: bool = false
+var active_effect: AnimatedSprite2D
 
 const MAGIC_MISSILE = preload("res://scenes/projectiles/magic_missile.tscn")
 const DAMAGE_POPUP = preload("res://scenes/damage_popup.tscn")
 const HEALING_EFFECT = preload("res://scenes/effects/healing.tscn")
 const HEALING_POPUP = preload("res://scenes/healing_popup.tscn")
+const EXPERIENCE_GAIN_DELAY: float = 0.1
 
 func _ready() -> void:
 	current_health = health
@@ -83,8 +89,15 @@ func _input(event: InputEvent) -> void:
 			else:
 				is_moving = true
 				sprite.play("walk")
+		
+	if event.is_action_pressed("pull"):
+		if OS.is_debug_build():
+			collect_room_pickups()
 
 func _physics_process(_delta: float) -> void:
+	if healing_active:
+		active_effect.global_position = get_sprite_content_center() + Vector2(0, -25)
+		
 	var mouse_pos = get_global_mouse_position()
 	var local_pos = walkable_tiles.to_local(mouse_pos)
 	if is_valid_move_target(local_pos):
@@ -138,15 +151,14 @@ func take_damage(damage_taken: int) -> void:
 func heal_damage(heal_amount: int) -> void:
 	var heal_fx = HEALING_EFFECT.instantiate()
 	get_tree().get_first_node_in_group("effects").add_child(heal_fx)
-	heal_fx.global_position = get_sprite_content_center()
+	heal_fx.global_position = get_sprite_content_center() + Vector2(0, -25)
 	var duration := 6.0  # Duration in seconds
-	var ticks := 60  # Number of healing ticks
+	var ticks := 100  # Number of healing ticks
 	var heal_per_tick := float(heal_amount) / ticks
 	var heal_interval := duration / ticks
-	
-	var popup = HEALING_POPUP.instantiate()
-	add_child(popup)
-	popup.setup(heal_amount)
+	healing_active = true
+	active_effect = heal_fx
+	heal_fx.animation_finished.connect(reset_healing_active)
 	
 	for i in ticks:
 		await get_tree().create_timer(heal_interval).timeout
@@ -258,7 +270,6 @@ func get_sprite_content_center() -> Vector2:
 	var texture = sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
 	var image = texture.get_image()
 	
-	# Find bounds of non-transparent pixels
 	var min_x := image.get_width()
 	var min_y := image.get_height()
 	var max_x := 0
@@ -266,35 +277,57 @@ func get_sprite_content_center() -> Vector2:
 	
 	for y in range(image.get_height()):
 		for x in range(image.get_width()):
-			if image.get_pixel(x, y).a > 0:  # If pixel is not transparent
+			if image.get_pixel(x, y).a > 0:
 				min_x = min(min_x, x)
 				min_y = min(min_y, y)
 				max_x = max(max_x, x)
 				max_y = max(max_y, y)
-	
-	# Calculate center of actual content
+				
 	var center = Vector2(
 		(min_x + max_x) / 2.0,
 		(min_y + max_y) / 2.0
 	)
-	
-	# Offset from sprite's top-left to this center point
 	var offset = center - (Vector2(image.get_width(), image.get_height()) / 2.0)
 	
 	return sprite.global_position + offset
 
 func spawn_damage_popup(damage: int, type: String = "normal", is_crit: bool = false) -> void:
 	var popup = DAMAGE_POPUP.instantiate()
-	# Add to a designated effects layer or canvas layer for consistent rendering
 	add_child(popup)
 	popup.setup(damage, type, is_crit)
 
 func get_missing_health() -> int:
 	return health - current_health
 
-func collect_room_pickups() -> void:
-	PickupManager.get_instance().collect_all_pickups(self)
-
 func gain_experience(amount: int) -> void:
-	current_experience += amount
-	experience_gained.emit(amount)
+	experience_queue.append(amount)
+	print(experience_queue)
+	await get_tree().create_timer(.5).timeout
+	if not is_processing_experience:
+		process_experience_queue()
+
+func process_experience_queue() -> void:
+	print("processing experience queue")
+	is_processing_experience = true
+	
+	var i = experience_queue.size()
+	while i > 0:
+		var amount = experience_queue.pop_front()
+		print(amount)
+		current_experience += amount
+		print(current_experience)
+		experience_gained.emit(amount)
+		await get_tree().create_timer(.05).timeout
+		i -= 1
+	
+	is_processing_experience = false
+
+func collect_room_pickups() -> void:
+	var pickups = get_tree().get_nodes_in_group("pickup")
+	print(pickups)
+	for pickup in pickups:
+		if pickup.can_be_collected(self):
+			pickup.start_collection(self)
+
+func reset_healing_active() -> void:
+	healing_active = false

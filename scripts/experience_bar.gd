@@ -4,8 +4,6 @@ class_name ExperienceBar
 @onready var progress_bar: TextureProgressBar = $ProgressBar
 @onready var level_label: Label = $LevelLabel
 @onready var xp_label: Label = $XPLabel
-@onready var level_up_particles: GPUParticles2D = $LevelUpParticles
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var current_xp: int = 0
 var current_level: int = 1
@@ -22,53 +20,31 @@ func _ready() -> void:
 func setup_initial_values() -> void:
 	progress_bar.max_value = get_xp_for_next_level()
 	progress_bar.value = 0
-	level_up_particles.emitting = false
 
 func get_xp_for_next_level() -> int:
 	return int(BASE_XP * pow(LEVEL_MULTIPLIER, current_level - 1))
 
 func add_experience(amount: int) -> void:
-	target_xp = current_xp + amount
-	if !is_animating:
-		animate_xp_gain()
+	current_xp += amount
+	var next_level = get_xp_for_next_level()
+	var excess_xp = 0
+	if current_xp >= next_level:
+		if current_xp > next_level:
+			excess_xp = current_xp - next_level
 
-func animate_xp_gain() -> void:
-	is_animating = true
-	
-	while current_xp < target_xp:
-		var xp_needed = get_xp_for_next_level()
-		var xp_remaining = target_xp - current_xp
+		progress_bar.value = next_level
+		level_up()
+		await get_tree().create_timer(.25).timeout
+		add_experience(excess_xp)
+	else:
+		progress_bar.value = current_xp
 		
-		# If we have enough XP to level up
-		if current_xp + xp_remaining >= xp_needed:
-			# Fill to max
-			var tween = create_tween()
-			tween.tween_property(progress_bar, "value", xp_needed, 0.5)
-			await tween.finished
-			
-			# Level up!
-			level_up()
-			
-			# Calculate remaining XP after level up
-			current_xp = current_xp + xp_remaining - xp_needed
-			target_xp = target_xp - xp_needed
-			progress_bar.max_value = get_xp_for_next_level()
-			progress_bar.value = current_xp
-		else:
-			# Just add the XP
-			var tween = create_tween()
-			current_xp += xp_remaining
-			tween.tween_property(progress_bar, "value", current_xp, 0.5)
-			await tween.finished
-			break
-	
 	update_labels()
-	is_animating = false
 
 func level_up() -> void:
 	current_level += 1
-	animation_player.play("level_up")
-	level_up_particles.emitting = true
+	current_xp = 0
+	progress_bar.value = 0
 	update_labels()
 
 func update_labels() -> void:

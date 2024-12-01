@@ -1,23 +1,13 @@
 extends Pickup
 class_name HealthPack
 
-@export var heal_amount: int = 25
+var heal_amount: int = 100
 
-func _on_body_entered(body: Node2D) -> void:
-	if !is_being_collected and body.is_in_group("player"):
-		if body.has_method("heal_damage"):
-			body.heal_damage(heal_amount)
-		collect()
+func can_be_collected(player: Player) -> bool:
+	return player.get_missing_health() > 0
 
-func collect() -> void:
-	if collect_sound:
-		SoundManager.play_sfx(collect_sound, "Pickups", global_position)
-	collected.emit(target)
-	queue_free()
-
-func should_auto_collect(player: Node2D) -> bool:
-	if !player.has_method("get_missing_health"):
-		return false
-	
-	var missing_health = player.get_missing_health()
-	return missing_health >= heal_amount
+func collect(player: Player) -> bool:
+	if can_be_collected(player):
+		player.heal_damage(min(heal_amount, player.get_missing_health()))
+		return true
+	return false

@@ -1,44 +1,55 @@
 extends Node
 
-const COLLECTION_DELAY = 0.1
+var increase_experience_count: bool = false
+var experience_to_spawn: int = 0
+var spawning_experience: bool = false
 
-signal collection_complete
-
-static var instance: Node
-
-func _ready() -> void:
-	instance = self
-
-static func get_instance() -> Node:
-	return instance
-
-func collect_all_pickups(player: Node2D) -> void:
-	var pickups = get_tree().get_nodes_in_group("pickups")
-	if pickups.is_empty():
-		collection_complete.emit()
-		return
+func instantiate_pickup_by_path(path: String) -> Node:
+	if not path.begins_with("res://scenes/items/pickups/"):
+		path = "res://scenes/items/pickups/" + path
+	if not path.ends_with(".tscn"):
+		path = path + ".tscn"
 	
-	var health_packs = []
-	var other_pickups = []
+	# Try to load the scene
+	var pickup_scene = load(path)
+	if pickup_scene:
+		return pickup_scene.instantiate()
 	
-	for pickup in pickups:
-		if pickup is HealthPack:
-			if pickup.should_auto_collect(player):
-				health_packs.append(pickup)
-		else:
-			other_pickups.append(pickup)
-	
-	health_packs.sort_custom(func(a, b):
-		var dist_a = player.global_position.distance_squared_to(a.global_position)
-		var dist_b = player.global_position.distance_squared_to(b.global_position)
-		return dist_a < dist_b
-	)
-	
-	collect_pickups_sequence.call_deferred(health_packs, player)
-	collect_pickups_sequence.call_deferred(other_pickups, player)
+	print("Error: Could not load pickup scene at path: ", path)
+	return null
 
-func collect_pickups_sequence(pickups: Array, player: Node2D) -> void:
-	for pickup in pickups:
-		if is_instance_valid(pickup):
-			pickup.start_collection(player)
-			await get_tree().create_timer(COLLECTION_DELAY).timeout
+func create_pickup(path: String, pos: Vector2) -> void:
+	var pickup = instantiate_pickup_by_path(path)
+	get_tree().get_first_node_in_group("pickups").add_child(pickup)
+	pickup.global_position = pos
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("health"):
+		if OS.is_debug_build():
+			var player = get_tree().get_first_node_in_group("player")
+			var random_pos = player.global_position + Vector2(randi_range(-50, 50), randi_range(-50, 50))
+			create_pickup("health_pack", random_pos)
+	if event.is_action_pressed("experience"):
+		if OS.is_debug_build():
+			increase_experience_count = true
+	if event.is_action_released("experience"):
+		if OS.is_debug_build():
+			increase_experience_count = false
+
+func _process(delta: float) -> void:
+	if increase_experience_count:
+		experience_to_spawn += 1
+		await get_tree().process_frame
+	else:
+		if experience_to_spawn > 0 and !spawning_experience:
+			spawning_experience = true
+			spawn_experience()
+
+func spawn_experience() -> void:
+	while experience_to_spawn > 0:
+		var player = get_tree().get_first_node_in_group("player")
+		var random_pos = player.global_position + Vector2(randi_range(-500, 500), randi_range(-500, 500))
+		create_pickup("experience_gem", random_pos)
+		experience_to_spawn -= 1
+	
+	spawning_experience = false

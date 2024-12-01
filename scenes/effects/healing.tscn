@@ -859,10 +859,11 @@ animations = [{
 }]
 
 [node name="Healing" type="AnimatedSprite2D"]
-position = Vector2(0, -64)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_qw5w3")
 autoplay = "default"
 frame = 40
 frame_progress = 0.329091
 script = ExtResource("2_ebo51")
+modification_color = Color(1, 1, 1, 0.470588)
+z_level = 30

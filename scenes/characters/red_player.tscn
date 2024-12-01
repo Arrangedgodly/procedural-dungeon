@@ -1,8 +1,9 @@
-[gd_scene load_steps=60 format=3 uid="uid://bi3ubqat64q2c"]
+[gd_scene load_steps=61 format=3 uid="uid://bi3ubqat64q2c"]
 
 [ext_resource type="Script" path="res://resources/Player.gd" id="1_m6076"]
 [ext_resource type="Texture2D" uid="uid://c0pg2fw8onr5m" path="res://assets/sprites/character/Hero_01.png" id="2_6pkq6"]
 [ext_resource type="Script" path="res://resources/PolygonSprite.gd" id="3_l2db2"]
+[ext_resource type="Script" path="res://scripts/PlayerPickupZone.gd" id="4_4tjms"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5lv1v"]
 atlas = ExtResource("2_6pkq6")
@@ -461,3 +462,9 @@ wait_time = 0.1
 
 [node name="BasicAttackTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="PickupZone" type="Area2D" parent="."]
+script = ExtResource("4_4tjms")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupZone"]
+debug_color = Color(0.38339, 0.6002, 0.356356, 0.42)
