@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://1vlmyj4hjij0"]
+[gd_scene load_steps=6 format=3 uid="uid://1vlmyj4hjij0"]
 
 [ext_resource type="Script" path="res://scripts/experience_bar.gd" id="1_uq6c5"]
 [ext_resource type="Texture2D" uid="uid://odxmqy8nku41" path="res://assets/ui/HealthBars/Style 1/7/7.png" id="2_hp8hx"]
-[ext_resource type="Texture2D" uid="uid://diq0lhrru60ys" path="res://assets/ui/HealthBars/Style 1/7/7sPurble.png" id="3_lxoau"]
+[ext_resource type="Texture2D" uid="uid://dhwr46oiovymx" path="res://assets/ui/HealthBars/Style2/2/purple_bar_noborder.png" id="3_38uye"]
 [ext_resource type="FontFile" uid="uid://vbsmq6u2bioe" path="res://assets/fonts/PixelMiddle.ttf" id="4_7c6y1"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hsc7e"]
 
 [node name="ExperienceBar" type="Control"]
 layout_mode = 3
@@ -13,12 +15,21 @@ script = ExtResource("1_uq6c5")
 
 [node name="ProgressBar" type="TextureProgressBar" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 300.0
+offset_bottom = 32.0
 value = 50.0
 texture_under = ExtResource("2_hp8hx")
-texture_progress = ExtResource("3_lxoau")
-texture_progress_offset = Vector2(64, 0)
+
+[node name="Progress" type="TextureProgressBar" parent="."]
+material = SubResource("CanvasItemMaterial_hsc7e")
+layout_mode = 0
+offset_left = 76.0
+offset_top = 11.0
+offset_right = 165.0
+offset_bottom = 20.0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("3_38uye")
 
 [node name="LevelLabel" type="Label" parent="."]
 layout_mode = 0

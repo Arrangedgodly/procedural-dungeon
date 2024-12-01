@@ -301,21 +301,17 @@ func get_missing_health() -> int:
 
 func gain_experience(amount: int) -> void:
 	experience_queue.append(amount)
-	print(experience_queue)
 	await get_tree().create_timer(.5).timeout
 	if not is_processing_experience:
 		process_experience_queue()
 
 func process_experience_queue() -> void:
-	print("processing experience queue")
 	is_processing_experience = true
 	
 	var i = experience_queue.size()
 	while i > 0:
 		var amount = experience_queue.pop_front()
-		print(amount)
 		current_experience += amount
-		print(current_experience)
 		experience_gained.emit(amount)
 		await get_tree().create_timer(.05).timeout
 		i -= 1
@@ -324,7 +320,6 @@ func process_experience_queue() -> void:
 
 func collect_room_pickups() -> void:
 	var pickups = get_tree().get_nodes_in_group("pickup")
-	print(pickups)
 	for pickup in pickups:
 		if pickup.can_be_collected(self):
 			pickup.start_collection(self)

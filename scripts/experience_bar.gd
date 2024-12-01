@@ -1,9 +1,10 @@
 extends Control
 class_name ExperienceBar
 
-@onready var progress_bar: TextureProgressBar = $ProgressBar
+@onready var background: TextureProgressBar = $ProgressBar
 @onready var level_label: Label = $LevelLabel
 @onready var xp_label: Label = $XPLabel
+@onready var progress_bar: TextureProgressBar = $Progress
 
 var current_xp: int = 0
 var current_level: int = 1
@@ -14,10 +15,10 @@ const BASE_XP: int = 100
 const LEVEL_MULTIPLIER: float = 1.25
 
 func _ready() -> void:
-	setup_initial_values()
+	set_progress_values()
 	update_labels()
 
-func setup_initial_values() -> void:
+func set_progress_values() -> void:
 	progress_bar.max_value = get_xp_for_next_level()
 	progress_bar.value = 0
 
@@ -44,7 +45,7 @@ func add_experience(amount: int) -> void:
 func level_up() -> void:
 	current_level += 1
 	current_xp = 0
-	progress_bar.value = 0
+	set_progress_values()
 	update_labels()
 
 func update_labels() -> void:
