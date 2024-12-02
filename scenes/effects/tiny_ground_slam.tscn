@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://63dln8dmggco"]
+[gd_scene load_steps=13 format=3 uid="uid://63dln8dmggco"]
 
 [ext_resource type="Texture2D" uid="uid://dwjg0r3vuukjr" path="res://assets/vfx/general/fx3_toon_impact_small_blue/spritesheet.png" id="1_168ff"]
 [ext_resource type="Script" path="res://resources/Effect.gd" id="2_kol3k"]
+[ext_resource type="AudioStream" uid="uid://7k14wvvygrwq" path="res://assets/sounds/23_orc_jump_land.wav" id="3_6ewuj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8kscs"]
 atlas = ExtResource("1_168ff")
@@ -73,3 +74,4 @@ autoplay = "default"
 frame = 7
 frame_progress = 1.0
 script = ExtResource("2_kol3k")
+sound_effect = ExtResource("3_6ewuj")

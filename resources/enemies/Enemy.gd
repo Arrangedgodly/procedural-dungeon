@@ -105,6 +105,9 @@ func take_damage(dmg: int) -> void:
 		is_hit = true
 
 func attack_player() -> void:
+	if !attack_timer.is_stopped() or is_dead:
+		return
+		
 	SoundManager.play_sfx(attack_sound, "Enemies", self.global_position)
 
 func remove_corpse() -> void:

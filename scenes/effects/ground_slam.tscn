@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://b1yvskuc344do"]
+[gd_scene load_steps=13 format=3 uid="uid://b1yvskuc344do"]
 
 [ext_resource type="Texture2D" uid="uid://b6bkyjxrg2rwy" path="res://assets/vfx/general/fx3_toon_impact_large_blue/spritesheet.png" id="1_ames2"]
 [ext_resource type="Script" path="res://resources/Effect.gd" id="2_57ft4"]
+[ext_resource type="AudioStream" uid="uid://c0u5ir5onsssh" path="res://assets/sounds/13_human_jump_land_1.wav" id="3_esjlo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i5jgt"]
 atlas = ExtResource("1_ames2")
@@ -73,3 +74,4 @@ autoplay = "default"
 frame = 7
 frame_progress = 1.0
 script = ExtResource("2_57ft4")
+sound_effect = ExtResource("3_esjlo")

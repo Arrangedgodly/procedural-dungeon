@@ -16,15 +16,13 @@ func _ready() -> void:
 	super._ready()
 
 func attack_player() -> void:
-	if is_dead:
-		return
+	super.attack_player()
 	
 	combo_hits = 0
 	perform_combo_attack()
 
 func perform_combo_attack() -> void:
 	if combo_hits < max_combo_hits and target and get_distance_to_player() <= attack_range:
-		# Quick forward lunge
 		var lunge_dir = (target.global_position - global_position).normalized()
 		velocity = lunge_dir * speed * 0.5
 		move_and_slide()
@@ -33,7 +31,7 @@ func perform_combo_attack() -> void:
 		var bite = BITE_EFFECT.instantiate()
 		get_tree().get_first_node_in_group("effects").add_child(bite)
 		var bite_offset = get_sprite_content_center() + (lunge_dir * attack_range)
-		bite.global_position = bite_offset
+		bite.update_position(bite_offset)
 		await sprite.animation_finished
 		
 		if target and get_distance_to_player() <= attack_range:
@@ -41,10 +39,8 @@ func perform_combo_attack() -> void:
 			
 		combo_hits += 1
 		
-		# Continue combo with slight delay
 		await get_tree().create_timer(hit_delay).timeout
 		perform_combo_attack()
 	else:
-		# Reset after combo ends
 		velocity = Vector2.ZERO
 		attack_timer.start()

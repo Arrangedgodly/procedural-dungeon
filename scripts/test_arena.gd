@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var background_music: AudioStream
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().change_scene_to_file("res://scenes/enemy_selector.tscn")
@@ -23,6 +25,8 @@ func _ready() -> void:
 	var projectiles = Node2D.new()
 	add_child(projectiles)
 	projectiles.add_to_group("projectiles")
+	
+	SoundManager.play_music(background_music)
 
 func instantiate_enemy(enemy_path: String) -> Node:
 	var enemy_instance = EnemyManager.instantiate_enemy_by_path(enemy_path)
@@ -44,3 +48,6 @@ func apply_variant_effects(enemy: Node, variant: EnemyVariant) -> void:
 		"Swift":
 			enemy.speed *= 1.5
 			enemy.attack_timer.wait_time *= 0.8
+
+func _exit_tree() -> void:
+	SoundManager.stop(background_music)

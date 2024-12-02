@@ -39,7 +39,7 @@ func create_slash_effect(flip_vertical: bool) -> Node2D:
 		var attack_dir = (target.global_position - global_position).normalized()
 		var offset_distance = 15
 		
-		slash.global_position = get_sprite_content_center() + (attack_dir * offset_distance)
+		slash.update_position(get_sprite_content_center() + (attack_dir * offset_distance))
 		slash.rotation = attack_dir.angle() - PI/2
 		slash.flip_v = true if flip_vertical else false
 	

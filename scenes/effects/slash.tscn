@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://cv2s1tnqkf8m3"]
+[gd_scene load_steps=14 format=3 uid="uid://cv2s1tnqkf8m3"]
 
 [ext_resource type="Texture2D" uid="uid://cddbyv37fe561" path="res://assets/vfx/slash.png" id="1_78mbj"]
 [ext_resource type="Script" path="res://resources/Effect.gd" id="2_aexhm"]
+[ext_resource type="AudioStream" uid="uid://brysk3y5303po" path="res://assets/sounds/22_Slash_04.wav" id="3_iqxdq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qcsji"]
 atlas = ExtResource("1_78mbj")
@@ -81,3 +82,4 @@ frame = 8
 frame_progress = 1.0
 script = ExtResource("2_aexhm")
 z_level = 30
+sound_effect = ExtResource("3_iqxdq")

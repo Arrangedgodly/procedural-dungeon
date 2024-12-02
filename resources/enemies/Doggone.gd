@@ -22,7 +22,7 @@ func attack_player() -> void:
 		var bite = BITE_EFFECT.instantiate()
 		get_tree().get_first_node_in_group("effects").add_child(bite)
 		var bite_offset = get_sprite_content_center() + (attack_dir * attack_range)
-		bite.global_position = bite_offset
+		bite.update_position(bite_offset)
 		
 		if target and get_distance_to_player() <= attack_range:
 			target.take_damage(damage)
@@ -41,7 +41,7 @@ func attack_player() -> void:
 				bite = BITE_EFFECT.instantiate()
 				get_tree().get_first_node_in_group("effects").add_child(bite)
 				bite_offset = get_sprite_content_center() + (attack_dir * attack_range)
-				bite.global_position = bite_offset
+				bite.update_position(bite_offset)
 				
 				if target and get_distance_to_player() <= attack_range:
 					target.take_damage(damage)
