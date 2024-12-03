@@ -82,3 +82,5 @@ func update_charge_telegraph() -> void:
 		charge_telegraph.clear_points()
 		charge_telegraph.add_point(Vector2.ZERO)
 		charge_telegraph.add_point(direction * attack_range)
+
+# TODO: Fix charge attack so the sprite keeps the attack animation playing and the blitzer stops when it hits a wall instead of stupid sliding

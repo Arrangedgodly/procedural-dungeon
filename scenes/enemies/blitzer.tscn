@@ -262,5 +262,5 @@ wait_time = 3.0
 one_shot = true
 
 [node name="HuntPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("5_mkmsn")]
-blackboard = NodePath("@Node@18095")
+blackboard = NodePath("@Node@21474")
 actor = NodePath("..")

@@ -48,8 +48,11 @@ func get_enemy_index_by_path(path: String) -> int:
 	return -1  # Return -1 if not found
 
 func instantiate_enemy_by_path(path: String) -> Node:
-	if not path.begins_with("res://"):
-		path = "res://" + path
+	if not path.begins_with("res://scenes/enemies/"):
+		path = "res://scenes/enemies/" + path
+	
+	if not path.ends_with(".tscn"):
+		path = path + ".tscn"
 	
 	# Try to load the scene
 	var enemy_scene = load(path)

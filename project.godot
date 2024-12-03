@@ -27,6 +27,7 @@ SoundManager="*res://autoloads/SoundManager.gd"
 Debugger="*res://autoloads/Debugger.gd"
 CursorManager="*res://autoloads/CursorManager.gd"
 PickupManager="*res://autoloads/PickupManager.gd"
+Console="*res://addons/console/console.gd"
 
 [debug]
 
@@ -47,7 +48,7 @@ movie_writer/fps=30
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/beehave/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/beehave/plugin.cfg", "res://addons/console/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg")
 
 [global_group]
 

@@ -21,3 +21,6 @@ func set_modification_color(new_color: Color) -> void:
 func update_position(new_pos: Vector2) -> void:
 	self.global_position = new_pos
 	SoundManager.play_sfx(sound_effect, "Effects", self.global_position)
+
+# TODO: Finish Adding sounds to all effects (splatter + quick slam are missing)
+# TODO: Balance audio on effects to make the bite sound actually heard

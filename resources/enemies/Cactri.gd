@@ -5,7 +5,7 @@ var can_damage: bool = true
 
 func _ready() -> void:
 	health = 30
-	speed = 30
+	speed = 50
 	damage = 50
 	approach_range = 250
 	attack_range = 15
